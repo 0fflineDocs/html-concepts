@@ -1,5 +1,6 @@
 import os
 import re
+from datetime import datetime
 
 # Configuration
 DESIGNS_DIR = "designs"
@@ -17,7 +18,6 @@ def get_metadata(html_path):
         title = title_match.group(1).strip() if title_match else "Untitled Design"
         
         # Find desc_match = re.search(r'', content)
-        # FIX: Ensure desc_match is checked properly
         description = desc_match.group(1).strip() if desc_match else "No description provided."
         
         return title, description
@@ -35,7 +35,6 @@ def update_readme(links_markdown):
     with open(README_FILE, 'r', encoding='utf-8') as f:
         readme_content = f.read()
 
-    # Regex to find everything between markers
     pattern = f"{start_marker}.*?{end_marker}"
     replacement = f"{start_marker}\n{links_markdown}\n{end_marker}"
     
@@ -52,24 +51,19 @@ def main():
     html_list_items = ""
     markdown_list_items = ""
     
-    # Get all subdirectories in the designs folder
     folders = sorted([f for f in os.listdir(DESIGNS_DIR) if os.path.isdir(os.path.join(DESIGNS_DIR, f))])
 
     for folder in folders:
         path = f"{DESIGNS_DIR}/{folder}/index.html"
         if os.path.exists(path):
             title, desc = get_metadata(path)
-            
-            # URL relative to root
             url = f"{DESIGNS_DIR}/{folder}/index.html"
-            
-            # For the website (index.html)
             html_list_items += f'<li><a href="{url}">{title}</a><p>{desc}</p></li>\n'
-            
-            # For the README.md
             markdown_list_items += f"* [{title}]({url}) - {desc}\n"
 
-    # Full HTML template for the root index.html
+    # Generate timestamp
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     full_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,14 +71,14 @@ def main():
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design Gallery</title>
     <style>
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #24292e; }}
-        h1 {{ border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #24292e; background: #fdfdfd; }}
+        h1 {{ border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }}
         ul {{ list-style: none; padding: 0; }}
-        li {{ margin-bottom: 20px; padding: 15px; border: 1px solid #e1e4e8; border-radius: 6px; }}
-        li:hover {{ background-color: #f6f8fa; }}
-        a {{ font-weight: 600; color: #0366d6; text-decoration: none; font-size: 1.25rem; }}
-        a:hover {{ text-decoration: underline; }}
-        p {{ margin: 5px 0 0; color: #586069; }}
+        li {{ margin-bottom: 20px; padding: 20px; border: 1px solid #e1e4e8; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }}
+        li:hover {{ border-color: #0366d6; }}
+        a {{ font-weight: 600; color: #0366d6; text-decoration: none; font-size: 1.3rem; }}
+        p {{ margin: 8px 0 0; color: #586069; }}
+        footer {{ margin-top: 50px; font-size: 0.85rem; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }}
     </style>
 </head>
 <body>
@@ -92,16 +86,17 @@ def main():
     <ul>
         {html_list_items}
     </ul>
+    <footer>
+        Last built on: {now} (UTC)
+    </footer>
 </body>
 </html>"""
 
-    # Write the web index
     with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
         f.write(full_html)
 
-    # Update the README
     update_readme(markdown_list_items)
-    print("Successfully updated index.html and README.md")
+    print(f"Successfully updated at {now}")
 
 if __name__ == "__main__":
     main()
