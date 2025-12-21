@@ -436,6 +436,71 @@
             }
         }
 
+        /* CSS Cheat Sheet Overlay */
+        .css-cheatsheet {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(10, 10, 15, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 320px;
+            max-width: 380px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .card:hover .css-cheatsheet {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .cheatsheet-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            color: var(--card-primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .css-property {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+        }
+
+        .css-property-name {
+            font-family: 'Courier New', monospace;
+            color: #a1a1b5;
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+        }
+
+        .css-property-value {
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--card-primary);
+            word-break: break-word;
+            font-size: 0.75rem;
+            line-height: 1.5;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -454,6 +519,18 @@
                 flex-direction: column;
                 gap: 16px;
                 align-items: flex-start;
+            }
+
+            .css-cheatsheet {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                max-width: 90%;
+            }
+
+            .card:hover .css-cheatsheet {
+                transform: translate(-50%, -50%);
             }
         }
     </style>
@@ -480,6 +557,29 @@
                         </a>
                     </div>
                 </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#0ea5e9 (Sky Blue)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#06b6d4 (Cyan)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Circles pattern</div>
+                    </div>
+                </div>
             </article>
 
             <!-- Card 2 -->
@@ -494,6 +594,29 @@
                         <a href="https://learn.microsoft.com/en-us/security/zero-trust/" class="learn-more">
                             <span>View Resources</span>
                         </a>
+                    </div>
+                </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#8b5cf6 (Purple)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#a78bfa (Light Purple)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Diagonal lines pattern</div>
                     </div>
                 </div>
             </article>
@@ -512,6 +635,29 @@
                         </a>
                     </div>
                 </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#f97316 (Orange)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#fb923c (Light Orange)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Semi-circle arc</div>
+                    </div>
+                </div>
             </article>
 
             <!-- Card 4 -->
@@ -526,6 +672,29 @@
                         <a href="https://learn.microsoft.com/en-us/security/adoption/" class="learn-more">
                             <span>Get Started</span>
                         </a>
+                    </div>
+                </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#10b981 (Green)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#34d399 (Light Green)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Hexagon pattern</div>
                     </div>
                 </div>
             </article>
@@ -544,6 +713,29 @@
                         </a>
                     </div>
                 </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#fbbf24 (Amber)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#f87171 (Red)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Gradient strip</div>
+                    </div>
+                </div>
             </article>
 
             <!-- Card 6 -->
@@ -558,6 +750,29 @@
                         <a href="https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model" class="learn-more">
                             <span>Learn More</span>
                         </a>
+                    </div>
+                </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#6366f1 (Indigo)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#818cf8 (Light Indigo)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Corner triangles</div>
                     </div>
                 </div>
             </article>
@@ -576,6 +791,29 @@
                         </a>
                     </div>
                 </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#ec4899 (Pink)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#f472b6 (Light Pink)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Dots pattern</div>
+                    </div>
+                </div>
             </article>
 
             <!-- Card 8 -->
@@ -592,6 +830,29 @@
                         </a>
                     </div>
                 </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#14b8a6 (Teal)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#2dd4bf (Light Teal)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Curved wave</div>
+                    </div>
+                </div>
             </article>
 
             <!-- Card 9 -->
@@ -606,6 +867,29 @@
                         <a href="https://learn.microsoft.com/en-us/security/zero-trust/deploy/networks" class="learn-more">
                             <span>View Guide</span>
                         </a>
+                    </div>
+                </div>
+                <div class="css-cheatsheet">
+                    <div class="cheatsheet-title">CSS Styles</div>
+                    <div class="css-property">
+                        <div class="css-property-name">Title Font:</div>
+                        <div class="css-property-value">font-family: 'Outfit', sans-serif<br>font-size: 1.75rem<br>font-weight: 700</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Body Font:</div>
+                        <div class="css-property-value">font-family: 'DM Sans', sans-serif<br>font-size: 0.95rem</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Primary Color:</div>
+                        <div class="css-property-value">#6366f1 (Indigo)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Secondary Color:</div>
+                        <div class="css-property-value">#8b5cf6 (Purple)</div>
+                    </div>
+                    <div class="css-property">
+                        <div class="css-property-name">Decoration:</div>
+                        <div class="css-property-value">Layered squares</div>
                     </div>
                 </div>
             </article>
