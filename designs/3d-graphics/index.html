@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Libraries - Live Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 60px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 1200px) {
+            .demo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .demo-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            border-color: #3a3a3a;
+            transform: translateY(-2px);
+        }
+
+        .demo-canvas-wrapper {
+            width: 100%;
+            height: 280px;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-canvas-wrapper canvas,
+        .demo-canvas-wrapper svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .demo-info {
+            padding: 16px;
+        }
+
+        .demo-library {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .demo-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .library-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-threejs { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-zdog { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+        .badge-p5 { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+        .badge-babylon { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge-d3 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3D Graphics Libraries</h1>
+            <p class="subtitle">Live interactive demonstrations</p>
+        </header>
+
+        <div class="demo-grid">
+            <!-- Three.js Demo 1 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="three-matrix"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-threejs">Three.js</div>
+                    <div class="demo-title">Matrix Rain</div>
+                </div>
+            </div>
+
+            <!-- Three.js Demo 2 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="three-wireframe"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-threejs">Three.js</div>
+                    <div class="demo-title">Neon Wireframe</div>
+                </div>
+            </div>
+
+            <!-- Zdog Demo 1 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="zdog-crystal"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-zdog">Zdog</div>
+                    <div class="demo-title">Crystal Gem</div>
+                </div>
+            </div>
+
+            <!-- Zdog Demo 2 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="zdog-city"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-zdog">Zdog</div>
+                    <div class="demo-title">Isometric City</div>
+                </div>
+            </div>
+
+            <!-- P5.js Demo 1 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper" id="p5-neural"></div>
+                <div class="demo-info">
+                    <div class="library-badge badge-p5">P5.js</div>
+                    <div class="demo-title">Neural Network</div>
+                </div>
+            </div>
+
+            <!-- P5.js Demo 2 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper" id="p5-glitch"></div>
+                <div class="demo-info">
+                    <div class="library-badge badge-p5">P5.js</div>
+                    <div class="demo-title">Glitch Art</div>
+                </div>
+            </div>
+
+            <!-- Babylon.js Demo 1 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="babylon-holo"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-babylon">Babylon.js</div>
+                    <div class="demo-title">Hologram Cube</div>
+                </div>
+            </div>
+
+            <!-- Babylon.js Demo 2 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="babylon-particles"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-babylon">Babylon.js</div>
+                    <div class="demo-title">Particle Burst</div>
+                </div>
+            </div>
+
+            <!-- D3.js Demo 1 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper" id="d3-network"></div>
+                <div class="demo-info">
+                    <div class="library-badge badge-d3">D3.js</div>
+                    <div class="demo-title">Network Graph</div>
+                </div>
+            </div>
+
+            <!-- D3.js Demo 2 -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper" id="d3-dataflow"></div>
+                <div class="demo-info">
+                    <div class="library-badge badge-d3">D3.js</div>
+                    <div class="demo-title">Data Stream</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+
+        // Three.js Demo 1: Matrix Rain
+        {
+            const canvas = document.getElementById('three-matrix');
+            const parentWidth = canvas.parentElement.clientWidth;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 15;
+
+            const particles = new THREE.BufferGeometry();
+            const particleCount = 500;
+            const positions = new Float32Array(particleCount * 3);
+            const velocities = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 30;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+                velocities.push(Math.random() * 0.1 + 0.05);
+            }
+
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0x00ff00,
+                size: 0.2,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particleSystem = new THREE.Points(particles, material);
+            scene.add(particleSystem);
+
+            function animateMatrix() {
+                requestAnimationFrame(animateMatrix);
+
+                const positions = particleSystem.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3 + 1] -= velocities[i];
+                    if (positions[i * 3 + 1] < -15) {
+                        positions[i * 3 + 1] = 15;
+                    }
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+                particleSystem.rotation.y += 0.001;
+
+                renderer.render(scene, camera);
+            }
+            animateMatrix();
+        }
+
+        // Three.js Demo 2: Neon Wireframe
+        {
+            const canvas = document.getElementById('three-wireframe');
+            const parentWidth = canvas.parentElement.clientWidth;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            const geometry = new THREE.IcosahedronGeometry(2, 0);
+            const edges = new THREE.EdgesGeometry(geometry);
+            const material = new THREE.LineBasicMaterial({
+                color: 0xff00ff,
+                linewidth: 2
+            });
+            const wireframe = new THREE.LineSegments(edges, material);
+            scene.add(wireframe);
+
+            const innerGeometry = new THREE.IcosahedronGeometry(1.5, 0);
+            const innerEdges = new THREE.EdgesGeometry(innerGeometry);
+            const innerMaterial = new THREE.LineBasicMaterial({
+                color: 0x00ffff,
+                linewidth: 2
+            });
+            const innerWireframe = new THREE.LineSegments(innerEdges, innerMaterial);
+            scene.add(innerWireframe);
+
+            function animateWireframe() {
+                requestAnimationFrame(animateWireframe);
+                wireframe.rotation.x += 0.01;
+                wireframe.rotation.y += 0.01;
+                innerWireframe.rotation.x -= 0.015;
+                innerWireframe.rotation.y -= 0.015;
+                renderer.render(scene, camera);
+            }
+            animateWireframe();
+        }
+    </script>
+
+    <!-- Zdog -->
+    <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+    <script>
+        // Zdog Demo 1: Crystal
+        {
+            const canvas = document.getElementById('zdog-crystal');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 280;
+
+            const illo = new Zdog.Illustration({
+                element: canvas,
+                zoom: 3,
+                dragRotate: true,
+            });
+
+            const crystal = new Zdog.Anchor({
+                addTo: illo,
+            });
+
+            // Create diamond/crystal shape
+            const colors = ['#ec4899', '#8b5cf6', '#06b6d4', '#f59e0b'];
+
+            for (let i = 0; i < 4; i++) {
+                new Zdog.Cone({
+                    addTo: crystal,
+                    diameter: 40,
+                    length: 50,
+                    stroke: false,
+                    color: colors[i],
+                    fill: true,
+                    rotate: { y: (Math.PI / 2) * i },
+                });
+            }
+
+            new Zdog.Cone({
+                addTo: crystal,
+                diameter: 40,
+                length: 30,
+                stroke: false,
+                color: '#ec4899',
+                fill: true,
+                rotate: { x: Math.PI },
+            });
+
+            function animateCrystal() {
+                illo.rotate.y += 0.02;
+                illo.rotate.x = Math.sin(Date.now() * 0.001) * 0.3;
+                illo.updateRenderGraph();
+                requestAnimationFrame(animateCrystal);
+            }
+            animateCrystal();
+        }
+
+        // Zdog Demo 2: Isometric City
+        {
+            const canvas = document.getElementById('zdog-city');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 280;
+
+            const illo = new Zdog.Illustration({
+                element: canvas,
+                zoom: 1.8,
+                rotate: { x: -0.6, y: 0.6 },
+            });
+
+            // Create buildings
+            const buildings = [
+                { x: -40, z: -40, h: 50, color: '#3b82f6' },
+                { x: 0, z: -40, h: 35, color: '#8b5cf6' },
+                { x: 40, z: -40, h: 45, color: '#ec4899' },
+                { x: -40, z: 0, h: 40, color: '#06b6d4' },
+                { x: 0, z: 0, h: 60, color: '#f59e0b' },
+                { x: 40, z: 0, h: 30, color: '#10b981' },
+                { x: -40, z: 40, h: 48, color: '#8b5cf6' },
+                { x: 0, z: 40, h: 35, color: '#3b82f6' },
+                { x: 40, z: 40, h: 42, color: '#ec4899' },
+            ];
+
+            buildings.forEach(b => {
+                new Zdog.Box({
+                    addTo: illo,
+                    width: 28,
+                    height: b.h,
+                    depth: 28,
+                    translate: { x: b.x, y: 0, z: b.z },
+                    stroke: 2,
+                    color: b.color,
+                    fill: true,
+                    leftFace: b.color,
+                    rightFace: b.color,
+                    topFace: '#ffffff',
+                    bottomFace: '#000000',
+                });
+            });
+
+            illo.updateRenderGraph();
+
+            function animateCity() {
+                illo.rotate.y += 0.005;
+                illo.updateRenderGraph();
+                requestAnimationFrame(animateCity);
+            }
+            animateCity();
+        }
+    </script>
+
+    <!-- P5.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script>
+        // P5.js Demo 1: Neural Network
+        const neuralSketch = (p) => {
+            let nodes = [];
+            let connections = [];
+
+            p.setup = () => {
+                const container = document.getElementById('p5-neural');
+                const canvas = p.createCanvas(container.clientWidth, 280);
+                canvas.parent('p5-neural');
+
+                // Create nodes
+                for (let i = 0; i < 30; i++) {
+                    nodes.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        vx: p.random(-0.5, 0.5),
+                        vy: p.random(-0.5, 0.5),
+                    });
+                }
+            };
+
+            p.draw = () => {
+                p.background(10);
+
+                // Update and draw nodes
+                nodes.forEach(node => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    if (node.x < 0 || node.x > p.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > p.height) node.vy *= -1;
+
+                    p.fill(139, 92, 246);
+                    p.noStroke();
+                    p.circle(node.x, node.y, 6);
+                });
+
+                // Draw connections
+                p.stroke(139, 92, 246, 30);
+                p.strokeWeight(1);
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const d = p.dist(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+                        if (d < 100) {
+                            p.line(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+                        }
+                    }
+                }
+            };
+        };
+
+        // P5.js Demo 2: Glitch Art
+        const glitchSketch = (p) => {
+            let offset = 0;
+
+            p.setup = () => {
+                const container = document.getElementById('p5-glitch');
+                const canvas = p.createCanvas(container.clientWidth, 280);
+                canvas.parent('p5-glitch');
+            };
+
+            p.draw = () => {
+                p.background(10);
+
+                p.push();
+                p.translate(p.width / 2, p.height / 2);
+
+                for (let i = 0; i < 20; i++) {
+                    p.push();
+                    p.rotate(offset + i * 0.2);
+
+                    // RGB shift effect
+                    p.fill(255, 0, 0, 50);
+                    p.rect(0, 0, 100 + i * 5, 5);
+
+                    p.fill(0, 255, 0, 50);
+                    p.rect(2, 0, 100 + i * 5, 5);
+
+                    p.fill(0, 0, 255, 50);
+                    p.rect(-2, 0, 100 + i * 5, 5);
+
+                    p.pop();
+                }
+
+                p.pop();
+
+                offset += 0.02;
+
+                // Random glitch bars
+                if (p.random() > 0.95) {
+                    p.fill(255, 0, 255, 150);
+                    p.noStroke();
+                    p.rect(0, p.random(p.height), p.width, 2);
+                }
+            };
+        };
+
+        new p5(neuralSketch);
+        new p5(glitchSketch);
+    </script>
+
+    <!-- Babylon.js -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script>
+        // Babylon.js Demo 1: Hologram
+        {
+            const canvas = document.getElementById('babylon-holo');
+            const engine = new BABYLON.Engine(canvas, true);
+
+            const createScene = () => {
+                const scene = new BABYLON.Scene(engine);
+                scene.clearColor = new BABYLON.Color4(0.04, 0.04, 0.04, 1);
+
+                const camera = new BABYLON.ArcRotateCamera(
+                    "camera",
+                    0, 1, 10,
+                    BABYLON.Vector3.Zero(),
+                    scene
+                );
+
+                const box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
+
+                const material = new BABYLON.StandardMaterial("material", scene);
+                material.emissiveColor = new BABYLON.Color3(0, 1, 1);
+                material.wireframe = true;
+                box.material = material;
+
+                // Animate
+                scene.registerBeforeRender(() => {
+                    box.rotation.y += 0.01;
+                    box.rotation.x += 0.005;
+
+                    // Pulse effect
+                    const scale = 1 + Math.sin(Date.now() * 0.002) * 0.1;
+                    box.scaling = new BABYLON.Vector3(scale, scale, scale);
+                });
+
+                return scene;
+            };
+
+            const scene = createScene();
+
+            // Properly size the canvas
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 280;
+            engine.resize();
+
+            engine.runRenderLoop(() => scene.render());
+        }
+
+        // Babylon.js Demo 2: Particles
+        {
+            const canvas = document.getElementById('babylon-particles');
+            const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+
+            const createScene = () => {
+                const scene = new BABYLON.Scene(engine);
+                scene.clearColor = new BABYLON.Color4(0.04, 0.04, 0.04, 1);
+
+                const camera = new BABYLON.ArcRotateCamera(
+                    "camera",
+                    0, Math.PI / 3, 10,
+                    BABYLON.Vector3.Zero(),
+                    scene
+                );
+
+                const particleSystem = new BABYLON.ParticleSystem("particles", 1500, scene);
+                particleSystem.particleTexture = new BABYLON.Texture(
+                    "https://www.babylonjs-playground.com/textures/flare.png",
+                    scene
+                );
+
+                particleSystem.emitter = new BABYLON.Vector3(0, -2, 0);
+                particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, 0, -0.5);
+                particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0, 0.5);
+
+                particleSystem.color1 = new BABYLON.Color4(0.1, 0.9, 0.3, 1.0);
+                particleSystem.color2 = new BABYLON.Color4(0.2, 1.0, 0.6, 1.0);
+                particleSystem.colorDead = new BABYLON.Color4(0, 0.2, 0, 0.0);
+
+                particleSystem.minSize = 0.2;
+                particleSystem.maxSize = 0.5;
+
+                particleSystem.minLifeTime = 0.8;
+                particleSystem.maxLifeTime = 2.0;
+
+                particleSystem.emitRate = 400;
+
+                particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+                particleSystem.gravity = new BABYLON.Vector3(0, -5, 0);
+
+                particleSystem.direction1 = new BABYLON.Vector3(-3, 10, -3);
+                particleSystem.direction2 = new BABYLON.Vector3(3, 12, 3);
+
+                particleSystem.minAngularSpeed = 0;
+                particleSystem.maxAngularSpeed = Math.PI;
+
+                particleSystem.minEmitPower = 3;
+                particleSystem.maxEmitPower = 6;
+                particleSystem.updateSpeed = 0.015;
+
+                particleSystem.start();
+
+                return scene;
+            };
+
+            const scene = createScene();
+
+            // Properly size the canvas
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 280;
+            engine.resize();
+
+            engine.runRenderLoop(() => scene.render());
+        }
+    </script>
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // D3.js Demo 1: Network Graph
+        {
+            const container = document.getElementById('d3-network');
+            const width = container.clientWidth;
+            const height = 280;
+
+            const svg = d3.select('#d3-network')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            const nodes = d3.range(20).map(i => ({ id: i }));
+            const links = d3.range(30).map(() => ({
+                source: Math.floor(Math.random() * 20),
+                target: Math.floor(Math.random() * 20)
+            }));
+
+            const simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(50))
+                .force('charge', d3.forceManyBody().strength(-100))
+                .force('center', d3.forceCenter(width / 2, height / 2));
+
+            const link = svg.append('g')
+                .selectAll('line')
+                .data(links)
+                .enter()
+                .append('line')
+                .attr('stroke', '#f59e0b')
+                .attr('stroke-opacity', 0.3)
+                .attr('stroke-width', 1);
+
+            const node = svg.append('g')
+                .selectAll('circle')
+                .data(nodes)
+                .enter()
+                .append('circle')
+                .attr('r', 4)
+                .attr('fill', '#fbbf24');
+
+            simulation.on('tick', () => {
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+            });
+        }
+
+        // D3.js Demo 2: Data Stream
+        {
+            const container = document.getElementById('d3-dataflow');
+            const width = container.clientWidth;
+            const height = 280;
+
+            const svg = d3.select('#d3-dataflow')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            const data = d3.range(50).map(() => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                r: Math.random() * 3 + 1
+            }));
+
+            const circles = svg.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr('r', d => d.r)
+                .attr('fill', '#f59e0b')
+                .attr('opacity', 0.6);
+
+            function animate() {
+                data.forEach(d => {
+                    d.x += d.vx;
+                    d.y += d.vy;
+
+                    if (d.x < 0 || d.x > width) d.vx *= -1;
+                    if (d.y < 0 || d.y > height) d.vy *= -1;
+                });
+
+                circles
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
