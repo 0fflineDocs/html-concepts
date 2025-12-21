@@ -1,7 +1,2 @@
-# My Design Portfolio
-
-This repo contains HTML/CSS design explorations.
-
-## Design Gallery
-## How to use
-Just add a new folder to /designs!
+> *"Design is not just what it looks like and feels like. Design is how it works."*  
+> — Steve Jobs
