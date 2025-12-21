@@ -1,45 +1,65 @@
 import os
+import re
 
-# Configuration
 DESIGNS_DIR = "designs"
-OUTPUT_FILE = "index.html"
+INDEX_FILE = "index.html"
+README_FILE = "README.md"
 
-def generate_index():
-    links_html = ""
+def get_metadata(html_path):
+    """Extracts title and a custom description comment from HTML."""
+    with open(html_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+        
+    # Find <title>Text</title>
+    title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE)
+    title = title_match.group(1) if title_match else "Untitled Design"
     
-    # Sort folders by name (or date)
+    # Find desc_match = re.search(r'', content)
+    description = desc_match.group(1) if desc_match else "No description provided."
+    
+    return title, description
+
+def update_readme(links_markdown):
+    """Replaces content between two markers in README.md."""
+    start_marker = ""
+    end_marker = ""
+    
+    with open(README_FILE, 'r') as f:
+        readme_content = f.read()
+
+    pattern = f"{start_marker}.*?{end_marker}"
+    replacement = f"{start_marker}\n{links_markdown}\n{end_marker}"
+    
+    new_content = re.sub(pattern, replacement, readme_content, flags=re.DOTALL)
+    
+    with open(README_FILE, 'w') as f:
+        f.write(new_content)
+
+def main():
+    if not os.path.exists(DESIGNS_DIR):
+        return
+
+    html_list_items = ""
+    markdown_list_items = ""
+    
     folders = sorted([f for f in os.listdir(DESIGNS_DIR) if os.path.isdir(os.path.join(DESIGNS_DIR, f))])
 
     for folder in folders:
-        display_name = folder.replace("-", " ").title()
         path = f"{DESIGNS_DIR}/{folder}/index.html"
-        links_html += f'<li><a href="{path}">{display_name}</a></li>\n'
+        if os.path.exists(path):
+            title, desc = get_metadata(path)
+            
+            # For the website (index.html)
+            html_list_items += f'<li><a href="{path}">{title}</a> - {desc}</li>\n'
+            
+            # For the README.md
+            markdown_list_items += f"* [{title}]({path}) - {desc}\n"
 
-    # The HTML template
-    html_content = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Design Gallery</title>
-        <style>
-            body {{ font-family: sans-serif; padding: 2rem; line-height: 1.6; }}
-            ul {{ list-style: none; padding: 0; }}
-            li {{ margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }}
-            a {{ text-decoration: none; color: #007bff; font-weight: bold; font-size: 1.2rem; }}
-            a:hover {{ text-decoration: underline; }}
-        </style>
-    </head>
-    <body>
-        <h1>My Design Explorations</h1>
-        <ul>
-            {links_html}
-        </ul>
-    </body>
-    </html>
-    """
+    # Save index.html (the code from the previous step goes here)
+    # ... [Insert the HTML template logic from the previous reply] ...
 
-    with open(OUTPUT_FILE, "w") as f:
-        f.write(html_content)
+    # Update README
+    update_readme(markdown_list_items)
 
 if __name__ == "__main__":
-    generate_index()
+    main()
