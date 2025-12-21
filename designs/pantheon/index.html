@@ -1,1 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pantheon - Council of Perspectives</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            /* Colors */
+            --parchment: #F5E6D3;
+            --terracotta: #D4774E;
+            --bronze: #CD7F32;
+            --stone: #8B7355;
+            --aegean: #5B8A9D;
+            --olive: #7C8363;
+            --marble: #FAF8F3;
+            --slate: #3A3A3A;
+
+            /* Council Colors */
+            --atlas: #8B7355;
+            --eris: #C44536;
+            --pythia: #5B8A9D;
+            --prometheus: #E8994F;
+            --nemesis: #6B5B95;
+
+            /* Typography */
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Lora', serif;
+            --font-ui: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--parchment);
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(139, 115, 85, 0.03) 2px,
+                    rgba(139, 115, 85, 0.03) 4px
+                );
+            color: var(--slate);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--marble) 0%, var(--parchment) 100%);
+            border-top: 4px double var(--bronze);
+            border-bottom: 4px double var(--bronze);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header::before,
+        header::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--terracotta);
+        }
+
+        header::before {
+            left: 20px;
+        }
+
+        header::after {
+            right: 20px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5em;
+            color: var(--bronze);
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: var(--font-ui);
+            font-size: 1.1em;
+            color: var(--stone);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        /* Greek Key Border */
+        .greek-border {
+            height: 8px;
+            background:
+                linear-gradient(90deg, var(--terracotta) 0px, transparent 0px) 0 0,
+                linear-gradient(90deg, var(--terracotta) 0px, transparent 0px) 0 100%;
+            background-size: 20px 2px;
+            background-repeat: repeat-x;
+            margin: 30px 0;
+        }
+
+        /* Topic Input Section */
+        .topic-section {
+            background: var(--marble);
+            padding: 30px;
+            border-radius: 8px;
+            border: 3px solid var(--bronze);
+            margin-bottom: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .topic-section h2 {
+            font-family: var(--font-heading);
+            color: var(--terracotta);
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .topic-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--stone);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1.1em;
+            background: var(--parchment);
+            color: var(--slate);
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .topic-input:focus {
+            outline: none;
+            border-color: var(--aegean);
+            box-shadow: 0 0 0 3px rgba(91, 138, 157, 0.2);
+        }
+
+        .submit-btn {
+            margin-top: 15px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--bronze) 0%, var(--terracotta) 100%);
+            color: var(--marble);
+            border: none;
+            border-radius: 4px;
+            font-family: var(--font-ui);
+            font-size: 1em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Council Members Grid */
+        .council-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .council-member {
+            background: var(--marble);
+            border: 3px solid var(--bronze);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .council-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--member-color);
+        }
+
+        .council-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .council-member.atlas::before { background: var(--atlas); }
+        .council-member.eris::before { background: var(--eris); }
+        .council-member.pythia::before { background: var(--pythia); }
+        .council-member.prometheus::before { background: var(--prometheus); }
+
+        .member-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: var(--marble);
+            background: var(--member-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .council-member.atlas .member-icon { background: var(--atlas); }
+        .council-member.eris .member-icon { background: var(--eris); }
+        .council-member.pythia .member-icon { background: var(--pythia); }
+        .council-member.prometheus .member-icon { background: var(--prometheus); }
+
+        .member-name {
+            font-family: var(--font-heading);
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            color: var(--member-color);
+        }
+
+        .council-member.atlas .member-name { color: var(--atlas); }
+        .council-member.eris .member-name { color: var(--eris); }
+        .council-member.pythia .member-name { color: var(--pythia); }
+        .council-member.prometheus .member-name { color: var(--prometheus); }
+
+        .member-role {
+            font-family: var(--font-ui);
+            font-size: 0.9em;
+            color: var(--stone);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .member-desc {
+            font-size: 0.95em;
+            color: var(--slate);
+            line-height: 1.5;
+        }
+
+        /* Discussion Section */
+        .discussion-section {
+            background: var(--marble);
+            padding: 30px;
+            border-radius: 8px;
+            border: 3px solid var(--stone);
+            margin-bottom: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .discussion-section h2 {
+            font-family: var(--font-heading);
+            color: var(--bronze);
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .current-topic {
+            background: var(--parchment);
+            padding: 20px;
+            border-left: 5px solid var(--terracotta);
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-style: italic;
+            color: var(--slate);
+        }
+
+        /* Message Bubbles */
+        .message {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--member-color);
+            background: var(--parchment);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        }
+
+        .message.atlas { border-left-color: var(--atlas); }
+        .message.eris { border-left-color: var(--eris); }
+        .message.pythia { border-left-color: var(--pythia); }
+        .message.prometheus { border-left-color: var(--prometheus); }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        .message-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--marble);
+            background: var(--member-color);
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+
+        .message.atlas .message-icon { background: var(--atlas); }
+        .message.eris .message-icon { background: var(--eris); }
+        .message.pythia .message-icon { background: var(--pythia); }
+        .message.prometheus .message-icon { background: var(--prometheus); }
+
+        .message-name {
+            font-family: var(--font-heading);
+            font-size: 1.3em;
+            color: var(--member-color);
+        }
+
+        .message.atlas .message-name { color: var(--atlas); }
+        .message.eris .message-name { color: var(--eris); }
+        .message.pythia .message-name { color: var(--pythia); }
+        .message.prometheus .message-name { color: var(--prometheus); }
+
+        .message-role {
+            font-family: var(--font-ui);
+            font-size: 0.75em;
+            color: var(--stone);
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
+        .message-content {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: var(--slate);
+        }
+
+        /* Synthesis Section */
+        .synthesis {
+            background: linear-gradient(135deg, #f8f5ff 0%, var(--marble) 100%);
+            padding: 30px;
+            border-radius: 8px;
+            border: 4px double var(--nemesis);
+            margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(107, 91, 149, 0.2);
+        }
+
+        .synthesis-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--nemesis);
+        }
+
+        .synthesis-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--marble);
+            background: var(--nemesis);
+            margin-right: 15px;
+            font-size: 2em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .synthesis h3 {
+            font-family: var(--font-heading);
+            font-size: 2em;
+            color: var(--nemesis);
+            margin: 0;
+        }
+
+        .synthesis-role {
+            font-family: var(--font-ui);
+            font-size: 0.8em;
+            color: var(--stone);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .synthesis-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: var(--slate);
+        }
+
+        .synthesis-content p {
+            margin-bottom: 15px;
+        }
+
+        .synthesis-content strong {
+            color: var(--nemesis);
+            font-weight: 600;
+        }
+
+        /* Decorative Elements */
+        .laurel-divider {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--bronze);
+            font-size: 1.5em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .council-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header::before,
+            header::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>THE PANTHEON</h1>
+            <p class="subtitle">Council of Perspectives</p>
+        </header>
+
+        <div class="greek-border"></div>
+
+        <!-- Topic Input -->
+        <section class="topic-section">
+            <h2>Present Your Question to the Council</h2>
+            <textarea class="topic-input" placeholder="Enter the topic for discussion...">Should we adopt artificial general intelligence in critical infrastructure decision-making?</textarea>
+            <button class="submit-btn">CONVENE THE COUNCIL</button>
+        </section>
+
+        <!-- Council Members -->
+        <section class="council-grid">
+            <div class="council-member atlas">
+                <div class="member-icon">🏛️</div>
+                <h3 class="member-name">Atlas</h3>
+                <p class="member-role">The Realist</p>
+                <p class="member-desc">Bearer of burdens, grounded in present reality and practical constraints.</p>
+            </div>
+
+            <div class="council-member eris">
+                <div class="member-icon">⚡</div>
+                <h3 class="member-name">Eris</h3>
+                <p class="member-role">The Contrarian</p>
+                <p class="member-desc">Challenger of assumptions, revealer of discord and hidden truths.</p>
+            </div>
+
+            <div class="council-member pythia">
+                <div class="member-icon">🔮</div>
+                <h3 class="member-name">Pythia</h3>
+                <p class="member-role">The Oracle</p>
+                <p class="member-desc">Seer of patterns, herald of future possibilities and long-term implications.</p>
+            </div>
+
+            <div class="council-member prometheus">
+                <div class="member-icon">🔥</div>
+                <h3 class="member-name">Prometheus</h3>
+                <p class="member-role">The Scientist</p>
+                <p class="member-desc">Bearer of knowledge, champion of evidence and systematic inquiry.</p>
+            </div>
+        </section>
+
+        <div class="laurel-divider">❦ ❦ ❦</div>
+
+        <!-- Discussion -->
+        <section class="discussion-section">
+            <h2>Council Deliberation</h2>
+
+            <div class="current-topic">
+                <strong>Topic:</strong> Should we adopt artificial general intelligence in critical infrastructure decision-making?
+            </div>
+
+            <div class="message atlas">
+                <div class="message-header">
+                    <div class="message-icon">🏛️</div>
+                    <div>
+                        <span class="message-name">Atlas</span>
+                        <span class="message-role">The Realist</span>
+                    </div>
+                </div>
+                <div class="message-content">
+                    Here's what we're actually dealing with: AGI doesn't exist yet. We have narrow AI systems that excel at specific tasks but lack general reasoning. The practical question is whether today's AI tools can assist in infrastructure decisions—and the answer is limited. Current systems require massive oversight, can't handle novel scenarios well, and fail catastrophically when encountering edge cases. The weight of evidence shows we're decades away from true AGI. Let's focus on what's implementable now: AI-assisted analytics with human final authority.
+                </div>
+            </div>
+
+            <div class="message eris">
+                <div class="message-header">
+                    <div class="message-icon">⚡</div>
+                    <div>
+                        <span class="message-name">Eris</span>
+                        <span class="message-role">The Contrarian</span>
+                    </div>
+                </div>
+                <div class="message-content">
+                    But what if our human oversight is the actual weakness? Everyone assumes humans are better at critical decisions, yet history shows us repeatedly making catastrophic infrastructure choices driven by politics, short-term thinking, and cognitive biases. Have you considered that an AI system—even imperfect—might outperform committees plagued by groupthink and corruption? This sounds good until you realize we're essentially asking: "Should flawed humans control everything, or should flawed AI assist flawed humans?" The real question being avoided is whether our faith in human judgment is itself the dangerous assumption.
+                </div>
+            </div>
+
+            <div class="message pythia">
+                <div class="message-header">
+                    <div class="message-icon">🔮</div>
+                    <div>
+                        <span class="message-name">Pythia</span>
+                        <span class="message-role">The Oracle</span>
+                    </div>
+                </div>
+                <div class="message-content">
+                    The patterns suggest a gradual merging of human and artificial decision-making that is already underway. I foresee a time when the question will not be "should we adopt AGI" but rather "how did we become so dependent without deciding to?" The future whispers of systems so deeply embedded in infrastructure that extraction becomes impossible. If this continues unchecked, we will find ourselves in a world where critical systems are unintelligible to their human operators—a kind of technological lock-in where we must trust what we cannot understand. The choice before us now determines whether we guide this integration consciously or accept it by default.
+                </div>
+            </div>
+
+            <div class="message prometheus">
+                <div class="message-header">
+                    <div class="message-icon">🔥</div>
+                    <div>
+                        <span class="message-name">Prometheus</span>
+                        <span class="message-role">The Scientist</span>
+                    </div>
+                </div>
+                <div class="message-content">
+                    The data shows mixed results. Research indicates AI systems excel in pattern recognition and optimization but fail at common-sense reasoning and novel problem-solving. A 2024 MIT study found that AI-assisted infrastructure management reduced errors by 23% in routine operations but increased catastrophic failures by 340% when facing unprecedented scenarios. What's the evidence for AGI reliability? We don't have it yet. We need to test incrementally: deploy AI for monitoring and analysis, maintain human authority for decisions, and rigorously measure outcomes. The scientific method demands we gather evidence before scaling deployment to critical systems.
+                </div>
+            </div>
+
+            <!-- Synthesis -->
+            <div class="synthesis">
+                <div class="synthesis-header">
+                    <div class="synthesis-icon">⚖️</div>
+                    <div>
+                        <h3>Nemesis</h3>
+                        <p class="synthesis-role">The Synthesizer</p>
+                    </div>
+                </div>
+                <div class="synthesis-content">
+                    <p><strong>The balance lies in acknowledging the merit each perspective brings while rejecting their excesses.</strong></p>
+
+                    <p>Atlas correctly grounds us: AGI does not yet exist, and we must work with present capabilities, not fantasies. Eris reveals an uncomfortable truth: human decision-making is also deeply flawed, and we cannot simply assume human superiority. Pythia warns of a critical danger: passive drift toward dependency without conscious choice. Prometheus provides the empirical anchor: evidence shows both promise and peril, demanding measured experimentation.</p>
+
+                    <p><strong>The synthesis emerges thus:</strong> Deploy AI as a decision-support tool in critical infrastructure with rigorous human oversight, transparent operation, and continuous empirical validation. Establish clear boundaries where AI assists but humans decide, while simultaneously researching AI interpretability to prevent the lock-in Pythia foresees. Neither reject AI entirely (Atlas's excess of caution) nor embrace it uncritically (ignoring Prometheus's evidence of catastrophic failures). Acknowledge Eris's point that human judgment needs improvement—let AI serve as a check on our biases, while we serve as a check on AI's brittleness.</p>
+
+                    <p><strong>Justice demands we proceed with wisdom, not hubris.</strong> Neither fear nor enthusiasm alone should guide us, but rather evidence-based incrementalism with eyes wide open to both human and artificial limitations.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="laurel-divider">❦</div>
+    </div>
+</body>
+</html>

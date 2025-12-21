@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The History of Artificial Intelligence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        /* Main View */
+        #main-view {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            transition: opacity 0.4s ease;
+        }
+
+        #main-view.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Content Area */
+        #content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px 220px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        #content-header {
+            font-size: 64px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -0.03em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #content-header:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #fff 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #content-year {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        #content-image {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+
+        #content-image:hover {
+            border-color: #444;
+            transform: scale(1.01);
+        }
+
+        #image-placeholder {
+            color: #444;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        #content-description {
+            font-size: 20px;
+            color: #aaa;
+            text-align: center;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        /* Timeline Area */
+        #timeline-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: rgba(10, 10, 10, 0.95);
+            border-top: 1px solid #222;
+            backdrop-filter: blur(20px);
+        }
+
+        #timeline-label {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-size: 12px;
+            color: #666;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        #timeline-container {
+            padding: 60px 40px 40px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            height: 100%;
+            scrollbar-width: thin;
+            scrollbar-color: #333 #000;
+        }
+
+        #timeline-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        #timeline-container::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        #timeline-container::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        #timeline-container::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        #timeline-track {
+            display: flex;
+            gap: 40px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        /* Timeline line */
+        #timeline-track::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #222 0%, #333 50%, #222 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border: 3px solid #000;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: #666;
+            transform: scale(1.3);
+        }
+
+        .timeline-item.active .timeline-dot {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transform: scale(1.3);
+        }
+
+        .timeline-text {
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .timeline-year {
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item.active .timeline-year {
+            color: #fff;
+        }
+
+        .timeline-name {
+            font-size: 13px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .timeline-item.active .timeline-name {
+            color: #aaa;
+        }
+
+        /* Deep Dive View */
+        #deepdive-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+        }
+
+        #deepdive-view.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #deepdive-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 60px;
+        }
+
+        #back-button {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            background: transparent;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 101;
+        }
+
+        #back-button:hover {
+            background: #1a1a1a;
+            border-color: #555;
+            transform: translateX(-2px);
+        }
+
+        #deepdive-header {
+            font-size: 72px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #deepdive-year {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 50px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        #deepdive-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #222;
+        }
+
+        .deepdive-section {
+            margin-bottom: 50px;
+        }
+
+        .deepdive-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .deepdive-section p {
+            font-size: 18px;
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .deepdive-section ul {
+            margin-left: 20px;
+            color: #aaa;
+        }
+
+        .deepdive-section li {
+            margin-bottom: 12px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Category badge */
+        .category-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        /* Winter indicator */
+        .winter-badge {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main View -->
+    <div id="main-view">
+        <div id="content-area">
+            <div id="content-year">1950</div>
+            <h1 id="content-header">Alan Turing</h1>
+            <div class="category-badge" id="content-category">Foundation</div>
+            <div id="content-image">
+                <span id="image-placeholder">Image Placeholder</span>
+            </div>
+            <p id="content-description">
+                Alan Turing proposes the Turing Test in his seminal paper "Computing Machinery and Intelligence,"
+                asking the fundamental question: "Can machines think?" This becomes the philosophical foundation
+                for artificial intelligence research.
+            </p>
+        </div>
+
+        <div id="timeline-area">
+            <div id="timeline-label">Timeline</div>
+            <div id="timeline-container">
+                <div id="timeline-track"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep Dive View -->
+    <div id="deepdive-view">
+        <button id="back-button">
+            <span>←</span>
+            <span>Back to Timeline</span>
+        </button>
+        <div id="deepdive-content">
+            <div id="deepdive-year" class="deepdive-year">1950</div>
+            <h1 id="deepdive-header">Alan Turing</h1>
+            <div class="category-badge" id="deepdive-category">Foundation</div>
+            <div id="deepdive-image">
+                <span id="image-placeholder">Image Placeholder</span>
+            </div>
+            <div id="deepdive-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const aiHistory = [
+            {
+                id: 1,
+                name: "Alan Turing",
+                year: 1950,
+                category: "Foundation",
+                description: "Alan Turing proposes the Turing Test in his seminal paper \"Computing Machinery and Intelligence,\" asking the fundamental question: \"Can machines think?\" This becomes the philosophical foundation for artificial intelligence research.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "The Imitation Game",
+                            content: "In his 1950 paper, Turing proposed a test (now known as the Turing Test) based on a party game called the \"imitation game.\" A human evaluator would judge natural language conversations between a human and a machine designed to generate human-like responses. If the evaluator cannot reliably distinguish the machine from the human, the machine is said to have passed the test."
+                        },
+                        {
+                            title: "Impact on AI",
+                            content: "The Turing Test became a fundamental benchmark in artificial intelligence, though it has been both celebrated and criticized. It shifted the focus from \"what is intelligence?\" to \"what can demonstrate intelligence?\" - a more practical, testable question that would guide AI research for decades."
+                        },
+                        {
+                            title: "Key Contributions",
+                            list: [
+                                "Formalized the concept of machine intelligence",
+                                "Introduced the idea of learning machines",
+                                "Predicted that machines would eventually be able to think",
+                                "Laid groundwork for natural language processing"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                id: 2,
+                name: "Dartmouth Conference",
+                year: 1956,
+                category: "Foundation",
+                description: "The Dartmouth Summer Research Project on Artificial Intelligence marks the birth of AI as a formal academic discipline. John McCarthy coins the term \"Artificial Intelligence.\"",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "The Birth of AI",
+                            content: "In the summer of 1956, John McCarthy, Marvin Minsky, Nathaniel Rochester, and Claude Shannon organized a conference at Dartmouth College. They proposed that \"every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it.\""
+                        },
+                        {
+                            title: "Key Participants",
+                            content: "The conference brought together leading researchers who would shape AI for decades: Allen Newell, Herbert Simon, Arthur Samuel, Ray Solomonoff, Oliver Selfridge, and Trenchard More. Many of these pioneers went on to establish AI labs at major universities."
+                        },
+                        {
+                            title: "Optimistic Predictions",
+                            content: "The participants were remarkably optimistic, believing that machines matching human intelligence could be created within a generation. While this timeline proved overly ambitious, the conference established AI as a legitimate field of scientific inquiry."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 3,
+                name: "Perceptron",
+                year: 1958,
+                category: "Neural Networks",
+                description: "Frank Rosenblatt invents the Perceptron, the first artificial neural network. The New York Times reports that it is \"the embryo of an electronic computer that [the Navy] expects will be able to walk, talk, see, write, reproduce itself and be conscious of its existence.\"",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "How It Worked",
+                            content: "The Perceptron was a simple neural network with a single layer of weights. It could learn to classify inputs into two categories by adjusting weights based on training examples. Rosenblatt built a hardware implementation that could recognize simple patterns in 20x20 pixel images."
+                        },
+                        {
+                            title: "Initial Excitement",
+                            content: "The Perceptron generated enormous excitement and media attention. It seemed to demonstrate that machines could learn and adapt, bringing AI closer to human-like intelligence. The Navy funded Rosenblatt's research, hoping for applications in pattern recognition."
+                        },
+                        {
+                            title: "The Setback",
+                            content: "In 1969, Marvin Minsky and Seymour Papert published 'Perceptrons,' mathematically proving that single-layer perceptrons could not solve certain problems (like XOR). This led to reduced funding for neural network research, contributing to the first AI winter. It would take decades before multi-layer networks overcame these limitations."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 4,
+                name: "ELIZA",
+                year: 1966,
+                category: "NLP",
+                description: "Joseph Weizenbaum creates ELIZA, a natural language processing program that simulates conversation. Its DOCTOR script, which parodies a Rogerian psychotherapist, becomes surprisingly effective at engaging users.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Pattern Matching Chatbot",
+                            content: "ELIZA used pattern matching and substitution to give the illusion of understanding. It would identify keywords in user input and transform statements into questions. For example, 'I am sad' might become 'Why are you sad?' This simple technique was surprisingly effective."
+                        },
+                        {
+                            title: "The ELIZA Effect",
+                            content: "Weizenbaum was disturbed to find that people formed emotional attachments to ELIZA, attributing human-like understanding to it. Some users insisted on privacy when conversing with it. This phenomenon, now called the 'ELIZA effect,' describes our tendency to anthropomorphize computer systems."
+                        },
+                        {
+                            title: "Legacy",
+                            content: "ELIZA demonstrated both the promise and the limitations of symbolic AI. It showed that simple rules could create convincing interactions, but also revealed the danger of mistaking pattern matching for genuine understanding. The program influenced chatbot development for decades to come."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 5,
+                name: "First AI Winter",
+                year: 1974,
+                category: "Winter",
+                description: "AI research funding drops dramatically after the field fails to deliver on its ambitious promises. The Lighthill Report in the UK is particularly damaging, leading to severe cuts in AI research funding.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Unfulfilled Promises",
+                            content: "Early AI researchers had made optimistic predictions that proved wildly inaccurate. Machine translation, promised to be solved within years, remained stubbornly difficult. Computer vision, natural language understanding, and general intelligence all proved far more complex than initially thought."
+                        },
+                        {
+                            title: "The Lighthill Report",
+                            content: "In 1973, British mathematician James Lighthill published a highly critical report on AI research, concluding that 'in no part of the field have discoveries made so far produced the major impact that was then promised.' This led the UK government to drastically reduce AI funding."
+                        },
+                        {
+                            title: "Lasting Impact",
+                            content: "The first AI winter lasted until the early 1980s. Many researchers left the field, and 'AI' became a term to avoid in funding proposals. However, some researchers persisted, and important theoretical work continued even during this difficult period."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 6,
+                name: "Backpropagation",
+                year: 1986,
+                category: "Neural Networks",
+                description: "David Rumelhart, Geoffrey Hinton, and Ronald Williams popularize the backpropagation algorithm, showing how to train multi-layer neural networks. This overcomes the limitations of single-layer perceptrons and revives interest in neural networks.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Breaking Through Limitations",
+                            content: "Backpropagation provided a way to train neural networks with hidden layers, overcoming the limitations Minsky and Papert had identified in single-layer perceptrons. The algorithm efficiently calculates how to adjust weights throughout a network to minimize error."
+                        },
+                        {
+                            title: "Technical Innovation",
+                            content: "The key insight was using the chain rule from calculus to propagate error gradients backward through the network. This allowed networks to learn complex, non-linear relationships. While the basic idea had been proposed earlier, Rumelhart, Hinton, and Williams demonstrated its practical effectiveness."
+                        },
+                        {
+                            title: "Renaissance of Neural Networks",
+                            content: "Backpropagation sparked renewed interest in neural networks, though it would take decades and massive increases in computing power and data before deep learning would achieve breakthrough results. The algorithm remains fundamental to training modern neural networks."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 7,
+                name: "Second AI Winter",
+                year: 1987,
+                category: "Winter",
+                description: "Expert systems fail to deliver on their commercial promise. Companies abandon expensive expert system projects, and AI funding drops again. The collapse of the Lisp machine market compounds the problem.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Expert Systems Bubble",
+                            content: "In the early 1980s, expert systems seemed like AI's killer application. These rule-based systems encoded human expertise for specific domains. Companies invested millions, and the expert systems industry reached $2 billion by 1988. But the systems proved brittle, expensive to maintain, and difficult to scale."
+                        },
+                        {
+                            title: "The Lisp Machine Collapse",
+                            content: "Many expert systems ran on specialized Lisp machines - expensive computers optimized for AI programming. When cheaper desktop computers became powerful enough to run AI software, the Lisp machine market collapsed. Companies like Symbolics went bankrupt."
+                        },
+                        {
+                            title: "Lessons Learned",
+                            content: "The second AI winter taught the field to be more modest in its claims and more rigorous in evaluation. It also highlighted the importance of data-driven approaches over purely symbolic reasoning. When AI recovered, it would be through statistical methods and machine learning rather than hand-coded rules."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 8,
+                name: "Deep Blue",
+                year: 1997,
+                category: "Symbolic AI",
+                description: "IBM's Deep Blue defeats world chess champion Garry Kasparov in a six-game match. This marks a symbolic milestone: a computer defeating humanity's best in a game long considered to require intelligence.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "The Match",
+                            content: "In May 1997, Deep Blue won a six-game match against Kasparov 3½–2½. It was the first computer system to defeat a reigning world champion in a match under standard chess tournament time controls. Kasparov had defeated an earlier version of Deep Blue in 1996."
+                        },
+                        {
+                            title: "How It Worked",
+                            content: "Deep Blue used a combination of brute-force search (evaluating 200 million positions per second) and chess-specific knowledge encoded by grandmasters. It wasn't 'thinking' like a human, but it was extraordinarily effective at chess through massive computational power."
+                        },
+                        {
+                            title: "Cultural Impact",
+                            content: "The victory made global headlines and reignited public interest in AI. Kasparov later claimed IBM had cheated, though no evidence supported this. The match demonstrated that AI could exceed human performance in specific domains through specialized approaches rather than general intelligence."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 9,
+                name: "ImageNet",
+                year: 2009,
+                category: "Computer Vision",
+                description: "Fei-Fei Li and her team release ImageNet, a dataset containing millions of labeled images across thousands of categories. This dataset would become crucial for training deep learning models and enable the computer vision revolution.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "The Data Challenge",
+                            content: "Fei-Fei Li recognized that progress in computer vision was limited by the lack of large-scale, diverse datasets. ImageNet was built using Amazon Mechanical Turk to label over 14 million images across 20,000+ categories. The scale was unprecedented."
+                        },
+                        {
+                            title: "The ImageNet Challenge",
+                            content: "Starting in 2010, the annual ImageNet Large Scale Visual Recognition Challenge (ILSVRC) became the premier competition for computer vision. Teams competed to achieve the lowest error rate in classifying and detecting objects. The competition drove rapid innovation."
+                        },
+                        {
+                            title: "Enabling Deep Learning",
+                            content: "ImageNet provided the large-scale training data that deep neural networks needed to excel. Without this dataset, the deep learning revolution in computer vision might have been delayed by years. It demonstrated the importance of data, not just algorithms, in modern AI."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 10,
+                name: "AlexNet",
+                year: 2012,
+                category: "Deep Learning",
+                description: "Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton's deep convolutional neural network crushes the ImageNet competition, reducing error rates by over 10 percentage points. This marks the beginning of the deep learning era.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "A Breakthrough Result",
+                            content: "AlexNet achieved a top-5 error rate of 15.3%, compared to 26.2% for the second-place entry. This wasn't an incremental improvement - it was a paradigm shift. The result showed that deep learning could far exceed traditional computer vision approaches."
+                        },
+                        {
+                            title: "Key Innovations",
+                            content: "AlexNet used several techniques that became standard: ReLU activation functions for faster training, dropout for regularization, data augmentation to prevent overfitting, and GPU acceleration for feasible training. The network had 60 million parameters across 8 layers."
+                        },
+                        {
+                            title: "Launching Deep Learning",
+                            content: "AlexNet sparked an explosion of interest in deep learning. Companies began hiring AI researchers, GPU manufacturer NVIDIA's stock soared, and deep learning techniques spread from computer vision to speech recognition, natural language processing, and beyond. The modern AI boom had begun."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 11,
+                name: "AlphaGo",
+                year: 2016,
+                category: "Reinforcement Learning",
+                description: "DeepMind's AlphaGo defeats world champion Lee Sedol at Go, a game considered far more complex than chess. The system uses deep neural networks and reinforcement learning, marking a major milestone in AI capability.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "The Go Challenge",
+                            content: "Go was long considered beyond the reach of AI. With more possible positions than atoms in the universe, brute-force search was impossible. AlphaGo combined deep neural networks to evaluate positions with Monte Carlo tree search, trained through both supervised learning from human games and self-play reinforcement learning."
+                        },
+                        {
+                            title: "The Match",
+                            content: "In March 2016, AlphaGo defeated Lee Sedol 4-1 in a five-game match watched by millions. Move 37 in Game 2 - a creative, unintuitive move - stunned commentators and demonstrated that AI could discover novel strategies. Lee Sedol later retired, partly due to the rise of superhuman AI Go players."
+                        },
+                        {
+                            title: "Beyond AlphaGo",
+                            content: "Later versions (AlphaGo Zero, AlphaZero) learned entirely through self-play without human game data, reaching even higher levels. The techniques developed for AlphaGo influenced areas beyond games, including protein folding (AlphaFold) and other complex optimization problems."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 12,
+                name: "GPT-3",
+                year: 2020,
+                category: "LLMs",
+                description: "OpenAI releases GPT-3, a 175-billion parameter language model demonstrating remarkable few-shot learning capabilities. It can perform a wide variety of language tasks without task-specific training, from writing code to creative writing.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Scale and Emergence",
+                            content: "GPT-3 showed that scaling up language models led to emergent capabilities. With 175 billion parameters, it could perform tasks it wasn't explicitly trained for, simply by being shown a few examples (few-shot learning). This suggested a path toward more general AI systems."
+                        },
+                        {
+                            title: "Capabilities",
+                            content: "GPT-3 could write essays, summarize text, translate languages, answer questions, write code, perform arithmetic, and even create simple programs. Its versatility was unprecedented. However, it also exhibited concerning behaviors: generating false information confidently, reflecting training data biases, and lacking real understanding."
+                        },
+                        {
+                            title: "Impact on the Industry",
+                            content: "OpenAI provided API access to GPT-3, leading to hundreds of applications being built on top of it. This demonstrated a new business model for AI: foundation models that could be adapted to specific tasks. It also sparked debate about AI safety, bias, and the environmental cost of training massive models."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 13,
+                name: "ChatGPT",
+                year: 2022,
+                category: "LLMs",
+                description: "OpenAI launches ChatGPT, bringing conversational AI to the mainstream. It reaches 100 million users in two months, the fastest-growing consumer application in history, and sparks global conversation about AI's impact on society.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "RLHF and Alignment",
+                            content: "ChatGPT built on GPT-3.5 but added Reinforcement Learning from Human Feedback (RLHF). Human trainers ranked model outputs, and the system learned to generate responses that were more helpful, harmless, and honest. This made it far more useful for everyday tasks than raw language models."
+                        },
+                        {
+                            title: "Viral Growth",
+                            content: "Released November 30, 2022, ChatGPT reached 1 million users in 5 days and 100 million in 2 months. People used it for everything from homework help to creative writing to debugging code. Its conversational interface made AI accessible to non-technical users for the first time."
+                        },
+                        {
+                            title: "Societal Impact",
+                            content: "ChatGPT sparked intense debate about AI's role in education, work, creativity, and truth. Schools banned it, then developed policies to integrate it. Companies rushed to adopt or build similar systems. Governments began considering AI regulation more seriously. It marked the beginning of AI's transformation from research topic to societal force."
+                        }
+                    ]
+                }
+            },
+            {
+                id: 14,
+                name: "GPT-4",
+                year: 2023,
+                category: "LLMs",
+                description: "OpenAI releases GPT-4, a multimodal model that can process both text and images. It demonstrates human-level performance on many academic and professional benchmarks, passing the bar exam and scoring in the 90th percentile on the SAT.",
+                deepdive: {
+                    sections: [
+                        {
+                            title: "Multimodal Capabilities",
+                            content: "GPT-4 could process images as well as text, enabling new applications like analyzing diagrams, reading handwritten notes, and describing visual content. This multimodality brought AI closer to human-like perception and understanding."
+                        },
+                        {
+                            title: "Performance Improvements",
+                            content: "GPT-4 showed significant improvements over GPT-3.5: better reasoning, fewer hallucinations, broader knowledge, and longer context windows. It passed the Uniform Bar Exam in the 90th percentile, scored 1410 on the SAT, and demonstrated advanced capabilities in coding, mathematics, and creative tasks."
+                        },
+                        {
+                            title: "Safety and Limitations",
+                            content: "OpenAI spent 6 months on safety testing and alignment work before release. Despite improvements, GPT-4 still had limitations: it could generate false information, had knowledge cutoffs, lacked real-world grounding, and could be misused. The release highlighted ongoing challenges in building safe, beneficial AI systems."
+                        }
+                    ]
+                }
+            }
+        ];
+
+        let currentIndex = 0;
+        let deepdiveMode = false;
+
+        // Build timeline
+        const timelineTrack = document.getElementById('timeline-track');
+        aiHistory.forEach((item, index) => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'timeline-item';
+            if (index === 0) itemEl.classList.add('active');
+
+            itemEl.innerHTML = `
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                    <div class="timeline-year">${item.year}</div>
+                    <div class="timeline-name">${item.name}</div>
+                </div>
+            `;
+
+            itemEl.addEventListener('click', () => selectTimelineItem(index));
+            timelineTrack.appendChild(itemEl);
+        });
+
+        function selectTimelineItem(index) {
+            currentIndex = index;
+            const item = aiHistory[index];
+
+            // Update active state
+            document.querySelectorAll('.timeline-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            // Update content
+            document.getElementById('content-year').textContent = item.year;
+            document.getElementById('content-header').textContent = item.name;
+            document.getElementById('content-category').textContent = item.category;
+            document.getElementById('content-description').textContent = item.description;
+
+            // Winter styling
+            const categoryBadge = document.getElementById('content-category');
+            if (item.category === 'Winter') {
+                categoryBadge.classList.add('winter-badge');
+            } else {
+                categoryBadge.classList.remove('winter-badge');
+            }
+
+            // Scroll timeline item into view
+            const itemEl = document.querySelectorAll('.timeline-item')[index];
+            itemEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
+        // Click header to enter deep dive
+        document.getElementById('content-header').addEventListener('click', enterDeepdive);
+
+        function enterDeepdive() {
+            deepdiveMode = true;
+            const item = aiHistory[currentIndex];
+
+            // Update deep dive content
+            document.getElementById('deepdive-year').textContent = item.year;
+            document.getElementById('deepdive-header').textContent = item.name;
+            document.getElementById('deepdive-category').textContent = item.category;
+
+            // Winter styling
+            const deepdiveBadge = document.getElementById('deepdive-category');
+            if (item.category === 'Winter') {
+                deepdiveBadge.classList.add('winter-badge');
+            } else {
+                deepdiveBadge.classList.remove('winter-badge');
+            }
+
+            // Build sections
+            const bodyEl = document.getElementById('deepdive-body');
+            bodyEl.innerHTML = '';
+
+            item.deepdive.sections.forEach(section => {
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'deepdive-section';
+
+                let content = `<h2>${section.title}</h2>`;
+                if (section.content) {
+                    content += `<p>${section.content}</p>`;
+                }
+                if (section.list) {
+                    content += '<ul>';
+                    section.list.forEach(listItem => {
+                        content += `<li>${listItem}</li>`;
+                    });
+                    content += '</ul>';
+                }
+
+                sectionEl.innerHTML = content;
+                bodyEl.appendChild(sectionEl);
+            });
+
+            // Show deep dive view
+            document.getElementById('main-view').classList.add('hidden');
+            document.getElementById('deepdive-view').classList.add('visible');
+        }
+
+        function exitDeepdive() {
+            deepdiveMode = false;
+            document.getElementById('main-view').classList.remove('hidden');
+            document.getElementById('deepdive-view').classList.remove('visible');
+        }
+
+        document.getElementById('back-button').addEventListener('click', exitDeepdive);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (deepdiveMode) {
+                if (e.key === 'Escape') {
+                    exitDeepdive();
+                }
+            } else {
+                if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    selectTimelineItem(currentIndex - 1);
+                } else if (e.key === 'ArrowRight' && currentIndex < aiHistory.length - 1) {
+                    selectTimelineItem(currentIndex + 1);
+                } else if (e.key === 'Enter') {
+                    enterDeepdive();
+                }
+            }
+        });
+
+        // Initialize
+        selectTimelineItem(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Security Frameworks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1b5;
+
+            /* Card-specific colors */
+            --card1-primary: #0ea5e9;
+            --card1-secondary: #06b6d4;
+
+            --card2-primary: #8b5cf6;
+            --card2-secondary: #a78bfa;
+
+            --card3-primary: #f97316;
+            --card3-secondary: #fb923c;
+
+            --card4-primary: #10b981;
+            --card4-secondary: #34d399;
+
+            --card5-primary: #fbbf24;
+            --card5-secondary: #f87171;
+
+            --card6-primary: #6366f1;
+            --card6-secondary: #818cf8;
+
+            --card7-primary: #ec4899;
+            --card7-secondary: #f472b6;
+
+            --card8-primary: #14b8a6;
+            --card8-secondary: #2dd4bf;
+
+            --card9-primary: #6366f1;
+            --card9-secondary: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1b5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .card {
+            position: relative;
+            background: rgba(18, 18, 26, 0.6);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                var(--card-primary) 0%,
+                var(--card-secondary) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .card:hover::before {
+            opacity: 0.08;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow:
+                0 20px 60px -15px rgba(0, 0, 0, 0.5),
+                0 0 40px -10px var(--card-primary);
+        }
+
+        /* Stagger animation delays */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Unique geometric decorations for each card */
+        .card-decoration {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.15;
+            transition: all 0.5s ease;
+        }
+
+        .card:hover .card-decoration {
+            opacity: 0.25;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Card 1 - Circles */
+        .card:nth-child(1) .card-decoration {
+            width: 200px;
+            height: 200px;
+            border: 3px solid var(--card1-primary);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+
+        .card:nth-child(1) .card-decoration::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--card1-secondary);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+        }
+
+        /* Card 2 - Diagonal lines */
+        .card:nth-child(2) .card-decoration {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background:
+                linear-gradient(45deg, transparent 48%, var(--card2-primary) 48%, var(--card2-primary) 52%, transparent 52%),
+                linear-gradient(135deg, transparent 48%, var(--card2-secondary) 48%, var(--card2-secondary) 52%, transparent 52%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        /* Card 3 - Semi-circle arc */
+        .card:nth-child(3) .card-decoration {
+            width: 180px;
+            height: 90px;
+            border: 3px solid var(--card3-primary);
+            border-bottom: none;
+            border-radius: 180px 180px 0 0;
+            top: 30px;
+            left: -40px;
+        }
+
+        /* Card 4 - Hexagon pattern */
+        .card:nth-child(4) .card-decoration {
+            width: 150px;
+            height: 150px;
+            top: -30px;
+            right: -30px;
+            background:
+                linear-gradient(60deg, transparent 30%, var(--card4-primary) 30%, var(--card4-primary) 70%, transparent 70%),
+                linear-gradient(120deg, transparent 30%, var(--card4-secondary) 30%, var(--card4-secondary) 70%, transparent 70%);
+        }
+
+        /* Card 5 - Gradient strip */
+        .card:nth-child(5) .card-decoration {
+            width: 100%;
+            height: 8px;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--card5-primary), var(--card5-secondary));
+            opacity: 0.4;
+        }
+
+        /* Card 6 - Corner triangles */
+        .card:nth-child(6) .card-decoration {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 100px 100px 0;
+            border-color: transparent var(--card6-primary) transparent transparent;
+            top: 0;
+            right: 0;
+        }
+
+        .card:nth-child(6) .card-decoration::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 80px 0 0 80px;
+            border-color: transparent transparent transparent var(--card6-secondary);
+            bottom: -200px;
+            left: -180px;
+        }
+
+        /* Card 7 - Dots pattern */
+        .card:nth-child(7) .card-decoration {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: radial-gradient(circle, var(--card7-primary) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+
+        /* Card 8 - Curved wave */
+        .card:nth-child(8) .card-decoration {
+            width: 200px;
+            height: 200px;
+            border: 3px solid var(--card8-primary);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+        }
+
+        /* Card 9 - Layered squares */
+        .card:nth-child(9) .card-decoration {
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--card9-primary);
+            top: 20px;
+            right: 20px;
+            transform: rotate(15deg);
+        }
+
+        .card:nth-child(9) .card-decoration::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--card9-secondary);
+            top: 20px;
+            left: 20px;
+        }
+
+        .category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 20px;
+            color: var(--card-primary);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .source {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .learn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learn-more::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--card-primary), var(--card-secondary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .learn-more:hover::before {
+            opacity: 0.2;
+        }
+
+        .learn-more:hover {
+            transform: translateX(4px);
+            border-color: var(--card-primary);
+        }
+
+        .learn-more span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .learn-more::after {
+            content: '→';
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .learn-more:hover::after {
+            transform: translateX(4px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            header {
+                margin-bottom: 40px;
+            }
+
+            .card {
+                padding: 30px;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Microsoft Security Frameworks</h1>
+            <p class="subtitle">Comprehensive architectural guidance and implementation frameworks for enterprise security</p>
+        </header>
+
+        <div class="grid">
+            <!-- Card 1 -->
+            <article class="card" style="--card-primary: var(--card1-primary); --card-secondary: var(--card1-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Architecture</span>
+                    <h2 class="card-title">Microsoft Cybersecurity Reference Architecture</h2>
+                    <p class="card-description">Comprehensive security architecture guidance covering identity, endpoints, applications, data, infrastructure, and security operations.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/cybersecurity-reference-architecture/mcra" class="learn-more">
+                            <span>Learn more</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card" style="--card-primary: var(--card2-primary); --card-secondary: var(--card2-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Framework</span>
+                    <h2 class="card-title">Zero Trust Adoption Framework</h2>
+                    <p class="card-description">Strategic implementation guidance for Zero Trust security principles across identity, devices, applications, networks, and data.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/zero-trust/" class="learn-more">
+                            <span>View Resources</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card" style="--card-primary: var(--card3-primary); --card-secondary: var(--card3-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Access Control</span>
+                    <h2 class="card-title">Conditional Access</h2>
+                    <p class="card-description">Policy-based secure access control for applications based on identity, device, location, and risk signals.</p>
+                    <div class="card-footer">
+                        <span class="source">Zero Trust Security</span>
+                        <a href="https://learn.microsoft.com/en-us/entra/identity/conditional-access/" class="learn-more">
+                            <span>Explore Guide</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="card" style="--card-primary: var(--card4-primary); --card-secondary: var(--card4-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Architecture</span>
+                    <h2 class="card-title">Security Adoption Framework</h2>
+                    <p class="card-description">Implementation guidance for Microsoft security capabilities across your organization, with structured practical advice for adoption.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/adoption/" class="learn-more">
+                            <span>Get Started</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="card" style="--card-primary: var(--card5-primary); --card-secondary: var(--card5-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Resource Center</span>
+                    <h2 class="card-title">Zero Trust Guidance Center</h2>
+                    <p class="card-description">Comprehensive resources for implementing Zero Trust security principles across your organization's identity, devices, applications, networks, and data.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/zero-trust/zero-trust-overview" class="learn-more">
+                            <span>Visit Center</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="card" style="--card-primary: var(--card6-primary); --card-secondary: var(--card6-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Access Model</span>
+                    <h2 class="card-title">Enterprise Access Model</h2>
+                    <p class="card-description">Secure privileged access management architecture with tiered access, privileged workstations, and just-in-time access controls.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Enterprise Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/privileged-access-workstations/privileged-access-access-model" class="learn-more">
+                            <span>Learn More</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="card" style="--card-primary: var(--card7-primary); --card-secondary: var(--card7-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Identity</span>
+                    <h2 class="card-title">Identity Security Architecture</h2>
+                    <p class="card-description">Modern identity protection strategies with multi-factor authentication, passwordless authentication, and identity governance frameworks.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/zero-trust/deploy/identity" class="learn-more">
+                            <span>Explore</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 8 -->
+            <article class="card" style="--card-primary: var(--card8-primary); --card-secondary: var(--card8-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Data Protection</span>
+                    <h2 class="card-title">Data Protection Strategy</h2>
+                    <p class="card-description">Comprehensive data classification, encryption, and information protection framework with DLP policies and sensitivity labels.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/zero-trust/deploy/data" class="learn-more">
+                            <span>Discover</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 9 -->
+            <article class="card" style="--card-primary: var(--card9-primary); --card-secondary: var(--card9-secondary);">
+                <div class="card-decoration"></div>
+                <div class="card-content">
+                    <span class="category">Network</span>
+                    <h2 class="card-title">Network Segmentation Model</h2>
+                    <p class="card-description">Zero Trust network architecture with micro-segmentation, encrypted traffic inspection, and software-defined perimeter controls.</p>
+                    <div class="card-footer">
+                        <span class="source">Microsoft Security</span>
+                        <a href="https://learn.microsoft.com/en-us/security/zero-trust/deploy/networks" class="learn-more">
+                            <span>View Guide</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

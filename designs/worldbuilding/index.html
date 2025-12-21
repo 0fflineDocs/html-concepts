@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worlds Beyond Imagination</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cinzel:wght@400;600;800&family=VT323&family=Courier+Prime:wght@400;700&family=Permanent+Marker&family=Raleway:wght@300;600&family=UnifrakturMaguntia&family=Oswald:wght@400;700&family=Monoton&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: #0d0d0d;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at top, rgba(75, 0, 130, 0.15), transparent),
+                radial-gradient(ellipse at bottom, rgba(0, 50, 80, 0.15), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.7s ease-out backwards;
+        }
+
+        /* CARD 1: NEON MEGACITY - Cyberpunk aesthetic */
+        .world-1 {
+            background: linear-gradient(180deg, #1a0033 0%, #0a0015 100%);
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3), inset 0 0 30px rgba(255, 0, 255, 0.1);
+            position: relative;
+        }
+
+        .world-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .world-1-inner {
+            padding: 40px;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 0, 255, 0.03) 2px,
+                rgba(255, 0, 255, 0.03) 4px
+            );
+        }
+
+        .world-1:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.6), 0 0 100px rgba(0, 255, 255, 0.3);
+        }
+
+        .world-1 .world-tag {
+            color: #00ffff;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 16px;
+            display: block;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .world-1 .world-name {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .world-1 .world-desc {
+            color: #d0d0ff;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+
+        .world-1 .explore-btn {
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 12px 28px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-1 .explore-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #00ffff;
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .world-1 .explore-btn:hover::before {
+            left: 0;
+        }
+
+        .world-1 .explore-btn:hover {
+            color: #0a0015;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        /* CARD 2: SKY KINGDOMS - Ethereal floating aesthetic */
+        .world-2 {
+            background: linear-gradient(180deg, #e0f2ff 0%, #bae6fd 100%);
+            padding: 50px;
+            font-family: 'Cinzel', serif;
+            border-radius: 30px;
+            border: none;
+            position: relative;
+            overflow: visible;
+        }
+
+        .world-2::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(186, 230, 253, 0.4));
+            border-radius: 30px;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        .world-2::after {
+            content: '☁';
+            position: absolute;
+            font-size: 4rem;
+            top: -20px;
+            right: 30px;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .world-2:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(56, 189, 248, 0.3);
+        }
+
+        .world-2 .world-tag {
+            color: #0369a1;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .world-2 .world-name {
+            font-size: 2rem;
+            color: #075985;
+            margin-bottom: 16px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .world-2 .world-desc {
+            font-family: 'Raleway', sans-serif;
+            color: #0c4a6e;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-2 .explore-btn {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.4s;
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        .world-2 .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.5);
+        }
+
+        /* CARD 3: RUST WASTES - Post-apocalyptic grunge */
+        .world-3 {
+            background:
+                linear-gradient(135deg, rgba(120, 53, 15, 0.3), rgba(217, 119, 6, 0.2)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.3"/></svg>');
+            background-color: #451a03;
+            padding: 40px;
+            font-family: 'Courier Prime', monospace;
+            border: 3px solid #92400e;
+            border-radius: 0;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .world-3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(217, 119, 6, 0.1) 10px,
+                rgba(217, 119, 6, 0.1) 20px
+            );
+            pointer-events: none;
+        }
+
+        .world-3:hover {
+            transform: rotate(-1deg) scale(1.02);
+            border-color: #d97706;
+        }
+
+        .world-3 .world-tag {
+            background: #dc2626;
+            color: #fef3c7;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+        }
+
+        .world-3 .world-name {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .world-3 .world-desc {
+            color: #fde68a;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .world-3 .explore-btn {
+            background: transparent;
+            border: 2px solid #fbbf24;
+            color: #fbbf24;
+            padding: 10px 24px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .world-3 .explore-btn:hover {
+            background: #fbbf24;
+            color: #451a03;
+            transform: translateX(5px);
+        }
+
+        /* CARD 4: ABYSSAL DEPTHS - Bioluminescent underwater */
+        .world-4 {
+            background: radial-gradient(ellipse at top, #0c1445 0%, #020617 100%);
+            padding: 45px;
+            font-family: 'Raleway', sans-serif;
+            backdrop-filter: blur(40px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-4::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .world-4::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -30px;
+            left: -30px;
+            animation: pulse 5s ease-in-out infinite 1s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .world-4:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(34, 211, 238, 0.4);
+        }
+
+        .world-4 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .world-4 .world-tag {
+            color: #22d3ee;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .world-4 .world-name {
+            font-size: 2.1rem;
+            background: linear-gradient(135deg, #22d3ee 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .world-4 .world-desc {
+            color: #bae6fd;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-4 .explore-btn {
+            background: rgba(34, 211, 238, 0.2);
+            border: 1px solid #22d3ee;
+            color: #22d3ee;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .world-4 .explore-btn:hover {
+            background: rgba(34, 211, 238, 0.4);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
+        }
+
+        /* CARD 5: COGWORK EMPIRE - Steampunk industrial */
+        .world-5 {
+            background: linear-gradient(135deg, #78350f 0%, #451a03 100%);
+            padding: 0;
+            font-family: 'UnifrakturMaguntia', cursive;
+            border: 4px double #d97706;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 0 30px rgba(217, 119, 6, 0.2);
+        }
+
+        .world-5-inner {
+            padding: 40px;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(217, 119, 6, 0.1) 3px,
+                    rgba(217, 119, 6, 0.1) 6px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(217, 119, 6, 0.1) 3px,
+                    rgba(217, 119, 6, 0.1) 6px
+                );
+        }
+
+        .world-5::before {
+            content: '⚙';
+            position: absolute;
+            font-size: 8rem;
+            top: -20px;
+            right: -20px;
+            opacity: 0.1;
+            animation: rotateGear 20s linear infinite;
+        }
+
+        @keyframes rotateGear {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .world-5:hover {
+            transform: scale(1.03);
+            box-shadow:
+                inset 0 0 40px rgba(217, 119, 6, 0.3),
+                0 15px 40px rgba(217, 119, 6, 0.4);
+        }
+
+        .world-5 .world-tag {
+            font-family: 'Oswald', sans-serif;
+            color: #fbbf24;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .world-5 .world-name {
+            font-size: 2.3rem;
+            color: #fcd34d;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .world-5 .world-desc {
+            font-family: 'Raleway', sans-serif;
+            color: #fde68a;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-weight: 300;
+        }
+
+        .world-5 .explore-btn {
+            font-family: 'Oswald', sans-serif;
+            background: #d97706;
+            color: #fef3c7;
+            padding: 12px 28px;
+            border: 2px solid #fbbf24;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .world-5 .explore-btn:hover {
+            background: #fbbf24;
+            color: #451a03;
+            border-color: #fcd34d;
+        }
+
+        /* CARD 6: GLACIAL CITADEL - Crystalline ice */
+        .world-6 {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+            padding: 45px;
+            font-family: 'Raleway', sans-serif;
+            border: 2px solid #bae6fd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-6::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(30deg, transparent 45%, rgba(56, 189, 248, 0.1) 45%, rgba(56, 189, 248, 0.1) 55%, transparent 55%),
+                linear-gradient(150deg, transparent 45%, rgba(186, 230, 253, 0.15) 45%, rgba(186, 230, 253, 0.15) 55%, transparent 55%);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .world-6:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 25px 50px rgba(14, 165, 233, 0.3);
+            border-color: #0ea5e9;
+        }
+
+        .world-6 .world-tag {
+            color: #0369a1;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .world-6 .world-name {
+            font-size: 2rem;
+            color: #075985;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+        }
+
+        .world-6 .world-desc {
+            color: #0c4a6e;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-6 .explore-btn {
+            background: transparent;
+            border: 2px solid #0ea5e9;
+            color: #075985;
+            padding: 11px 26px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+        }
+
+        .world-6 .explore-btn:hover {
+            background: #0ea5e9;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* CARD 7: PYROCLASM - Volcanic fire world */
+        .world-7 {
+            background:
+                linear-gradient(180deg, #7c2d12 0%, #1c0a00 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 5px,
+                    rgba(234, 88, 12, 0.1) 5px,
+                    rgba(234, 88, 12, 0.1) 10px
+                );
+            padding: 40px;
+            font-family: 'Permanent Marker', cursive;
+            border: none;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-7::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(0deg, rgba(234, 88, 12, 0.3) 0%, transparent 100%);
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .world-7:hover {
+            transform: scale(1.04);
+            box-shadow: 0 20px 60px rgba(234, 88, 12, 0.6), inset 0 0 50px rgba(234, 88, 12, 0.2);
+        }
+
+        .world-7 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .world-7 .world-tag {
+            background: linear-gradient(90deg, #dc2626, #ea580c);
+            color: #fff7ed;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .world-7 .world-name {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .world-7 .world-desc {
+            font-family: 'Raleway', sans-serif;
+            color: #fed7aa;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-7 .explore-btn {
+            font-family: 'Oswald', sans-serif;
+            background: linear-gradient(135deg, #f97316, #dc2626);
+            color: #fff7ed;
+            padding: 13px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.5);
+        }
+
+        .world-7 .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.7);
+        }
+
+        /* CARD 8: VERDANT WILDS - Enchanted forest */
+        .world-8 {
+            background: linear-gradient(135deg, #14532d 0%, #052e16 100%);
+            padding: 50px;
+            font-family: 'Cinzel', serif;
+            border-radius: 25px;
+            border: 2px solid #22c55e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-8::before {
+            content: '🌿';
+            position: absolute;
+            font-size: 10rem;
+            top: -30px;
+            left: -30px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .world-8::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(34, 197, 94, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .world-8:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(34, 197, 94, 0.4);
+            border-color: #4ade80;
+        }
+
+        .world-8 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .world-8 .world-tag {
+            color: #86efac;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 600;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .world-8 .world-name {
+            font-size: 2.2rem;
+            color: #d1fae5;
+            margin-bottom: 16px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .world-8 .world-desc {
+            font-family: 'Raleway', sans-serif;
+            color: #a7f3d0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-8 .explore-btn {
+            font-family: 'Raleway', sans-serif;
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+            color: #d1fae5;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.4s;
+        }
+
+        .world-8 .explore-btn:hover {
+            background: #22c55e;
+            color: #052e16;
+            transform: scale(1.05);
+        }
+
+        /* CARD 9: STELLAR NEXUS - Futuristic space station */
+        .world-9 {
+            background:
+                linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.95) 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/><circle cx="150" cy="30" r="1" fill="white" opacity="0.6"/><circle cx="100" cy="100" r="1.5" fill="white" opacity="0.9"/><circle cx="170" cy="150" r="1" fill="white" opacity="0.7"/><circle cx="30" cy="170" r="1" fill="white" opacity="0.5"/></svg>');
+            background-size: cover, 200px 200px;
+            padding: 45px;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid #334155;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .world-9::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .world-9:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.4);
+            border-color: #6366f1;
+        }
+
+        .world-9 > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .world-9 .world-tag {
+            color: #818cf8;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 400;
+        }
+
+        .world-9 .world-name {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            font-weight: 900;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .world-9 .world-desc {
+            font-family: 'Raleway', sans-serif;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .world-9 .explore-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .world-9 .explore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Animation delays */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+        .card:nth-child(5) { animation-delay: 0.3s; }
+        .card:nth-child(6) { animation-delay: 0.35s; }
+        .card:nth-child(7) { animation-delay: 0.4s; }
+        .card:nth-child(8) { animation-delay: 0.45s; }
+        .card:nth-child(9) { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 16px;
+            }
+
+            header {
+                margin-bottom: 50px;
+            }
+
+            .world-1-inner, .world-2, .world-3, .world-4, .world-5-inner,
+            .world-6, .world-7, .world-8, .world-9 {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Worlds Beyond Imagination</h1>
+            <p class="subtitle">Nine realms awaiting discovery — each with its own laws, cultures, and untold stories</p>
+        </header>
+
+        <div class="grid">
+            <!-- World 1: Neon Megacity -->
+            <article class="card world-1">
+                <div class="world-1-inner">
+                    <span class="world-tag">Cyberpunk</span>
+                    <h2 class="world-name">Neon Megacity</h2>
+                    <p class="world-desc">A sprawling metropolis where towering skyscrapers pierce acid rain clouds. Holographic advertisements flicker in perpetual twilight. Corporate syndicates rule from glass towers while hackers navigate the digital underworld, their consciousness merging with the vast neural network that powers civilization.</p>
+                    <a href="#" class="explore-btn">Enter Grid</a>
+                </div>
+            </article>
+
+            <!-- World 2: Sky Kingdoms -->
+            <article class="card world-2">
+                <span class="world-tag">Fantasy</span>
+                <h2 class="world-name">The Sky Kingdoms</h2>
+                <p class="world-desc">Floating islands drift through endless azure skies, connected by rainbow bridges and wind currents. Ancient academies of magic hover above the clouds, where scholars study the mysteries of levitation and storm-calling. Crystal spires capture sunlight, powering the archipelago's enchantments.</p>
+                <a href="#" class="explore-btn">Ascend</a>
+            </article>
+
+            <!-- World 3: Rust Wastes -->
+            <article class="card world-3">
+                <span class="world-tag">Post-Apocalyptic</span>
+                <h2 class="world-name">The Rust Wastes</h2>
+                <p class="world-desc">Endless dunes of rust and ash stretch beneath a dying sun. Scavengers pick through the bones of fallen war machines, seeking fuel and salvage. Nomadic clans traverse the wasteland in armored caravans, trading stories of the world before the collapse at fortified oases.</p>
+                <a href="#" class="explore-btn">Survive</a>
+            </article>
+
+            <!-- World 4: Abyssal Depths -->
+            <article class="card world-4">
+                <span class="world-tag">Sci-Fi Aquatic</span>
+                <h2 class="world-name">Abyssal Depths</h2>
+                <p class="world-desc">In the crushing darkness of an alien ocean, bioluminescent cities cling to thermal vents. Genetically adapted colonists commune with sentient deep-sea creatures. Pressure domes house laboratories where scientists unlock the secrets of the planet's primordial ecosystem.</p>
+                <a href="#" class="explore-btn">Dive Deep</a>
+            </article>
+
+            <!-- World 5: Cogwork Empire -->
+            <article class="card world-5">
+                <div class="world-5-inner">
+                    <span class="world-tag">Steampunk</span>
+                    <h2 class="world-name">Cogwork Empire</h2>
+                    <p class="world-desc">Brass gears turn endlessly in the great clockwork citadels. Steam locomotives thunder across continent-spanning rail networks. Inventors in leather goggles craft mechanical wonders in workshops filled with the scent of coal and oil, while airships navigate by astrolabe and compass.</p>
+                    <a href="#" class="explore-btn">Embark</a>
+                </div>
+            </article>
+
+            <!-- World 6: Glacial Citadel -->
+            <article class="card world-6">
+                <span class="world-tag">Fantasy Nordic</span>
+                <h2 class="world-name">Glacial Citadel</h2>
+                <p class="world-desc">Crystalline palaces rise from frozen tundra, their faceted walls refracting auroral light into prismatic rainbows. Ice mages shape glaciers into grand fortifications. Ancient frost giants slumber beneath the permafrost, their dreams influencing the eternal winter above.</p>
+                <a href="#" class="explore-btn">Journey North</a>
+            </article>
+
+            <!-- World 7: Pyroclasm -->
+            <article class="card world-7">
+                <span class="world-tag">High Fantasy</span>
+                <h2 class="world-name">Pyroclasm</h2>
+                <p class="world-desc">Rivers of molten rock carve through obsidian plains. Fire elementals dance in volcanic calderas, their forms shifting between solid and flame. Forge-priests channel geothermal power to shape legendary weapons, while phoenix riders patrol skies choked with ash and embers.</p>
+                <a href="#" class="explore-btn">Brave the Flames</a>
+            </article>
+
+            <!-- World 8: Verdant Wilds -->
+            <article class="card world-8">
+                <span class="world-tag">Mythic Nature</span>
+                <h2 class="world-name">The Verdant Wilds</h2>
+                <p class="world-desc">Ancient forests sprawl across continents, their canopy so dense the forest floor exists in perpetual twilight. Sentient trees whisper secrets in rustling leaves. Druidic circles maintain balance between civilization and the wild magic that pulses through every root and branch.</p>
+                <a href="#" class="explore-btn">Walk the Green Path</a>
+            </article>
+
+            <!-- World 9: Stellar Nexus -->
+            <article class="card world-9">
+                <span class="world-tag">Space Opera</span>
+                <h2 class="world-name">Stellar Nexus</h2>
+                <p class="world-desc">A colossal space station orbits a neutron star, serving as a crossroads for a thousand species. Trade vessels dock at rotating rings while diplomats negotiate in zero-gravity chambers. Jump gates flicker with exotic particles, connecting distant corners of the galaxy.</p>
+                <a href="#" class="explore-btn">Launch Sequence</a>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

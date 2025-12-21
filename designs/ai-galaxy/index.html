@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Thread of Intelligence - AI History Timeline</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        body:active {
+            cursor: grabbing;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* HUD Elements */
+        .hud {
+            position: fixed;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        #progress-hud {
+            top: 30px;
+            left: 30px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        #progress-bar {
+            width: 300px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #fbbf24);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        #year-display {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        #instructions {
+            top: 30px;
+            right: 30px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            text-align: right;
+            opacity: 0.6;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Info Card */
+        #info-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 600px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+
+        #info-card.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #info-card h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #info-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        #info-card .section {
+            margin-bottom: 20px;
+        }
+
+        #info-card .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8b5cf6;
+            margin-bottom: 8px;
+        }
+
+        #info-card p {
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        #close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: color 0.2s;
+        }
+
+        #close-btn:hover {
+            color: #fff;
+        }
+
+        /* Hover Tooltip */
+        #hover-tooltip {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 4px;
+            padding: 15px 20px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 150;
+            font-family: 'Rajdhani', sans-serif;
+            max-width: 300px;
+        }
+
+        #hover-tooltip.visible {
+            opacity: 1;
+        }
+
+        #hover-tooltip .year {
+            font-size: 12px;
+            color: #8b5cf6;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        #hover-tooltip .title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        #hover-tooltip .brief {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        #hover-tooltip .cta {
+            font-size: 11px;
+            color: #8b5cf6;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <!-- HUD -->
+    <div id="progress-hud" class="hud">
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <div id="year-display">1950</div>
+    </div>
+
+    <div id="instructions" class="hud">
+        SCROLL: Travel through time<br>
+        DRAG: Rotate view<br>
+        HOVER: Preview milestone<br>
+        CLICK: Deep dive
+    </div>
+
+    <!-- Hover Tooltip -->
+    <div id="hover-tooltip">
+        <div class="year"></div>
+        <div class="title"></div>
+        <div class="brief"></div>
+        <div class="cta">Click to explore →</div>
+    </div>
+
+    <!-- Info Card (Deep Dive) -->
+    <div id="info-card">
+        <button id="close-btn">&times;</button>
+        <h2 id="card-name"></h2>
+        <h3 id="card-title"></h3>
+        <div class="section">
+            <div class="section-title">Context</div>
+            <p id="card-context"></p>
+        </div>
+        <div class="section">
+            <div class="section-title">Breakthrough</div>
+            <p id="card-breakthrough"></p>
+        </div>
+        <div class="section">
+            <div class="section-title">Impact</div>
+            <p id="card-impact"></p>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        // Timeline Data
+        const milestones = [
+            {
+                year: 1950,
+                name: "Alan Turing",
+                title: "The Imitation Game",
+                brief: "Can machines think? Turing proposes a test that would define AI for generations.",
+                context: "Post-WWII era. Turing had just helped crack the Enigma code. Computers were room-sized calculators. The question seemed absurd: could they ever think?",
+                breakthrough: "Turing proposed the 'Imitation Game' - if a machine could convince a human it was human through conversation, it could be considered intelligent. This shifted the question from philosophy to engineering.",
+                impact: "Established the foundational question of AI. The Turing Test remains a cultural touchstone, even as modern AI makes us reconsider what 'intelligence' means."
+            },
+            {
+                year: 1956,
+                name: "Dartmouth Conference",
+                title: "Birth of Artificial Intelligence",
+                brief: "The term 'Artificial Intelligence' is coined. A new field is born.",
+                context: "Summer research project at Dartmouth College. John McCarthy, Marvin Minsky, Claude Shannon, and others gathered with boundless optimism.",
+                breakthrough: "First time researchers formally collaborated on machine intelligence. They believed human-level AI was just 20 years away. Named the field 'Artificial Intelligence'.",
+                impact: "Created AI as a distinct research field. Set ambitious goals that drove decades of research, even if the timeline was wildly optimistic."
+            },
+            {
+                year: 1957,
+                name: "Frank Rosenblatt",
+                title: "The Perceptron",
+                brief: "First neural network that could learn. A glimpse of the future.",
+                context: "Inspired by how neurons work in the brain. Built a physical machine with potentiometers as weights.",
+                breakthrough: "Created an algorithm that could learn to classify patterns by adjusting connection weights. Demonstrated at a press conference where it learned to distinguish left from right.",
+                impact: "Proved machines could learn from experience. Started the first wave of neural network research, though limitations would soon cause disappointment."
+            },
+            {
+                year: 1974,
+                name: "AI Winter Begins",
+                title: "The First Winter",
+                brief: "Funding dries up. Progress stalls. The dream seems dead.",
+                context: "Early AI promised too much, delivered too little. Systems were brittle, couldn't handle real-world complexity. The Lighthill Report criticized AI research.",
+                breakthrough: "Not a breakthrough, but a reckoning. Researchers learned AI was harder than expected. Combinatorial explosion, computational limits, and lack of common sense knowledge were real barriers.",
+                impact: "Funding collapsed. Many researchers left the field. But those who remained focused on narrower, achievable goals. Planted seeds for future success."
+            },
+            {
+                year: 1986,
+                name: "Backpropagation",
+                title: "Learning Deep Networks",
+                brief: "Rumelhart, Hinton, and Williams rediscover how to train neural networks with many layers.",
+                context: "Neural networks had fallen out of favor. Critics said they were too limited. Multi-layer networks existed but no one could train them effectively.",
+                breakthrough: "Backpropagation algorithm efficiently computes gradients through multiple layers. Suddenly, neural networks could learn complex representations.",
+                impact: "Revived neural network research. The technique still powers modern deep learning. But computers weren't powerful enough yet to show its full potential."
+            },
+            {
+                year: 1997,
+                name: "Deep Blue",
+                title: "Machine Defeats World Champion",
+                brief: "IBM's Deep Blue defeats Garry Kasparov at chess. Symbolic AI's greatest triumph.",
+                context: "Chess was considered the pinnacle of human intelligence. Kasparov was the greatest player alive. Deep Blue used brute force search to evaluate 200 million positions per second.",
+                breakthrough: "Not through learning or intuition, but through sheer computational power and clever pruning algorithms. Searched deeper than any human could.",
+                impact: "Proved machines could exceed human performance in complex domains. But also showed the limits of pure search - it was narrow, brittle, and didn't generalize."
+            },
+            {
+                year: 2012,
+                name: "Geoffrey Hinton",
+                title: "AlexNet & Deep Learning Revolution",
+                brief: "ImageNet breakthrough proves neural networks can see. Everything changes.",
+                context: "ImageNet competition challenged systems to identify objects in millions of images. Progress was slow. Then Hinton's team used deep neural networks on GPUs.",
+                breakthrough: "AlexNet won by a shocking margin: 15.3% error vs 26.2% for second place. Used deep convolutional networks, ReLU activations, dropout, and GPU training.",
+                impact: "Sparked the deep learning revolution. Every tech giant pivoted to invest in neural networks. Proved that with enough data and compute, deep learning works."
+            },
+            {
+                year: 2017,
+                name: "Vaswani et al.",
+                title: "Attention Is All You Need",
+                brief: "Transformers replace recurrence. The architecture that would power modern AI.",
+                context: "Recurrent networks dominated sequence tasks but were slow to train. They processed sequences step-by-step, limiting parallelization.",
+                breakthrough: "Introduced the Transformer architecture using self-attention mechanisms. Could process entire sequences in parallel. Scaled beautifully with more compute.",
+                impact: "Became the foundation for GPT, BERT, and all modern language models. Enabled training on unprecedented scales. Changed AI from brittle systems to fluid intelligence."
+            },
+            {
+                year: 2022,
+                name: "OpenAI",
+                title: "ChatGPT Launches",
+                brief: "AI enters mainstream consciousness. The world will never be the same.",
+                context: "GPT-3 had shown impressive capabilities but was clunky. OpenAI fine-tuned it with human feedback (RLHF) and launched a simple chat interface.",
+                breakthrough: "Made AI accessible to everyone. Natural conversation, helpful responses, creative writing. Reached 100 million users faster than any product in history.",
+                impact: "AI went from research labs to dinner tables. Sparked global conversation about AI's potential and risks. Every company scrambled to integrate AI. The age of foundation models began."
+            },
+            {
+                year: 2024,
+                name: "Anthropic, OpenAI, Google",
+                title: "The Age of Reasoning",
+                brief: "Modern AI systems can think, plan, and solve complex problems. The thread continues forward.",
+                context: "Foundation models evolved from simple pattern matching to genuine problem-solving. Claude, GPT-4, Gemini showed reasoning, coding, and analysis capabilities.",
+                breakthrough: "AI systems that can break down complex problems, consider multiple approaches, and explain their reasoning. Extended 'thinking' before responding improves performance.",
+                impact: "AI becomes a thinking partner, not just a tool. We're still discovering the implications. The thread of intelligence stretches into an uncertain but thrilling future."
+            }
+        ];
+
+        // Scene Setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Camera positioning
+        camera.position.set(0, 0, 5);
+
+        // Create neural network structure
+        const networkNodes = [];
+        const networkEdges = [];
+
+        // Define network structure with positions
+        const networkStructure = [
+            // Main trunk + branches
+            { id: 0, pos: [0, 0, 0], year: 1950 },      // Turing
+            { id: 1, pos: [0, 0.5, 5], year: 1956 },    // Dartmouth
+            { id: 2, pos: [0, 0, 10], year: 1957 },     // Perceptron
+
+            // Split: Symbolic AI branch (left)
+            { id: 3, pos: [-3, 1, 15], year: 1974 },    // AI Winter (symbolic path)
+            { id: 4, pos: [-4, 0.5, 20], year: null },  // Connector node
+
+            // Split: Neural Network branch (right)
+            { id: 5, pos: [3, -1, 15], year: 1986 },    // Backpropagation
+            { id: 6, pos: [4, -0.5, 20], year: null },  // Connector node
+
+            // Branches continue
+            { id: 7, pos: [-3, 0, 25], year: 1997 },    // Deep Blue (symbolic)
+            { id: 8, pos: [3, 0, 28], year: 2012 },     // AlexNet (neural)
+
+            // Convergence point
+            { id: 9, pos: [0, 0, 35], year: null },     // Merge point
+            { id: 10, pos: [0, 0, 40], year: 2017 },    // Transformers
+            { id: 11, pos: [0, 0, 45], year: 2022 },    // ChatGPT
+
+            // Final expansion
+            { id: 12, pos: [-2, 1, 50], year: 2024 },   // Branch 1
+            { id: 13, pos: [2, -1, 50], year: 2024 },   // Branch 2
+            { id: 14, pos: [0, 2, 52], year: 2024 },    // Branch 3
+        ];
+
+        // Define connections (edges)
+        const connections = [
+            [0, 1], [1, 2],           // Early main trunk
+            [2, 3], [2, 5],           // Split to symbolic and neural
+            [3, 4], [5, 6],           // Continue branches
+            [4, 7], [6, 8],           // Branch developments
+            [7, 9], [8, 9],           // Converge
+            [9, 10], [10, 11],        // Modern trunk
+            [11, 12], [11, 13], [11, 14], // Final expansion
+            [3, 5],                   // Cross-connection (AI winter affected both)
+            [4, 6],                   // Mid-level connection
+        ];
+
+        // Create network nodes
+        networkStructure.forEach(node => {
+            const position = new THREE.Vector3(...node.pos);
+            networkNodes.push({
+                id: node.id,
+                position: position,
+                year: node.year,
+                connections: []
+            });
+        });
+
+        // Create edges (synaptic connections)
+        connections.forEach(([startId, endId]) => {
+            const startNode = networkNodes[startId];
+            const endNode = networkNodes[endId];
+
+            // Create line geometry for connection
+            const points = [startNode.position, endNode.position];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+            const material = new THREE.LineBasicMaterial({
+                color: 0x8b5cf6,
+                transparent: true,
+                opacity: 0.3,
+                linewidth: 2
+            });
+
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            // Store edge data for animation
+            networkEdges.push({
+                start: startNode.position,
+                end: endNode.position,
+                line: line,
+                pulseOffset: Math.random() * Math.PI * 2
+            });
+
+            startNode.connections.push(endId);
+        });
+
+        // Create pulsing connection tubes (thicker glow)
+        connections.forEach(([startId, endId]) => {
+            const startNode = networkNodes[startId];
+            const endNode = networkNodes[endId];
+
+            const curve = new THREE.LineCurve3(startNode.position, endNode.position);
+            const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.05, 8, false);
+            const tubeMaterial = new THREE.MeshBasicMaterial({
+                color: 0x8b5cf6,
+                transparent: true,
+                opacity: 0.15
+            });
+            const tube = new THREE.Mesh(tubeGeometry, tubeMaterial);
+            scene.add(tube);
+        });
+
+        // Create milestone nodes (only for nodes with years)
+        const nodeMeshes = [];
+        const nodeData = [];
+        const milestoneMapping = [
+            { nodeId: 0, milestoneIndex: 0 },  // Turing
+            { nodeId: 1, milestoneIndex: 1 },  // Dartmouth
+            { nodeId: 2, milestoneIndex: 2 },  // Perceptron
+            { nodeId: 3, milestoneIndex: 3 },  // AI Winter
+            { nodeId: 5, milestoneIndex: 4 },  // Backpropagation
+            { nodeId: 7, milestoneIndex: 5 },  // Deep Blue
+            { nodeId: 8, milestoneIndex: 6 },  // AlexNet
+            { nodeId: 10, milestoneIndex: 7 }, // Transformers
+            { nodeId: 11, milestoneIndex: 8 }, // ChatGPT
+            { nodeId: 12, milestoneIndex: 9 }, // 2024
+        ];
+
+        milestoneMapping.forEach(mapping => {
+            const networkNode = networkNodes[mapping.nodeId];
+            const milestone = milestones[mapping.milestoneIndex];
+            const position = networkNode.position;
+
+            // Node sphere
+            const nodeGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+            const nodeMaterial = new THREE.MeshBasicMaterial({
+                color: 0xfbbf24,
+                transparent: true,
+                opacity: 0.9
+            });
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.copy(position);
+            scene.add(node);
+
+            // Inner glow
+            const glowGeometry = new THREE.SphereGeometry(0.35, 32, 32);
+            const glowMaterial = new THREE.MeshBasicMaterial({
+                color: 0xfbbf24,
+                transparent: true,
+                opacity: 0.25
+            });
+            const nodeGlow = new THREE.Mesh(glowGeometry, glowMaterial);
+            nodeGlow.position.copy(position);
+            scene.add(nodeGlow);
+
+            // Outer pulse
+            const pulseGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const pulseMaterial = new THREE.MeshBasicMaterial({
+                color: 0xfbbf24,
+                transparent: true,
+                opacity: 0.1
+            });
+            const nodePulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
+            nodePulse.position.copy(position);
+            scene.add(nodePulse);
+
+            nodeMeshes.push(node);
+            nodeData.push({
+                mesh: node,
+                glow: nodeGlow,
+                pulse: nodePulse,
+                milestone: milestone,
+                networkNode: networkNode
+            });
+        });
+
+        // Lightning particles (synaptic firing)
+        const lightningParticles = [];
+
+        function createLightningPulse(start, end) {
+            const geometry = new THREE.SphereGeometry(0.08, 8, 8);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x3baaff,
+                transparent: true,
+                opacity: 1.0
+            });
+            const particle = new THREE.Mesh(geometry, material);
+            particle.position.copy(start);
+
+            // Trail glow
+            const trailGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+            const trailMaterial = new THREE.MeshBasicMaterial({
+                color: 0x3baaff,
+                transparent: true,
+                opacity: 0.4
+            });
+            const trail = new THREE.Mesh(trailGeometry, trailMaterial);
+            trail.position.copy(start);
+
+            scene.add(particle);
+            scene.add(trail);
+
+            return {
+                particle: particle,
+                trail: trail,
+                start: start.clone(),
+                end: end.clone(),
+                progress: 0,
+                speed: 0.01 + Math.random() * 0.02,
+                active: true,
+                edge: null // Will store reference to edge being traveled
+            };
+        }
+
+        // Initialize some lightning pulses
+        for (let i = 0; i < 20; i++) {
+            const edgeIndex = Math.floor(Math.random() * networkEdges.length);
+            const edge = networkEdges[edgeIndex];
+            const pulse = createLightningPulse(edge.start, edge.end);
+            pulse.progress = Math.random(); // Random starting position
+            pulse.edgeIndex = edgeIndex;
+            lightningParticles.push(pulse);
+        }
+
+        // Lightning arcs (random electrical discharges between distant nodes)
+        const lightningArcs = [];
+
+        function createLightningArc() {
+            const node1 = networkNodes[Math.floor(Math.random() * networkNodes.length)];
+            const node2 = networkNodes[Math.floor(Math.random() * networkNodes.length)];
+
+            if (node1 === node2) return null;
+
+            // Create jagged lightning path
+            const segments = 8;
+            const points = [];
+            for (let i = 0; i <= segments; i++) {
+                const t = i / segments;
+                const pos = new THREE.Vector3().lerpVectors(node1.position, node2.position, t);
+
+                // Add randomness (except endpoints)
+                if (i > 0 && i < segments) {
+                    pos.x += (Math.random() - 0.5) * 0.5;
+                    pos.y += (Math.random() - 0.5) * 0.5;
+                    pos.z += (Math.random() - 0.5) * 0.5;
+                }
+                points.push(pos);
+            }
+
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({
+                color: 0x3bddff,
+                transparent: true,
+                opacity: 0,
+                linewidth: 3
+            });
+
+            const arc = new THREE.Line(geometry, material);
+            scene.add(arc);
+
+            return {
+                line: arc,
+                lifetime: 0,
+                maxLifetime: 0.3 + Math.random() * 0.5
+            };
+        }
+
+        // Spawn lightning arcs periodically
+        setInterval(() => {
+            if (Math.random() < 0.3) { // 30% chance every interval
+                const arc = createLightningArc();
+                if (arc) lightningArcs.push(arc);
+            }
+        }, 500);
+
+        // Star field background
+        const starsGeometry = new THREE.BufferGeometry();
+        const starPositions = [];
+
+        for (let i = 0; i < 5000; i++) {
+            const x = (Math.random() - 0.5) * 200;
+            const y = (Math.random() - 0.5) * 200;
+            const z = (Math.random() - 0.5) * 200;
+            starPositions.push(x, y, z);
+        }
+
+        starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3));
+        const starsMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.1,
+            transparent: true,
+            opacity: 0.6
+        });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
+
+        // Nebula particles
+        const nebulaGeometry = new THREE.BufferGeometry();
+        const nebulaPositions = [];
+        const nebulaColors = [];
+
+        for (let i = 0; i < 1000; i++) {
+            const x = (Math.random() - 0.5) * 100;
+            const y = (Math.random() - 0.5) * 100;
+            const z = (Math.random() - 0.5) * 100;
+            nebulaPositions.push(x, y, z);
+
+            // Purple-blue nebula colors
+            const color = new THREE.Color();
+            color.setHSL(0.7 + Math.random() * 0.1, 0.8, 0.5);
+            nebulaColors.push(color.r, color.g, color.b);
+        }
+
+        nebulaGeometry.setAttribute('position', new THREE.Float32BufferAttribute(nebulaPositions, 3));
+        nebulaGeometry.setAttribute('color', new THREE.Float32BufferAttribute(nebulaColors, 3));
+
+        const nebulaMaterial = new THREE.PointsMaterial({
+            size: 1.5,
+            transparent: true,
+            opacity: 0.15,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending
+        });
+        const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
+        scene.add(nebula);
+
+        // Interaction
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let hoveredNode = null;
+        let scrollProgress = 0;
+        let targetScrollProgress = 0;
+
+        // Mouse movement for camera rotation
+        let mouseX = 0;
+        let mouseY = 0;
+        let isDragging = false;
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            if (isDragging) {
+                mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
+            }
+
+            // Check for hover
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodeMeshes);
+
+            const tooltip = document.getElementById('hover-tooltip');
+
+            if (intersects.length > 0) {
+                const node = nodeData.find(n => n.mesh === intersects[0].object);
+                if (node && node !== hoveredNode) {
+                    hoveredNode = node;
+
+                    // Update tooltip
+                    tooltip.querySelector('.year').textContent = node.milestone.year;
+                    tooltip.querySelector('.title').textContent = node.milestone.title;
+                    tooltip.querySelector('.brief').textContent = node.milestone.brief;
+                    tooltip.style.left = event.clientX + 20 + 'px';
+                    tooltip.style.top = event.clientY + 20 + 'px';
+                    tooltip.classList.add('visible');
+
+                    // Enhance glow
+                    node.glow.material.opacity = 0.5;
+                    node.mesh.material.opacity = 1.0;
+                }
+            } else {
+                if (hoveredNode) {
+                    hoveredNode.glow.material.opacity = 0.2;
+                    hoveredNode.mesh.material.opacity = 0.8;
+                    hoveredNode = null;
+                }
+                tooltip.classList.remove('visible');
+            }
+        });
+
+        window.addEventListener('mousedown', () => {
+            isDragging = true;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Click to open info card
+        window.addEventListener('click', (event) => {
+            if (hoveredNode && !document.getElementById('info-card').classList.contains('visible')) {
+                const milestone = hoveredNode.milestone;
+
+                document.getElementById('card-name').textContent = milestone.name + ' • ' + milestone.year;
+                document.getElementById('card-title').textContent = milestone.title;
+                document.getElementById('card-context').textContent = milestone.context;
+                document.getElementById('card-breakthrough').textContent = milestone.breakthrough;
+                document.getElementById('card-impact').textContent = milestone.impact;
+
+                document.getElementById('info-card').classList.add('visible');
+                document.getElementById('hover-tooltip').classList.remove('visible');
+            }
+        });
+
+        document.getElementById('close-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('info-card').classList.remove('visible');
+        });
+
+        // Scroll navigation
+        window.addEventListener('wheel', (event) => {
+            targetScrollProgress += event.deltaY * 0.0003;
+            targetScrollProgress = Math.max(0, Math.min(1, targetScrollProgress));
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Camera path through network (follow main trunk)
+        const cameraPath = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-3, 3, -5),
+            new THREE.Vector3(-2, 2, 5),
+            new THREE.Vector3(0, 1, 15),
+            new THREE.Vector3(2, 0, 25),
+            new THREE.Vector3(-1, -1, 35),
+            new THREE.Vector3(0, 0, 45),
+            new THREE.Vector3(1, 2, 55)
+        ]);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Smooth scroll
+            scrollProgress += (targetScrollProgress - scrollProgress) * 0.05;
+
+            // Update camera position along path
+            const cameraPosition = cameraPath.getPoint(scrollProgress);
+            const lookAtTarget = new THREE.Vector3(0, 0, scrollProgress * 50);
+
+            camera.position.copy(cameraPosition);
+            camera.lookAt(lookAtTarget);
+
+            // Apply mouse rotation offset
+            if (isDragging) {
+                camera.position.x += mouseX * 3;
+                camera.position.y += mouseY * 3;
+            }
+
+            // Update HUD
+            const currentYear = Math.floor(1950 + scrollProgress * (2024 - 1950));
+            document.getElementById('year-display').textContent = currentYear;
+            document.getElementById('progress-fill').style.width = (scrollProgress * 100) + '%';
+
+            // Animate lightning particles
+            lightningParticles.forEach((pulse, index) => {
+                if (pulse.active) {
+                    pulse.progress += pulse.speed;
+
+                    if (pulse.progress >= 1.0) {
+                        // Reset to new random edge
+                        const edgeIndex = Math.floor(Math.random() * networkEdges.length);
+                        const edge = networkEdges[edgeIndex];
+                        pulse.start.copy(edge.start);
+                        pulse.end.copy(edge.end);
+                        pulse.progress = 0;
+                        pulse.speed = 0.01 + Math.random() * 0.02;
+                        pulse.edgeIndex = edgeIndex;
+                    }
+
+                    // Update particle position
+                    pulse.particle.position.lerpVectors(pulse.start, pulse.end, pulse.progress);
+                    pulse.trail.position.lerpVectors(pulse.start, pulse.end, Math.max(0, pulse.progress - 0.1));
+
+                    // Fade out trail
+                    pulse.trail.material.opacity = 0.4 * (1 - (pulse.progress % 1));
+
+                    // Make the edge glow brighter when particle passes through
+                    if (pulse.edgeIndex !== undefined) {
+                        const edge = networkEdges[pulse.edgeIndex];
+                        const glowInfluence = Math.sin(pulse.progress * Math.PI);
+                        edge.line.material.opacity = Math.max(edge.line.material.opacity, 0.6 * glowInfluence);
+                    }
+                }
+            });
+
+            // Animate lightning arcs
+            for (let i = lightningArcs.length - 1; i >= 0; i--) {
+                const arc = lightningArcs[i];
+                arc.lifetime += 0.016; // ~60fps
+
+                const t = arc.lifetime / arc.maxLifetime;
+
+                if (t < 0.3) {
+                    // Flash in
+                    arc.line.material.opacity = t / 0.3;
+                } else if (t < 0.7) {
+                    // Hold
+                    arc.line.material.opacity = 0.8 + Math.random() * 0.2;
+                } else {
+                    // Fade out
+                    arc.line.material.opacity = (1 - t) / 0.3;
+                }
+
+                if (arc.lifetime >= arc.maxLifetime) {
+                    scene.remove(arc.line);
+                    arc.line.geometry.dispose();
+                    arc.line.material.dispose();
+                    lightningArcs.splice(i, 1);
+                }
+            }
+
+            // Pulse edges randomly (synaptic firing effect)
+            const time = Date.now() * 0.001;
+            networkEdges.forEach((edge, index) => {
+                const pulse = Math.sin(time * 3 + edge.pulseOffset) * 0.5 + 0.5;
+                edge.line.material.opacity = 0.2 + pulse * 0.3;
+            });
+
+            // Gentle node pulsing
+            nodeData.forEach((node, index) => {
+                const pulse = Math.sin(time * 2 + index * 0.5) * 0.1 + 0.9;
+                node.mesh.scale.set(pulse, pulse, pulse);
+
+                // Pulse outer sphere
+                const outerPulse = Math.sin(time * 1.5 + index * 0.3) * 0.3 + 0.7;
+                node.pulse.scale.set(outerPulse, outerPulse, outerPulse);
+                node.pulse.material.opacity = 0.1 * (1 - outerPulse / 1.0);
+            });
+
+            // Slow star rotation
+            stars.rotation.y += 0.0001;
+            nebula.rotation.y -= 0.00005;
+            nebula.rotation.x += 0.00003;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
