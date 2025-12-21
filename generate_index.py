@@ -17,7 +17,8 @@ def get_metadata(html_path):
         title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE)
         title = title_match.group(1).strip() if title_match else "Untitled Design"
         
-        # Find desc_match = re.search(r'', content)
+        # Find <!-- description: ... -->
+        desc_match = re.search(r'<!--\s*description:\s*(.*?)\s*-->', content, re.IGNORECASE)
         description = desc_match.group(1).strip() if desc_match else "No description provided."
         
         return title, description
