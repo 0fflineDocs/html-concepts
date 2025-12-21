@@ -5,73 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design Gallery</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #24292e; background: #0a0a0a; }
-        h1 { border-bottom: 2px solid #333; padding-bottom: 0.3em; color: #fff; text-align: center; font-size: 2.5rem; margin-bottom: 40px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #24292e; background: #fdfdfd; }
+        h1 { border-bottom: 2px solid #eaecef; padding-bottom: 0.3em; }
         ul { list-style: none; padding: 0; }
-        li { margin-bottom: 25px; padding: 25px; border-radius: 12px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; position: relative; overflow: hidden; }
-        li:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
-        a { font-weight: 700; text-decoration: none; font-size: 1.5rem; display: block; transition: all 0.3s ease; }
-        p { margin: 12px 0 0; font-size: 0.95rem; line-height: 1.5; }
-        footer { margin-top: 50px; font-size: 0.85rem; color: #888; text-align: center; border-top: 1px solid #333; padding-top: 20px; }
-        
-        /* 3D Graphics - Isometric/Geometric */
-        .graphics-3d { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-left: 6px solid #f093fb; }
-        .graphics-3d a { font-family: 'Courier New', monospace; color: #fff; text-shadow: 2px 2px 0px #764ba2, 4px 4px 0px rgba(0,0,0,0.2); letter-spacing: 1px; }
-        .graphics-3d p { color: #f0e6ff; }
-        .graphics-3d:hover a { transform: translateX(4px); }
-        
-        /* AI Galaxy - Cosmic/Futuristic */
-        .ai-galaxy { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); border: 2px solid #4facfe; }
-        .ai-galaxy a { font-family: 'Trebuchet MS', sans-serif; color: #4facfe; text-shadow: 0 0 10px #00f2fe, 0 0 20px #4facfe; letter-spacing: 2px; }
-        .ai-galaxy p { color: #a0c4ff; }
-        .ai-galaxy::before { content: 'º6'; position: absolute; right: 20px; top: 20px; font-size: 2rem; color: #4facfe; opacity: 0.3; }
-        
-        /* AI History - Classic Timeline */
-        .ai-history { background: linear-gradient(to right, #f8f9fa 0%, #fff5e6 100%); border-left: 8px solid #d4a574; }
-        .ai-history a { font-family: Georgia, serif; color: #654321; font-style: italic; position: relative; padding-left: 30px; }
-        .ai-history a::before { content: 'eb'; position: absolute; left: 0; color: #d4a574; font-size: 1.8rem; font-style: normal; }
-        .ai-history p { color: #8b7355; }
-        
-        /* Cybersecurity - Terminal/Matrix */
-        .cybersecurity { background: #0d0d0d; border: 2px solid #00ff41; box-shadow: 0 0 20px rgba(0,255,65,0.3); }
-        .cybersecurity a { font-family: 'Courier New', monospace; color: #00ff41; text-shadow: 0 0 5px #00ff41; letter-spacing: 1px; }
-        .cybersecurity a::before { content: '$ '; color: #00ff41; }
-        .cybersecurity p { color: #00cc33; font-family: monospace; }
-        .cybersecurity:hover { box-shadow: 0 0 30px rgba(0,255,65,0.5); }
-        
-        /* Pantheon - Classical/Marble */
-        .pantheon { background: linear-gradient(135deg, #f5e6d3 0%, #d3c5b0 100%); border: 3px solid #8b7355; box-shadow: inset 0 2px 8px rgba(139,115,85,0.2); }
-        .pantheon a { font-family: 'Palatino', 'Times New Roman', serif; color: #5d4e37; font-variant: small-caps; letter-spacing: 3px; text-transform: uppercase; font-size: 1.4rem; }
-        .pantheon p { color: #7d6e58; font-style: italic; }
-        .pantheon::before { content: 'a1'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 3rem; opacity: 0.15; }
-        
-        /* Startup - Modern/Bold */
-        .startup { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); border: none; }
-        .startup a { font-family: 'Arial Black', sans-serif; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-size: 1.6rem; }
-        .startup p { color: #f0e6ff; font-weight: 500; }
-        .startup::after { content: 'a1'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 3rem; color: #fff; opacity: 0.2; }
-        
-        /* Worldbuilding - Fantasy/Mystical */
-        .worldbuilding { background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #1a252f 100%); border: 3px solid #f39c12; position: relative; }
-        .worldbuilding a { font-family: 'Garamond', serif; color: #f39c12; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 1.5px; font-size: 1.6rem; }
-        .worldbuilding p { color: #ecf0f1; }
-        .worldbuilding::before { content: 'f5fa'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 2.5rem; opacity: 0.2; filter: grayscale(50%); }
+        li { margin-bottom: 20px; padding: 20px; border: 1px solid #e1e4e8; border-radius: 8px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        li:hover { border-color: #0366d6; }
+        a { font-weight: 600; color: #0366d6; text-decoration: none; font-size: 1.3rem; }
+        p { margin: 8px 0 0; color: #586069; }
+        footer { margin-top: 50px; font-size: 0.85rem; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
     </style>
 </head>
 <body>
     <h1>Design Explorations</h1>
     <ul>
-        <li class="graphics-3d"><a href="designs/3d-graphics/index.html">3D Libraries - Live Demos</a><p>No description provided.</p></li>
-<li class="ai-galaxy"><a href="designs/ai-galaxy/index.html">The Thread of Intelligence - AI History Timeline</a><p>A cosmic visualization of AI's historical journey through time and innovation</p></li>
-<li class="ai-history"><a href="designs/ai-history/index.html">The History of Artificial Intelligence</a><p>An interactive timeline exploring the evolution of AI from early concepts to modern breakthroughs</p></li>
-<li class="cybersecurity"><a href="designs/cybersecurity/index.html">Microsoft Security Frameworks</a><p>An interactive guide to Microsoft's comprehensive security and compliance frameworks</p></li>
-<li class="pantheon"><a href="designs/pantheon/index.html">The Pantheon - Council of Perspectives</a><p>A dialogue between diverse perspectives exploring ideas and philosophical debates</p></li>
-<li class="startup"><a href="designs/startup/index.html">Neural — AI for Everyone</a><p>A modern AI startup landing page showcasing accessible artificial intelligence solutions</p></li>
-<li class="worldbuilding"><a href="designs/worldbuilding/index.html">Worlds Beyond Imagination</a><p>An interactive world-building tool exploring diverse fictional universes and storytelling</p></li>
+        <li><a href="designs/3d-graphics/index.html">3D Libraries - Live Demos</a><p>No description provided.</p></li>
+<li><a href="designs/ai-galaxy/index.html">The Thread of Intelligence - AI History Timeline</a><p>A cosmic visualization of AI's historical journey through time and innovation</p></li>
+<li><a href="designs/ai-history/index.html">The History of Artificial Intelligence</a><p>An interactive timeline exploring the evolution of AI from early concepts to modern breakthroughs</p></li>
+<li><a href="designs/cybersecurity/index.html">Microsoft Security Frameworks</a><p>An interactive guide to Microsoft's comprehensive security and compliance frameworks</p></li>
+<li><a href="designs/pantheon/index.html">The Pantheon - Council of Perspectives</a><p>A dialogue between diverse perspectives exploring ideas and philosophical debates</p></li>
+<li><a href="designs/startup/index.html">Neural — AI for Everyone</a><p>A modern AI startup landing page showcasing accessible artificial intelligence solutions</p></li>
+<li><a href="designs/worldbuilding/index.html">Worlds Beyond Imagination</a><p>An interactive world-building tool exploring diverse fictional universes and storytelling</p></li>
 
     </ul>
     <footer>
-        Last built on: 2025-12-21 19:22:26 (UTC)
+        Last built on: 2025-12-21 19:30:07 (UTC)
     </footer>
 </body>
 </html>
