@@ -74,110 +74,88 @@ def main():
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
+        html {{
+            background: #fafafa;
+        }}
+        
         body {{ 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Helvetica, Arial, sans-serif; 
-            line-height: 1.7; 
-            max-width: 1000px; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            line-height: 1.6; 
+            max-width: 900px; 
             margin: 0 auto; 
-            padding: 60px 40px;
-            color: #e4e4e7;
-            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 80px 32px 120px;
+            color: #1a1a1a;
+            background: #fafafa;
             min-height: 100vh;
         }}
         
         h1 {{ 
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            color: #0a0a0a;
+            letter-spacing: -0.025em;
         }}
         
         h1::after {{
             content: '';
             display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa);
-            margin: 1.5rem auto 3rem;
-            border-radius: 2px;
+            width: 48px;
+            height: 2px;
+            background: #0a0a0a;
+            margin: 2rem auto 4rem;
         }}
         
         ul {{ 
             list-style: none; 
             padding: 0;
             display: grid;
-            gap: 24px;
+            gap: 16px;
         }}
         
         li {{ 
-            padding: 28px 32px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 24px 28px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            background: #ffffff;
+            transition: all 0.2s ease;
             position: relative;
-            overflow: hidden;
-        }}
-        
-        li::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa, #ec4899);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
         }}
         
         li:hover {{
-            border-color: rgba(96, 165, 250, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 48px rgba(96, 165, 250, 0.15);
-        }}
-        
-        li:hover::before {{
-            transform: scaleX(1);
+            border-color: #d4d4d4;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
         }}
         
         a {{ 
-            font-weight: 600;
-            font-size: 1.5rem;
-            color: #f0f0f3;
+            font-weight: 500;
+            font-size: 1.125rem;
+            color: #0a0a0a;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.2s ease;
-            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+            letter-spacing: -0.015em;
         }}
         
         a:hover {{
-            color: #60a5fa;
-            transform: translateX(4px);
+            color: #525252;
         }}
         
         p {{ 
-            margin-top: 12px;
-            color: #a1a1aa;
-            font-size: 0.95rem;
+            margin-top: 8px;
+            color: #737373;
+            font-size: 0.9375rem;
             line-height: 1.6;
         }}
         
         footer {{ 
             margin-top: 80px;
-            padding-top: 40px;
-            font-size: 0.875rem;
-            color: #71717a;
+            padding-top: 32px;
+            font-size: 0.8125rem;
+            color: #a3a3a3;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid #e5e5e5;
         }}
     </style>
 </head>
