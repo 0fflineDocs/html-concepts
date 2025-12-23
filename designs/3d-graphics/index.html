@@ -793,6 +793,99 @@
             }
             animate();
         }
+
+        // WebGL Demo 1: Rotating Prism
+        {
+            const canvas = document.getElementById('webgl-prism');
+            const parentWidth = canvas.parentElement.clientWidth;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            // Create triangular prism
+            const geometry = new THREE.CylinderGeometry(0, 1, 2, 3);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xff4080,
+                transparent: true,
+                opacity: 0.8
+            });
+            const prism = new THREE.Mesh(geometry, material);
+            scene.add(prism);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xff4080, 1, 10);
+            pointLight.position.set(2, 2, 2);
+            scene.add(pointLight);
+
+            function animatePrism() {
+                prism.rotation.x += 0.01;
+                prism.rotation.y += 0.02;
+                prism.position.y = Math.sin(Date.now() * 0.001) * 0.5;
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animatePrism);
+            }
+            animatePrism();
+        }
+
+        // WebGL Demo 2: Particle Swirl
+        {
+            const canvas = document.getElementById('webgl-particles');
+            const parentWidth = canvas.parentElement.clientWidth;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            const particles = new THREE.BufferGeometry();
+            const particleCount = 200;
+            const positions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+            }
+            
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const material = new THREE.PointsMaterial({
+                color: 0x00ffff,
+                size: 0.1,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particleSystem = new THREE.Points(particles, material);
+            scene.add(particleSystem);
+
+            function animateParticles() {
+                particleSystem.rotation.y += 0.005;
+                particleSystem.rotation.x += 0.002;
+                
+                const positions = particleSystem.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = Date.now() * 0.001 + i * 0.1;
+                    positions[i * 3] = Math.cos(angle) * (2 + Math.sin(angle * 0.5));
+                    positions[i * 3 + 1] = Math.sin(angle * 0.7) * 2;
+                    positions[i * 3 + 2] = Math.sin(angle) * (2 + Math.cos(angle * 0.5));
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
     </script>
 
         // WebGL Demo 1: Rotating Prism
