@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Company Design Systems</title>
+    <!-- description: CSS: Tech company webpages -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Exobe inspired - Nordic minimalism */
+            --exobe-dark: #0d0d0d;
+            --exobe-accent: #00d4aa;
+            
+            /* Truesec inspired - Cybersecurity */
+            --truesec-navy: #0a1628;
+            --truesec-blue: #00a3ff;
+            
+            /* Microsoft inspired - Fluent Design */
+            --ms-blue: #0078d4;
+            --ms-purple: #8661c5;
+            --ms-teal: #00b294;
+            
+            /* GitHub inspired */
+            --github-dark: #0d1117;
+            --github-green: #238636;
+            --github-purple: #8957e5;
+            
+            /* Brave inspired */
+            --brave-orange: #fb542b;
+            --brave-purple: #a0a5eb;
+            
+            /* Vercel inspired */
+            --vercel-black: #000000;
+            --vercel-white: #ffffff;
+            
+            /* Stripe inspired */
+            --stripe-purple: #635bff;
+            --stripe-cyan: #00d4ff;
+            
+            /* Linear inspired */
+            --linear-purple: #5e6ad2;
+            --linear-blue: #4ea8de;
+            
+            /* Notion inspired */
+            --notion-black: #191919;
+            --notion-brown: #9f6b53;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+        }
+
+        .card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+        .card:nth-child(5) { animation-delay: 0.3s; }
+        .card:nth-child(6) { animation-delay: 0.35s; }
+        .card:nth-child(7) { animation-delay: 0.4s; }
+        .card:nth-child(8) { animation-delay: 0.45s; }
+        .card:nth-child(9) { animation-delay: 0.5s; }
+
+        /* ========================================
+           CARD 1: Exobe Style
+           Nordic minimalism, dark, teal accent
+        ======================================== */
+        .exobe-style {
+            background: var(--exobe-dark);
+            padding: 48px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+        }
+
+        .exobe-style::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--exobe-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .exobe-style:hover::before {
+            opacity: 1;
+        }
+
+        .exobe-style:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 170, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .exobe-style .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--exobe-accent);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exobe-style .tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--exobe-accent);
+            border-radius: 50%;
+        }
+
+        .exobe-style .title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .exobe-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .exobe-style .cta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--exobe-accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s ease;
+        }
+
+        .exobe-style .cta:hover {
+            gap: 12px;
+        }
+
+        .exobe-style .cta::after {
+            content: '→';
+        }
+
+        /* ========================================
+           CARD 2: Truesec Style
+           Cybersecurity, deep navy, blue glow
+        ======================================== */
+        .truesec-style {
+            background: var(--truesec-navy);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .truesec-style::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 163, 255, 0.08) 0%, transparent 50%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        .truesec-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--truesec-blue), transparent);
+        }
+
+        .truesec-style:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 60px rgba(0, 163, 255, 0.2);
+        }
+
+        .truesec-style .shield-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--truesec-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .truesec-style .shield-icon::before {
+            content: '🛡️';
+            font-size: 18px;
+        }
+
+        .truesec-style .tag {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--truesec-blue);
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .truesec-style .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .truesec-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .truesec-style .stats {
+            display: flex;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .truesec-style .stat {
+            text-align: left;
+        }
+
+        .truesec-style .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--truesec-blue);
+        }
+
+        .truesec-style .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ========================================
+           CARD 3: Microsoft Style
+           Fluent Design, gradient mesh, acrylic
+        ======================================== */
+        .microsoft-style {
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.15), rgba(134, 97, 197, 0.15));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 48px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .microsoft-style::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 120, 212, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(0, 178, 148, 0.15) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .microsoft-style:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .microsoft-style .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 12px);
+            gap: 3px;
+            margin-bottom: 24px;
+        }
+
+        .microsoft-style .logo-grid span {
+            width: 12px;
+            height: 12px;
+        }
+
+        .microsoft-style .logo-grid span:nth-child(1) { background: #f25022; }
+        .microsoft-style .logo-grid span:nth-child(2) { background: #7fba00; }
+        .microsoft-style .logo-grid span:nth-child(3) { background: #00a4ef; }
+        .microsoft-style .logo-grid span:nth-child(4) { background: #ffb900; }
+
+        .microsoft-style .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ms-blue);
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .microsoft-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .microsoft-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .microsoft-style .cta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--ms-blue);
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .microsoft-style .cta:hover {
+            background: #106ebe;
+            box-shadow: 0 8px 20px rgba(0, 120, 212, 0.4);
+        }
+
+        /* ========================================
+           CARD 4: GitHub Style
+           Developer-focused, dark mode, code feel
+        ======================================== */
+        .github-style {
+            background: var(--github-dark);
+            padding: 48px 40px;
+            border: 1px solid #30363d;
+            position: relative;
+        }
+
+        .github-style:hover {
+            border-color: #8957e5;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .github-style .octocat {
+            font-size: 32px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .github-style .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--github-purple);
+            background: rgba(137, 87, 229, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .github-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: #f0f6fc;
+        }
+
+        .github-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: #8b949e;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .github-style .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #c9d1d9;
+            overflow-x: auto;
+        }
+
+        .github-style .code-block .keyword { color: #ff7b72; }
+        .github-style .code-block .string { color: #a5d6ff; }
+        .github-style .code-block .comment { color: #8b949e; }
+
+        .github-style .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .github-style .btn-primary {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--github-green);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .github-style .btn-primary:hover {
+            background: #2ea043;
+        }
+
+        .github-style .btn-secondary {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c9d1d9;
+            background: #21262d;
+            border: 1px solid #30363d;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .github-style .btn-secondary:hover {
+            background: #30363d;
+            border-color: #8b949e;
+        }
+
+        /* ========================================
+           CARD 5: Brave Style
+           Privacy-focused, bold orange, shield
+        ======================================== */
+        .brave-style {
+            background: linear-gradient(180deg, #1e1e2e 0%, #12121a 100%);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brave-style::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(251, 84, 43, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .brave-style:hover {
+            transform: translateY(-4px) rotate(-0.5deg);
+            box-shadow: 0 24px 48px rgba(251, 84, 43, 0.2);
+        }
+
+        .brave-style .lion-badge {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--brave-orange), #ff8866);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+
+        .brave-style .tag {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--brave-orange);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .brave-style .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .brave-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .brave-style .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .brave-style .feature {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brave-style .feature::before {
+            content: '✓';
+            color: var(--brave-orange);
+            font-size: 0.7rem;
+        }
+
+        /* ========================================
+           CARD 6: Vercel Style
+           Minimal black/white, geometric, sharp
+        ======================================== */
+        .vercel-style {
+            background: var(--vercel-black);
+            padding: 48px 40px;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .vercel-style::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 35px solid #fff;
+        }
+
+        .vercel-style:hover {
+            border-color: #fff;
+            box-shadow: 0 0 0 1px #fff;
+        }
+
+        .vercel-style .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .vercel-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: #fff;
+            letter-spacing: -0.03em;
+        }
+
+        .vercel-style .title .gradient {
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .vercel-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #888;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .vercel-style .cta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #000;
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .vercel-style .cta:hover {
+            background: #eaeaea;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           CARD 7: Stripe Style
+           Premium gradient, financial tech
+        ======================================== */
+        .stripe-style {
+            background: linear-gradient(135deg, #0a2540 0%, #1a1a2e 100%);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stripe-style::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 100% 0%, rgba(99, 91, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 0% 100%, rgba(0, 212, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .stripe-style:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px rgba(99, 91, 255, 0.25);
+        }
+
+        .stripe-style .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--stripe-purple);
+            margin-bottom: 20px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stripe-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stripe-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stripe-style .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stripe-style .metric {
+            text-align: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stripe-style .metric-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .stripe-style .metric-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ========================================
+           CARD 8: Linear Style
+           Clean, purple gradients, productivity
+        ======================================== */
+        .linear-style {
+            background: #16161a;
+            padding: 48px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .linear-style::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--linear-purple), var(--linear-blue), var(--linear-purple));
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        .linear-style:hover {
+            border-color: rgba(94, 106, 210, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .linear-style .icon-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .linear-style .linear-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--linear-purple), var(--linear-blue));
+            border-radius: 8px;
+        }
+
+        .linear-style .status {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .linear-style .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--linear-purple);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .linear-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .linear-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .linear-style .keyboard-shortcut {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .linear-style .key {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* ========================================
+           CARD 9: Notion Style
+           Clean, minimal, warm tones
+        ======================================== */
+        .notion-style {
+            background: #ffffff;
+            padding: 48px 40px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .notion-style:hover {
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .notion-style .emoji-header {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .notion-style .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--notion-brown);
+            background: rgba(159, 107, 83, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .notion-style .title {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: var(--notion-black);
+        }
+
+        .notion-style .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #6b6b6b;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .notion-style .checklist {
+            list-style: none;
+        }
+
+        .notion-style .checklist li {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #37352f;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notion-style .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .notion-style .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #d3d3d3;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notion-style .checkbox.checked {
+            background: var(--notion-brown);
+            border-color: var(--notion-brown);
+        }
+
+        .notion-style .checkbox.checked::after {
+            content: '✓';
+            color: #fff;
+            font-size: 10px;
+        }
+
+        /* ========================================
+           Animations
+        ======================================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ========================================
+           Footer
+        ======================================== */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #222;
+        }
+
+        footer p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        footer .sources {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p class="eyebrow">Design Systems</p>
+            <h1>Tech Company Aesthetics</h1>
+            <p class="subtitle">Nine distinct approaches to modern tech product design, inspired by industry-leading companies</p>
+        </header>
+
+        <div class="grid">
+            <!-- Card 1: Exobe Style -->
+            <article class="card exobe-style">
+                <span class="tag">Nordic Design</span>
+                <h2 class="title">Minimal by Nature, Powerful by Design</h2>
+                <p class="description">Clean Scandinavian aesthetics meet cutting-edge technology. Every pixel serves a purpose, every interaction feels intentional.</p>
+                <a href="#" class="cta">Explore platform</a>
+            </article>
+
+            <!-- Card 2: Truesec Style -->
+            <article class="card truesec-style">
+                <div class="shield-icon"></div>
+                <span class="tag">Cybersecurity</span>
+                <h2 class="title">Defending Digital Frontiers</h2>
+                <p class="description">Enterprise-grade security solutions that protect what matters most. Proactive threat detection meets rapid response.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">&lt;50ms</div>
+                        <div class="stat-label">Response</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Monitoring</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3: Microsoft Style -->
+            <article class="card microsoft-style">
+                <div class="logo-grid">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <span class="tag">Azure Cloud</span>
+                <h2 class="title">Build Anything, Scale Everything</h2>
+                <p class="description">Comprehensive cloud services for AI, compute, databases, and more. Trusted by millions of developers worldwide.</p>
+                <a href="#" class="cta">Get started free</a>
+            </article>
+
+            <!-- Card 4: GitHub Style -->
+            <article class="card github-style">
+                <span class="octocat">🐙</span>
+                <span class="tag">Copilot</span>
+                <h2 class="title">Your AI Pair Programmer</h2>
+                <p class="description">Get suggestions for whole lines or entire functions right inside your editor. Powered by OpenAI Codex.</p>
+                <div class="code-block">
+                    <span class="keyword">function</span> calculateTotal(items) {<br>
+                    &nbsp;&nbsp;<span class="comment">// Copilot suggests...</span><br>
+                    &nbsp;&nbsp;<span class="keyword">return</span> items.<span class="string">reduce</span>((a, b) =&gt; a + b.price, 0);<br>
+                    }
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn-primary">Try Copilot</a>
+                    <a href="#" class="btn-secondary">View docs</a>
+                </div>
+            </article>
+
+            <!-- Card 5: Brave Style -->
+            <article class="card brave-style">
+                <div class="lion-badge">🦁</div>
+                <span class="tag">Privacy Browser</span>
+                <h2 class="title">Browse Freely Without Being Tracked</h2>
+                <p class="description">Block invasive ads and trackers by default. Earn rewards for your attention. Take back control of your online experience.</p>
+                <div class="features">
+                    <span class="feature">Ad Blocking</span>
+                    <span class="feature">HTTPS Upgrades</span>
+                    <span class="feature">Script Control</span>
+                    <span class="feature">Tor Integration</span>
+                </div>
+            </article>
+
+            <!-- Card 6: Vercel Style -->
+            <article class="card vercel-style">
+                <span class="tag">Frontend Cloud</span>
+                <h2 class="title">Develop. <span class="gradient">Preview. Ship.</span></h2>
+                <p class="description">The platform for frontend developers, providing the speed and reliability innovators need to create at the moment of inspiration.</p>
+                <a href="#" class="cta">Start Deploying →</a>
+            </article>
+
+            <!-- Card 7: Stripe Style -->
+            <article class="card stripe-style">
+                <span class="tag">Payment Infrastructure</span>
+                <h2 class="title">Financial Infrastructure for the Internet</h2>
+                <p class="description">Millions of companies use Stripe to accept payments, send payouts, and manage their businesses online.</p>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">99.99%</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">135+</div>
+                        <div class="metric-label">Currencies</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$1T+</div>
+                        <div class="metric-label">Processed</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 8: Linear Style -->
+            <article class="card linear-style">
+                <div class="icon-row">
+                    <div class="linear-icon"></div>
+                    <span class="status">● All systems operational</span>
+                </div>
+                <span class="tag">Issue Tracking</span>
+                <h2 class="title">Built for Modern Product Teams</h2>
+                <p class="description">Linear is a better way to build products. Streamlined issues, cycles, and product roadmaps with blazing-fast performance.</p>
+                <div class="keyboard-shortcut">
+                    Press <span class="key">⌘</span> <span class="key">K</span> to open command menu
+                </div>
+            </article>
+
+            <!-- Card 9: Notion Style -->
+            <article class="card notion-style">
+                <div class="emoji-header">📝</div>
+                <span class="tag">Workspace</span>
+                <h2 class="title">Your Wiki, Docs & Projects. Together.</h2>
+                <p class="description">A new tool that blends your everyday work apps into one. It's the all-in-one workspace for you and your team.</p>
+                <ul class="checklist">
+                    <li>
+                        <span class="checkbox checked"></span>
+                        Create team documentation
+                    </li>
+                    <li>
+                        <span class="checkbox checked"></span>
+                        Build a knowledge base
+                    </li>
+                    <li>
+                        <span class="checkbox"></span>
+                        Set up project roadmap
+                    </li>
+                </ul>
+            </article>
+        </div>
+
+        <footer>
+            <p>CSS Design Inspiration</p>
+            <p class="sources">Inspired by Exobe, Truesec, Microsoft, GitHub, Brave, Vercel, Stripe, Linear, and Notion</p>
+        </footer>
+    </div>
+</body>
+</html>
