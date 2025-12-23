@@ -240,16 +240,49 @@
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
                     <a-scene id="aframe-scene" embedded style="width: 100%; height: 100%;">
-                        <a-sphere id="aframe-sphere" position="0 1.25 -5" radius="1.25" color="#EF2D5E" roughness="0.1" metalness="0.5"></a-sphere>
-                        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-                        <a-sky color="#111111"></a-sky>
-                        <a-light type="ambient" color="#404040"></a-light>
-                        <a-light type="point" position="2 4 4" color="#ffffff"></a-light>
+                        <!-- Central energy orb -->
+                        <a-sphere id="energy-core" position="0 0 -5" radius="0.5" color="#ff0080" opacity="0.8"
+                            animation="property: rotation; to: 360 360 360; loop: true; dur: 3000"
+                            animation__glow="property: components.material.material.emissive; to: #ff0080; dur: 1500; dir: alternate; loop: true">
+                        </a-sphere>
+                        
+                        <!-- Orbiting particles -->
+                        <a-entity id="orbit-container" position="0 0 -5"
+                            animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+                            <a-sphere position="2 0 0" radius="0.1" color="#00ffff" opacity="0.9"></a-sphere>
+                            <a-sphere position="-2 0 0" radius="0.1" color="#ffff00" opacity="0.9"></a-sphere>
+                            <a-sphere position="0 2 0" radius="0.1" color="#ff4000" opacity="0.9"></a-sphere>
+                            <a-sphere position="0 -2 0" radius="0.1" color="#8000ff" opacity="0.9"></a-sphere>
+                        </a-entity>
+                        
+                        <!-- Pulsing rings -->
+                        <a-ring id="ring1" position="0 0 -5" radius-inner="1" radius-outer="1.2" color="#00ff80" opacity="0.4"
+                            animation="property: scale; to: 2 2 2; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
+                            animation__rotate="property: rotation; to: 360 0 360; loop: true; dur: 5000">
+                        </a-ring>
+                        <a-ring id="ring2" position="0 0 -5" radius-inner="1.5" radius-outer="1.7" color="#ff8000" opacity="0.3"
+                            animation="property: scale; to: 1.5 1.5 1.5; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine; delay: 1000"
+                            animation__rotate="property: rotation; to: -360 360 -360; loop: true; dur: 7000">
+                        </a-ring>
+                        
+                        <!-- Floating crystals -->
+                        <a-box id="crystal1" position="3 1 -6" width="0.3" height="0.8" depth="0.3" color="#ff00ff" opacity="0.7"
+                            animation="property: position; to: -3 -1 -4; dur: 6000; dir: alternate; loop: true; easing: easeInOutQuad"
+                            animation__rotate="property: rotation; to: 180 360 180; loop: true; dur: 4000">
+                        </a-box>
+                        <a-box id="crystal2" position="-3 -1 -4" width="0.3" height="0.8" depth="0.3" color="#00ffff" opacity="0.7"
+                            animation="property: position; to: 3 1 -6; dur: 6000; dir: alternate; loop: true; easing: easeInOutQuad; delay: 3000"
+                            animation__rotate="property: rotation; to: -180 -360 -180; loop: true; dur: 4000">
+                        </a-box>
+                        
+                        <a-sky color="#000011"></a-sky>
+                        <a-light type="ambient" color="#220044" intensity="0.3"></a-light>
+                        <a-light type="point" position="0 0 -3" color="#ff0080" intensity="0.8"></a-light>
                     </a-scene>
                 </div>
                 <div class="demo-info">
                     <div class="library-badge badge-aframe">A-Frame</div>
-                    <div class="demo-title">VR Scene</div>
+                    <div class="demo-title">Cosmic Energy</div>
                 </div>
             </div>
 
@@ -260,7 +293,7 @@
                 </div>
                 <div class="demo-info">
                     <div class="library-badge badge-cannon">Cannon.js</div>
-                    <div class="demo-title">Physics Simulation</div>
+                    <div class="demo-title">Gravity Storm</div>
                 </div>
             </div>
         </div>
@@ -804,27 +837,35 @@
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script>
-        // A-Frame Demo: VR Scene with animated sphere
-        AFRAME.registerComponent('animate-rotation', {
-            tick: function () {
-                this.el.object3D.rotation.x += 0.01;
-                this.el.object3D.rotation.y += 0.01;
-            }
-        });
-        
+        // A-Frame animations are handled declaratively in the HTML above
+        // Additional dynamic effects
         document.addEventListener('DOMContentLoaded', () => {
-            const sphere = document.querySelector('#aframe-sphere');
-            if (sphere) {
-                sphere.setAttribute('animate-rotation', '');
-                sphere.setAttribute('animation', {
-                    property: 'position',
-                    to: '0 2.5 -5',
-                    dur: 2000,
-                    dir: 'alternate',
-                    loop: true,
-                    easing: 'easeInOutSine'
-                });
-            }
+            // Add particle trail effect
+            setTimeout(() => {
+                const scene = document.querySelector('#aframe-scene');
+                if (scene) {
+                    for (let i = 0; i < 20; i++) {
+                        const particle = document.createElement('a-sphere');
+                        particle.setAttribute('position', {
+                            x: (Math.random() - 0.5) * 10,
+                            y: (Math.random() - 0.5) * 10,
+                            z: -8 + (Math.random() * 4)
+                        });
+                        particle.setAttribute('radius', Math.random() * 0.05 + 0.02);
+                        particle.setAttribute('color', `hsl(${Math.random() * 360}, 70%, 60%)`);
+                        particle.setAttribute('opacity', 0.6);
+                        particle.setAttribute('animation', {
+                            property: 'position',
+                            to: `${(Math.random() - 0.5) * 10} ${(Math.random() - 0.5) * 10} ${-3 + (Math.random() * 4)}`,
+                            dur: 5000 + Math.random() * 3000,
+                            loop: true,
+                            dir: 'alternate',
+                            easing: 'easeInOutSine'
+                        });
+                        scene.appendChild(particle);
+                    }
+                }
+            }, 1000);
         });
     </script>
 
@@ -833,7 +874,7 @@
     <script type="module">
         import * as THREE from 'three';
         
-        // Cannon.js Demo: Physics Simulation
+        // Cannon.js Demo: Gravity Storm - Dynamic gravitational effects
         {
             const canvas = document.getElementById('cannon-physics');
             const scene = new THREE.Scene();
@@ -843,79 +884,188 @@
             renderer.setSize(canvas.parentElement.clientWidth, 280);
             renderer.setClearColor(0x000000, 0);
             
-            // Physics world
+            // Physics world with variable gravity
             const world = new CANNON.World();
             world.gravity.set(0, -9.82, 0);
             world.broadphase = new CANNON.NaiveBroadphase();
             
-            // Ground
-            const groundShape = new CANNON.Plane();
-            const groundBody = new CANNON.Body({ mass: 0 });
-            groundBody.addShape(groundShape);
-            groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-            world.add(groundBody);
+            // Invisible attractors for interesting movement
+            const attractors = [];
+            for (let i = 0; i < 3; i++) {
+                attractors.push({
+                    position: new CANNON.Vec3(
+                        (Math.random() - 0.5) * 8,
+                        Math.random() * 6 + 2,
+                        (Math.random() - 0.5) * 8
+                    ),
+                    strength: 20 + Math.random() * 30
+                });
+            }
             
-            const groundGeometry = new THREE.PlaneGeometry(10, 10);
-            const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x333333, transparent: true, opacity: 0.3 });
-            const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-            groundMesh.rotation.x = -Math.PI / 2;
-            scene.add(groundMesh);
+            // Floating objects with various shapes
+            const objects = [];
+            const geometries = [
+                new THREE.SphereGeometry(0.3, 8, 6),
+                new THREE.BoxGeometry(0.5, 0.5, 0.5),
+                new THREE.ConeGeometry(0.3, 0.6, 6),
+                new THREE.OctahedronGeometry(0.4)
+            ];
             
-            // Falling boxes
-            const boxes = [];
-            const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-            
-            function createBox() {
-                // Physics body
-                const shape = new CANNON.Box(new CANNON.Vec3(0.25, 0.25, 0.25));
-                const body = new CANNON.Body({ mass: 1 });
+            function createFloatingObject() {
+                const geomIndex = Math.floor(Math.random() * geometries.length);
+                const geometry = geometries[geomIndex];
+                
+                // Physics shape based on geometry
+                let shape;
+                if (geomIndex === 0) shape = new CANNON.Sphere(0.3);
+                else if (geomIndex === 1) shape = new CANNON.Box(new CANNON.Vec3(0.25, 0.25, 0.25));
+                else shape = new CANNON.Sphere(0.3); // Approximate other shapes as spheres
+                
+                const body = new CANNON.Body({ mass: 0.5 });
                 body.addShape(shape);
                 body.position.set(
+                    (Math.random() - 0.5) * 6,
+                    8 + Math.random() * 4,
+                    (Math.random() - 0.5) * 6
+                );
+                body.velocity.set(
                     (Math.random() - 0.5) * 4,
-                    5 + Math.random() * 3,
+                    0,
                     (Math.random() - 0.5) * 4
                 );
                 world.add(body);
                 
-                // Visual mesh
-                const material = new THREE.MeshLambertMaterial({
-                    color: new THREE.Color().setHSL(Math.random(), 0.7, 0.6)
+                // Visual mesh with dynamic material
+                const hue = Math.random() * 360;
+                const material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(hue / 360, 0.8, 0.6),
+                    shininess: 100,
+                    transparent: true,
+                    opacity: 0.9
                 });
-                const mesh = new THREE.Mesh(boxGeometry, material);
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.castShadow = true;
                 scene.add(mesh);
                 
-                boxes.push({ body, mesh });
-                
-                // Remove old boxes
-                if (boxes.length > 15) {
-                    const old = boxes.shift();
-                    world.remove(old.body);
-                    scene.remove(old.mesh);
-                }
+                objects.push({ 
+                    body, 
+                    mesh, 
+                    hue,
+                    life: 0,
+                    maxLife: 300 + Math.random() * 200
+                });
             }
             
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+            // Particle system for trails
+            const trailGeometry = new THREE.SphereGeometry(0.05, 6, 4);
+            const trails = [];
+            
+            // Lighting setup
+            const ambientLight = new THREE.AmbientLight(0x202040, 0.4);
             scene.add(ambientLight);
             
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
+            const pointLight1 = new THREE.PointLight(0xff4080, 1, 20);
+            pointLight1.position.set(4, 6, 4);
+            scene.add(pointLight1);
             
-            camera.position.set(5, 5, 5);
-            camera.lookAt(0, 0, 0);
+            const pointLight2 = new THREE.PointLight(0x4080ff, 1, 20);
+            pointLight2.position.set(-4, 6, -4);
+            scene.add(pointLight2);
             
-            // Create boxes periodically
-            setInterval(createBox, 800);
+            camera.position.set(6, 8, 10);
+            camera.lookAt(0, 3, 0);
+            
+            // Create initial objects
+            for (let i = 0; i < 8; i++) {
+                createFloatingObject();
+            }
+            
+            let time = 0;
             
             function animate() {
+                time += 0.016;
                 world.step(1/60);
                 
-                // Update visual objects from physics
-                boxes.forEach(({ body, mesh }) => {
+                // Update attractor positions in circular motion
+                attractors.forEach((attractor, i) => {
+                    attractor.position.x = Math.cos(time * 0.3 + i * 2) * 3;
+                    attractor.position.z = Math.sin(time * 0.3 + i * 2) * 3;
+                });
+                
+                // Apply gravitational forces from attractors
+                objects.forEach(({ body }) => {
+                    attractors.forEach(attractor => {
+                        const dx = attractor.position.x - body.position.x;
+                        const dy = attractor.position.y - body.position.y;
+                        const dz = attractor.position.z - body.position.z;
+                        const distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                        
+                        if (distance > 0.1) {
+                            const force = attractor.strength / (distance * distance);
+                            body.force.x += (dx / distance) * force;
+                            body.force.y += (dy / distance) * force;
+                            body.force.z += (dz / distance) * force;
+                        }
+                    });
+                });
+                
+                // Update visual objects and create trails
+                objects.forEach(({ body, mesh, hue, life, maxLife }, index) => {
                     mesh.position.copy(body.position);
                     mesh.quaternion.copy(body.quaternion);
+                    
+                    // Update color based on velocity
+                    const speed = body.velocity.length();
+                    const intensity = Math.min(speed / 10, 1);
+                    mesh.material.color.setHSL((hue + time * 50) % 360 / 360, 0.8, 0.4 + intensity * 0.4);
+                    
+                    // Create trail particles
+                    if (Math.random() < 0.3) {
+                        const trailMaterial = new THREE.MeshBasicMaterial({
+                            color: mesh.material.color.clone(),
+                            transparent: true,
+                            opacity: 0.6
+                        });
+                        const trail = new THREE.Mesh(trailGeometry, trailMaterial);
+                        trail.position.copy(body.position);
+                        trail.life = 0;
+                        trail.maxLife = 30;
+                        scene.add(trail);
+                        trails.push(trail);
+                    }
+                    
+                    // Age and remove old objects
+                    objects[index].life++;
+                    if (life > maxLife || body.position.y < -5) {
+                        world.remove(body);
+                        scene.remove(mesh);
+                        objects.splice(index, 1);
+                    }
                 });
+                
+                // Update and cleanup trails
+                trails.forEach((trail, index) => {
+                    trail.life++;
+                    trail.material.opacity = 1 - (trail.life / trail.maxLife);
+                    trail.scale.setScalar(1 - trail.life / trail.maxLife);
+                    
+                    if (trail.life >= trail.maxLife) {
+                        scene.remove(trail);
+                        trails.splice(index, 1);
+                    }
+                });
+                
+                // Spawn new objects periodically
+                if (objects.length < 12 && Math.random() < 0.02) {
+                    createFloatingObject();
+                }
+                
+                // Animate lights
+                pointLight1.position.x = Math.cos(time * 0.5) * 5;
+                pointLight1.position.z = Math.sin(time * 0.5) * 5;
+                pointLight2.position.x = Math.cos(time * 0.7 + Math.PI) * 4;
+                pointLight2.position.z = Math.sin(time * 0.7 + Math.PI) * 4;
                 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animate);
