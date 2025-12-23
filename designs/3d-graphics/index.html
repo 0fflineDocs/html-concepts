@@ -236,25 +236,25 @@
                 </div>
             </div>
 
-            <!-- WebGL Demo 1 -->
+            <!-- Three.js Demo 3 -->
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
-                    <canvas id="webgl-prism"></canvas>
+                    <canvas id="three-volcano"></canvas>
                 </div>
                 <div class="demo-info">
-                    <div class="library-badge badge-aframe">WebGL</div>
-                    <div class="demo-title">Rotating Prism</div>
+                    <div class="library-badge badge-threejs">Three.js</div>
+                    <div class="demo-title">Volcano</div>
                 </div>
             </div>
 
-            <!-- WebGL Demo 2 -->
+            <!-- Three.js Demo 4 -->
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
-                    <canvas id="webgl-particles"></canvas>
+                    <canvas id="three-waterfall"></canvas>
                 </div>
                 <div class="demo-info">
-                    <div class="library-badge badge-aframe">WebGL</div>
-                    <div class="demo-title">Particle Swirl</div>
+                    <div class="library-badge badge-threejs">Three.js</div>
+                    <div class="demo-title">Waterfall</div>
                 </div>
             </div>
         </div>
@@ -794,103 +794,15 @@
             animate();
         }
 
-        // WebGL Demo 1: Rotating Prism
-        {
-            const canvas = document.getElementById('webgl-prism');
-            const parentWidth = canvas.parentElement.clientWidth;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-
-            renderer.setSize(parentWidth, 280);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            camera.position.z = 5;
-
-            // Create triangular prism
-            const geometry = new THREE.CylinderGeometry(0, 1, 2, 3);
-            const material = new THREE.MeshPhongMaterial({
-                color: 0xff4080,
-                transparent: true,
-                opacity: 0.8
-            });
-            const prism = new THREE.Mesh(geometry, material);
-            scene.add(prism);
-
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
-            scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xff4080, 1, 10);
-            pointLight.position.set(2, 2, 2);
-            scene.add(pointLight);
-
-            function animatePrism() {
-                prism.rotation.x += 0.01;
-                prism.rotation.y += 0.02;
-                prism.position.y = Math.sin(Date.now() * 0.001) * 0.5;
-                
-                renderer.render(scene, camera);
-                requestAnimationFrame(animatePrism);
-            }
-            animatePrism();
-        }
-
-        // WebGL Demo 2: Particle Swirl
-        {
-            const canvas = document.getElementById('webgl-particles');
-            const parentWidth = canvas.parentElement.clientWidth;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-
-            renderer.setSize(parentWidth, 280);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            camera.position.z = 5;
-
-            const particles = new THREE.BufferGeometry();
-            const particleCount = 200;
-            const positions = new Float32Array(particleCount * 3);
-            
-            for (let i = 0; i < particleCount; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 10;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-            }
-            
-            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            
-            const material = new THREE.PointsMaterial({
-                color: 0x00ffff,
-                size: 0.1,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            const particleSystem = new THREE.Points(particles, material);
-            scene.add(particleSystem);
-
-            function animateParticles() {
-                particleSystem.rotation.y += 0.005;
-                particleSystem.rotation.x += 0.002;
-                
-                const positions = particleSystem.geometry.attributes.position.array;
-                for (let i = 0; i < particleCount; i++) {
-                    const angle = Date.now() * 0.001 + i * 0.1;
-                    positions[i * 3] = Math.cos(angle) * (2 + Math.sin(angle * 0.5));
-                    positions[i * 3 + 1] = Math.sin(angle * 0.7) * 2;
-                    positions[i * 3 + 2] = Math.sin(angle) * (2 + Math.cos(angle * 0.5));
-                }
-                particleSystem.geometry.attributes.position.needsUpdate = true;
-                
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateParticles);
-            }
-            animateParticles();
-        }
     </script>
 
-        // WebGL Demo 1: Rotating Prism
+    <!-- Three.js Volcano & Waterfall -->
+    <script type="module">
+        import * as THREE from 'three';
+
+        // Three.js Demo 3: Volcano
         {
-            const canvas = document.getElementById('webgl-prism');
+            const canvas = document.getElementById('three-volcano');
             const parentWidth = canvas.parentElement.clientWidth;
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
@@ -898,39 +810,144 @@
 
             renderer.setSize(parentWidth, 280);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            camera.position.z = 5;
+            camera.position.set(0, 2, 8);
+            camera.lookAt(0, 0, 0);
 
-            // Create triangular prism
-            const geometry = new THREE.CylinderGeometry(0, 1, 2, 3);
-            const material = new THREE.MeshPhongMaterial({
-                color: 0xff4080,
-                transparent: true,
-                opacity: 0.8
+            // Volcano cone
+            const volcanoGeometry = new THREE.ConeGeometry(3, 4, 32, 1, true);
+            const volcanoMaterial = new THREE.MeshPhongMaterial({
+                color: 0x4a3728,
+                side: THREE.DoubleSide
             });
-            const prism = new THREE.Mesh(geometry, material);
-            scene.add(prism);
+            const volcano = new THREE.Mesh(volcanoGeometry, volcanoMaterial);
+            volcano.position.y = -1;
+            scene.add(volcano);
+
+            // Lava pool at top
+            const lavaGeometry = new THREE.CircleGeometry(0.8, 32);
+            const lavaMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 });
+            const lava = new THREE.Mesh(lavaGeometry, lavaMaterial);
+            lava.rotation.x = -Math.PI / 2;
+            lava.position.y = 1;
+            scene.add(lava);
+
+            // Lava particles
+            const lavaParticleCount = 150;
+            const lavaParticles = new THREE.BufferGeometry();
+            const lavaPositions = new Float32Array(lavaParticleCount * 3);
+            const lavaVelocities = [];
+            const lavaColors = new Float32Array(lavaParticleCount * 3);
+
+            for (let i = 0; i < lavaParticleCount; i++) {
+                lavaPositions[i * 3] = (Math.random() - 0.5) * 0.5;
+                lavaPositions[i * 3 + 1] = 1 + Math.random() * 2;
+                lavaPositions[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+                lavaVelocities.push({
+                    x: (Math.random() - 0.5) * 0.05,
+                    y: Math.random() * 0.08 + 0.02,
+                    z: (Math.random() - 0.5) * 0.05
+                });
+                // Orange to red gradient
+                lavaColors[i * 3] = 1;
+                lavaColors[i * 3 + 1] = Math.random() * 0.5;
+                lavaColors[i * 3 + 2] = 0;
+            }
+
+            lavaParticles.setAttribute('position', new THREE.BufferAttribute(lavaPositions, 3));
+            lavaParticles.setAttribute('color', new THREE.BufferAttribute(lavaColors, 3));
+
+            const lavaParticleMaterial = new THREE.PointsMaterial({
+                size: 0.15,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9
+            });
+
+            const lavaSystem = new THREE.Points(lavaParticles, lavaParticleMaterial);
+            scene.add(lavaSystem);
+
+            // Smoke particles
+            const smokeCount = 80;
+            const smokeParticles = new THREE.BufferGeometry();
+            const smokePositions = new Float32Array(smokeCount * 3);
+            const smokeData = [];
+
+            for (let i = 0; i < smokeCount; i++) {
+                smokePositions[i * 3] = (Math.random() - 0.5) * 0.3;
+                smokePositions[i * 3 + 1] = 1.5 + Math.random() * 3;
+                smokePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
+                smokeData.push({
+                    vy: Math.random() * 0.03 + 0.01,
+                    drift: (Math.random() - 0.5) * 0.01
+                });
+            }
+
+            smokeParticles.setAttribute('position', new THREE.BufferAttribute(smokePositions, 3));
+
+            const smokeMaterial = new THREE.PointsMaterial({
+                color: 0x666666,
+                size: 0.3,
+                transparent: true,
+                opacity: 0.4
+            });
+
+            const smokeSystem = new THREE.Points(smokeParticles, smokeMaterial);
+            scene.add(smokeSystem);
 
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
             scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xff4080, 1, 10);
-            pointLight.position.set(2, 2, 2);
+            const pointLight = new THREE.PointLight(0xff4500, 2, 15);
+            pointLight.position.set(0, 2, 0);
             scene.add(pointLight);
 
-            function animatePrism() {
-                prism.rotation.x += 0.01;
-                prism.rotation.y += 0.02;
-                prism.position.y = Math.sin(Date.now() * 0.001) * 0.5;
-                
+            function animateVolcano() {
+                requestAnimationFrame(animateVolcano);
+
+                // Animate lava particles
+                const lavaPos = lavaSystem.geometry.attributes.position.array;
+                for (let i = 0; i < lavaParticleCount; i++) {
+                    lavaPos[i * 3] += lavaVelocities[i].x;
+                    lavaPos[i * 3 + 1] += lavaVelocities[i].y;
+                    lavaPos[i * 3 + 2] += lavaVelocities[i].z;
+                    lavaVelocities[i].y -= 0.002; // gravity
+
+                    // Reset when fallen
+                    if (lavaPos[i * 3 + 1] < -1) {
+                        lavaPos[i * 3] = (Math.random() - 0.5) * 0.5;
+                        lavaPos[i * 3 + 1] = 1;
+                        lavaPos[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
+                        lavaVelocities[i].y = Math.random() * 0.08 + 0.02;
+                    }
+                }
+                lavaSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Animate smoke
+                const smokePos = smokeSystem.geometry.attributes.position.array;
+                for (let i = 0; i < smokeCount; i++) {
+                    smokePos[i * 3] += smokeData[i].drift;
+                    smokePos[i * 3 + 1] += smokeData[i].vy;
+
+                    if (smokePos[i * 3 + 1] > 5) {
+                        smokePos[i * 3] = (Math.random() - 0.5) * 0.3;
+                        smokePos[i * 3 + 1] = 1.5;
+                        smokePos[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
+                    }
+                }
+                smokeSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Pulse lava glow
+                lavaMaterial.color.setHSL(0.05, 1, 0.5 + Math.sin(Date.now() * 0.005) * 0.1);
+                pointLight.intensity = 2 + Math.sin(Date.now() * 0.003) * 0.5;
+
                 renderer.render(scene, camera);
-                requestAnimationFrame(animatePrism);
             }
-            animatePrism();
+            animateVolcano();
         }
 
-        // WebGL Demo 2: Particle Swirl
+        // Three.js Demo 4: Waterfall
         {
-            const canvas = document.getElementById('webgl-particles');
+            const canvas = document.getElementById('three-waterfall');
             const parentWidth = canvas.parentElement.clientWidth;
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
@@ -938,47 +955,143 @@
 
             renderer.setSize(parentWidth, 280);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            camera.position.z = 5;
+            camera.position.set(0, 0, 8);
 
-            const particles = new THREE.BufferGeometry();
-            const particleCount = 200;
-            const positions = new Float32Array(particleCount * 3);
-            
-            for (let i = 0; i < particleCount; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 10;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+            // Cliff/rock on left side
+            const cliffGeometry = new THREE.BoxGeometry(3, 6, 2);
+            const cliffMaterial = new THREE.MeshPhongMaterial({ color: 0x5a5a5a });
+            const cliff = new THREE.Mesh(cliffGeometry, cliffMaterial);
+            cliff.position.set(-2.5, 0, 0);
+            scene.add(cliff);
+
+            // Water particles
+            const waterParticleCount = 400;
+            const waterParticles = new THREE.BufferGeometry();
+            const waterPositions = new Float32Array(waterParticleCount * 3);
+            const waterVelocities = [];
+            const waterColors = new Float32Array(waterParticleCount * 3);
+
+            for (let i = 0; i < waterParticleCount; i++) {
+                const startY = Math.random() * 6 - 3;
+                waterPositions[i * 3] = -0.8 + Math.random() * 0.6;
+                waterPositions[i * 3 + 1] = startY;
+                waterPositions[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+                waterVelocities.push({
+                    y: -Math.random() * 0.15 - 0.05,
+                    x: Math.random() * 0.02,
+                    splashed: false
+                });
+                // Blue-cyan gradient
+                waterColors[i * 3] = 0.3 + Math.random() * 0.2;
+                waterColors[i * 3 + 1] = 0.7 + Math.random() * 0.3;
+                waterColors[i * 3 + 2] = 1;
             }
-            
-            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            
-            const material = new THREE.PointsMaterial({
-                color: 0x00ffff,
-                size: 0.1,
+
+            waterParticles.setAttribute('position', new THREE.BufferAttribute(waterPositions, 3));
+            waterParticles.setAttribute('color', new THREE.BufferAttribute(waterColors, 3));
+
+            const waterMaterial = new THREE.PointsMaterial({
+                size: 0.08,
+                vertexColors: true,
                 transparent: true,
                 opacity: 0.8
             });
-            
-            const particleSystem = new THREE.Points(particles, material);
-            scene.add(particleSystem);
 
-            function animateParticles() {
-                particleSystem.rotation.y += 0.005;
-                particleSystem.rotation.x += 0.002;
-                
-                const positions = particleSystem.geometry.attributes.position.array;
-                for (let i = 0; i < particleCount; i++) {
-                    const angle = Date.now() * 0.001 + i * 0.1;
-                    positions[i * 3] = Math.cos(angle) * (2 + Math.sin(angle * 0.5));
-                    positions[i * 3 + 1] = Math.sin(angle * 0.7) * 2;
-                    positions[i * 3 + 2] = Math.sin(angle) * (2 + Math.cos(angle * 0.5));
-                }
-                particleSystem.geometry.attributes.position.needsUpdate = true;
-                
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateParticles);
+            const waterSystem = new THREE.Points(waterParticles, waterMaterial);
+            scene.add(waterSystem);
+
+            // Mist particles at bottom
+            const mistCount = 100;
+            const mistParticles = new THREE.BufferGeometry();
+            const mistPositions = new Float32Array(mistCount * 3);
+            const mistData = [];
+
+            for (let i = 0; i < mistCount; i++) {
+                mistPositions[i * 3] = (Math.random() - 0.3) * 4;
+                mistPositions[i * 3 + 1] = -2.5 + Math.random() * 1.5;
+                mistPositions[i * 3 + 2] = (Math.random() - 0.5) * 2;
+                mistData.push({
+                    vy: Math.random() * 0.01 + 0.005,
+                    vx: (Math.random() - 0.5) * 0.01,
+                    life: Math.random()
+                });
             }
-            animateParticles();
+
+            mistParticles.setAttribute('position', new THREE.BufferAttribute(mistPositions, 3));
+
+            const mistMaterial = new THREE.PointsMaterial({
+                color: 0xaaddff,
+                size: 0.25,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            const mistSystem = new THREE.Points(mistParticles, mistMaterial);
+            scene.add(mistSystem);
+
+            // Pool at bottom
+            const poolGeometry = new THREE.CircleGeometry(2.5, 32);
+            const poolMaterial = new THREE.MeshPhongMaterial({
+                color: 0x1a6eb5,
+                transparent: true,
+                opacity: 0.7
+            });
+            const pool = new THREE.Mesh(poolGeometry, poolMaterial);
+            pool.rotation.x = -Math.PI / 2;
+            pool.position.set(0.5, -3, 0);
+            scene.add(pool);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x6688aa, 0.6);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
+
+            function animateWaterfall() {
+                requestAnimationFrame(animateWaterfall);
+
+                // Animate water particles
+                const waterPos = waterSystem.geometry.attributes.position.array;
+                for (let i = 0; i < waterParticleCount; i++) {
+                    waterPos[i * 3] += waterVelocities[i].x;
+                    waterPos[i * 3 + 1] += waterVelocities[i].y;
+                    waterVelocities[i].y -= 0.003; // gravity acceleration
+
+                    // Reset when below pool
+                    if (waterPos[i * 3 + 1] < -3.5) {
+                        waterPos[i * 3] = -0.8 + Math.random() * 0.6;
+                        waterPos[i * 3 + 1] = 3;
+                        waterPos[i * 3 + 2] = (Math.random() - 0.5) * 1.5;
+                        waterVelocities[i].y = -Math.random() * 0.15 - 0.05;
+                        waterVelocities[i].x = Math.random() * 0.02;
+                    }
+                }
+                waterSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Animate mist
+                const mistPos = mistSystem.geometry.attributes.position.array;
+                for (let i = 0; i < mistCount; i++) {
+                    mistPos[i * 3] += mistData[i].vx;
+                    mistPos[i * 3 + 1] += mistData[i].vy;
+                    mistData[i].life += 0.01;
+
+                    if (mistData[i].life > 1 || mistPos[i * 3 + 1] > 0) {
+                        mistPos[i * 3] = (Math.random() - 0.3) * 3;
+                        mistPos[i * 3 + 1] = -2.5;
+                        mistPos[i * 3 + 2] = (Math.random() - 0.5) * 2;
+                        mistData[i].life = 0;
+                    }
+                }
+                mistSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Subtle pool ripple effect
+                pool.rotation.z = Math.sin(Date.now() * 0.002) * 0.05;
+
+                renderer.render(scene, camera);
+            }
+            animateWaterfall();
         }
+    </script>
 </body>
 </html>
