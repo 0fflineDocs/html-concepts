@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro</title>
-    <!-- description: CSS: 80s retro -->
+    <title>80s Computing Heritage</title>
+    <!-- description: Authentic 80s computer company aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Bungee&family=Quicksand:wght@400;600;700&family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Courier+Prime:wght@400;700&family=VT323&family=Inconsolata:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 80s Neon Color Palette */
-            --neon-pink: #ff0080;
-            --neon-cyan: #00ffff;
-            --neon-purple: #8a2be2;
-            --neon-green: #39ff14;
-            --neon-orange: #ff6600;
-            --neon-yellow: #ffff00;
-            --neon-blue: #1e90ff;
-            
-            /* Retro Gradients */
-            --sunset-gradient: linear-gradient(180deg, #ff0080 0%, #ff6600 30%, #ffff00 70%, #ff0080 100%);
-            --cyber-gradient: linear-gradient(45deg, #00ffff, #8a2be2, #ff0080);
-            --vaporwave-gradient: linear-gradient(135deg, #ff0080, #8a2be2, #00ffff);
-            
-            /* Dark retro backgrounds */
-            --retro-black: #0a0a0a;
-            --retro-dark-blue: #0f0f2f;
-            --retro-dark-purple: #1a0a2e;
+            /* Authentic 80s Computer Colors */
+            --ibm-blue: #0066cc;
+            --ibm-gray: #c0c0c0;
+            --apple-beige: #f2f0e6;
+            --apple-brown: #5c4037;
+            --ms-blue: #003366;
+            --ms-white: #ffffff;
+            --commodore-blue: #40489a;
+            --commodore-light-blue: #7c70da;
+            --atari-red: #d32f2f;
+            --atari-orange: #ff6f00;
+            --terminal-green: #00ff00;
+            --terminal-amber: #ffbf00;
+            --crt-black: #000000;
         }
 
         * {
@@ -37,21 +33,403 @@
         }
 
         body {
-            font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--retro-black);
-            color: #ffffff;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: 'IBM Plex Mono', 'Courier Prime', monospace;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: unset;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Retro CRT scanlines effect */
-        body::before {
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .subtitle {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.25);
+            padding: 30px;
+            position: relative;
+            border: 2px solid #c0c0c0;
+            font-family: inherit;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            min-height: 280px;
+        }
+
+        .card:hover {
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.35);
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 400;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .year {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            display: inline-block;
+            border: 1px solid;
+        }
+
+        /* IBM - Classic Blue */
+        .card:nth-child(1) {
+            background: var(--ibm-blue);
+            color: white;
+            border: none;
+        }
+        .card:nth-child(1) .tag { color: rgba(255, 255, 255, 0.8); }
+        .card:nth-child(1) .year { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: white;
+            color: white;
+        }
+        .card:nth-child(1)::after {
+            content: 'IBM';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 48px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Apple - Classic Beige and Brown */
+        .card:nth-child(2) {
+            background: var(--apple-beige);
+            color: var(--apple-brown);
+            border: 2px solid var(--apple-brown);
+        }
+        .card:nth-child(2) .tag { color: rgba(92, 64, 55, 0.8); }
+        .card:nth-child(2) .year { 
+            background: rgba(92, 64, 55, 0.1); 
+            border-color: var(--apple-brown);
+        }
+        .card:nth-child(2)::after {
+            content: '🍎';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+        }
+
+        /* Microsoft - 80s Blue */
+        .card:nth-child(3) {
+            background: var(--ms-blue);
+            color: white;
+            border: none;
+        }
+        .card:nth-child(3) .tag { color: rgba(255, 255, 255, 0.8); }
+        .card:nth-child(3) .year { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: white;
+            color: white;
+        }
+        .card:nth-child(3)::before {
             content: '';
-            position: fixed;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+        }
+
+        /* Commodore - Blue */
+        .card:nth-child(4) {
+            background: var(--commodore-blue);
+            color: white;
+            border: 3px solid var(--commodore-light-blue);
+            font-family: 'Courier Prime', monospace;
+        }
+        .card:nth-child(4) .tag { color: var(--commodore-light-blue); }
+        .card:nth-child(4) .title { color: var(--commodore-light-blue); }
+        .card:nth-child(4) .year { 
+            background: transparent; 
+            border-color: var(--commodore-light-blue);
+            color: var(--commodore-light-blue);
+        }
+        .card:nth-child(4)::after {
+            content: '64';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--commodore-light-blue);
+        }
+
+        /* Atari - Red and Orange */
+        .card:nth-child(5) {
+            background: var(--atari-red);
+            color: white;
+            border: none;
+        }
+        .card:nth-child(5) .tag { color: rgba(255, 255, 255, 0.8); }
+        .card:nth-child(5) .year { 
+            background: var(--atari-orange); 
+            border-color: var(--atari-orange);
+            color: white;
+        }
+        .card:nth-child(5)::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 20px;
+            background: var(--atari-orange);
+            border-radius: 10px;
+        }
+
+        /* VIC-20 - Terminal Green */
+        .card:nth-child(6) {
+            background: var(--crt-black);
+            color: var(--terminal-green);
+            border: 2px solid var(--terminal-green);
+            font-family: 'VT323', monospace;
+        }
+        .card:nth-child(6) * {
+            font-family: 'VT323', monospace;
+            text-shadow: 0 0 5px var(--terminal-green);
+        }
+        .card:nth-child(6) .title {
+            font-size: 1.4rem;
+        }
+        .card:nth-child(6) .year { 
+            background: transparent; 
+            border-color: var(--terminal-green);
+        }
+
+        /* Apple IIe - Terminal Amber */
+        .card:nth-child(7) {
+            background: #1a1a1a;
+            color: var(--terminal-amber);
+            border: 1px solid var(--terminal-amber);
+            font-family: 'Courier Prime', monospace;
+        }
+        .card:nth-child(7) * {
+            font-family: 'Courier Prime', monospace;
+            text-shadow: 0 0 3px var(--terminal-amber);
+        }
+        .card:nth-child(7) .year { 
+            background: transparent; 
+            border-color: var(--terminal-amber);
+        }
+
+        /* Sinclair ZX - Rainbow Spectrum */
+        .card:nth-child(8) {
+            background: white;
+            color: black;
+            border: 3px solid black;
+        }
+        .card:nth-child(8) .tag { color: #666; }
+        .card:nth-child(8) .year { 
+            background: black; 
+            color: white;
+            border-color: black;
+        }
+        .card:nth-child(8)::before {
+            content: '';
+            position: absolute;
             top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(
+                90deg,
+                red 0%,
+                orange 16.66%,
+                yellow 33.33%,
+                green 50%,
+                blue 66.66%,
+                indigo 83.33%,
+                violet 100%
+            );
+        }
+
+        /* TRS-80 - Classic Computing */
+        .card:nth-child(9) {
+            background: #e8e8e8;
+            color: #333;
+            border: 3px solid #666;
+            font-family: 'Source Code Pro', monospace;
+        }
+        .card:nth-child(9) * {
+            font-family: 'Source Code Pro', monospace;
+        }
+        .card:nth-child(9) .tag { 
+            color: #666; 
+            letter-spacing: 0.1em;
+        }
+        .card:nth-child(9) .year { 
+            background: #666; 
+            color: white;
+            border-color: #666;
+        }
+        .card:nth-child(9)::after {
+            content: 'READY';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .card {
+                min-height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="eyebrow">Retro Computing</div>
+            <h1>80s Computer Heritage</h1>
+            <p class="subtitle">Authentic designs from the golden age of personal computing</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <span class="tag">Big Blue</span>
+                <h3 class="title">IBM Personal Computer</h3>
+                <p class="description">The machine that defined business computing with its blue and gray aesthetic, professional typography, and corporate design language.</p>
+                <span class="year">1981</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Think Different</span>
+                <h3 class="title">Apple II</h3>
+                <p class="description">Beige plastic case with brown accents, bringing computing to homes with friendly, approachable design and the iconic rainbow apple logo.</p>
+                <span class="year">1977</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Software Giant</span>
+                <h3 class="title">Microsoft</h3>
+                <p class="description">Early Microsoft's corporate identity with deep blue backgrounds, clean white text, and diamond-shaped logos representing innovation.</p>
+                <span class="year">1982</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Home Computer</span>
+                <h3 class="title">Commodore 64</h3>
+                <p class="description">Brown case with blue and light blue accents, using distinctive Commodore fonts and the famous "64" designation.</p>
+                <span class="year">1982</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Gaming Pioneer</span>
+                <h3 class="title">Atari</h3>
+                <p class="description">Bold red chassis with orange highlights, representing the arcade and home gaming revolution with futuristic styling.</p>
+                <span class="year">1977</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Terminal Display</span>
+                <h3 class="title">Commodore VIC-20</h3>
+                <p class="description">Green phosphor terminal display aesthetic with monospace fonts and the characteristic glow of early CRT monitors.</p>
+                <span class="year">1980</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Home Computing</span>
+                <h3 class="title">Apple IIe</h3>
+                <p class="description">Amber phosphor display styling with monospace Courier fonts, representing the warm glow of 80s home terminals.</p>
+                <span class="year">1983</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Budget Computer</span>
+                <h3 class="title">Sinclair ZX Spectrum</h3>
+                <p class="description">White and black minimalist design with the famous rainbow stripe, bringing affordable computing to the masses.</p>
+                <span class="year">1982</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Radio Shack</span>
+                <h3 class="title">TRS-80</h3>
+                <p class="description">Silver-gray business machine aesthetic with conservative fonts and the classic "READY" prompt that defined early computing.</p>
+                <span class="year">1977</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
             left: 0;
             width: 100%;
             height: 100%;
@@ -67,21 +445,9 @@
             animation: scanlines 0.1s infinite;
         }
 
-        /* Retro grid background */
+        /* Subtle grid background */
         body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: -1;
-            animation: grid-shift 20s linear infinite;
+            display: none;
         }
 
         .container {
@@ -99,40 +465,33 @@
         }
 
         .eyebrow {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 0.75rem;
             font-weight: 400;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--neon-cyan);
+            color: #666;
             margin-bottom: 16px;
-            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
         h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
             margin-bottom: 20px;
-            letter-spacing: 0.1em;
-            line-height: 1;
+            letter-spacing: 0.05em;
+            line-height: 1.1;
             text-transform: uppercase;
-            background: var(--cyber-gradient);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: neon-glow 2s ease-in-out infinite alternate, gradient-shift 4s ease infinite;
+            color: #333;
         }
 
         .subtitle {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 1.15rem;
-            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Courier Prime', monospace;
+            font-size: 1rem;
+            color: #666;
             max-width: 600px;
             margin: 0 auto;
             font-weight: 400;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
         .grid {
@@ -172,136 +531,130 @@
         .card:nth-child(9) { animation-delay: 0.5s; }
 
         /* ========================================
-           CARD 1: IBM Style
-           Big Blue 80s computer aesthetic
+           AUTHENTIC 80s COMPUTING STYLES
         ======================================== */
+        
+        /* CARD 1: IBM - Big Blue */
         .ibm-style {
-            background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
-            padding: 48px 40px;
-            border: 2px solid #1e90ff;
+            background: var(--ibm-blue);
+            color: white;
+            padding: 30px;
+            border: none;
             position: relative;
-            overflow: hidden;
-        }
-
-        .ibm-style::before {
-            content: 'IBM';
-            position: absolute;
-            bottom: -20px;
-            right: 20px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 120px;
-            font-weight: 900;
-            color: rgba(30, 144, 255, 0.08);
-            letter-spacing: 0.2em;
-            pointer-events: none;
-        }
-
-        .ibm-style::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent 0px,
-                transparent 8px,
-                rgba(30, 144, 255, 0.1) 8px,
-                rgba(30, 144, 255, 0.1) 16px
-            );
-            pointer-events: none;
-        }
-
-        .ibm-style:hover {
-            transform: scale(1.02);
-            border-color: var(--neon-cyan);
-            box-shadow: 
-                0 0 30px rgba(30, 144, 255, 0.5),
-                inset 0 0 30px rgba(30, 144, 255, 0.1);
         }
 
         .ibm-style .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            color: #1e90ff;
-            margin-bottom: 20px;
-            letter-spacing: 0.3em;
-            text-shadow: 0 0 20px #1e90ff;
-            position: relative;
-            z-index: 1;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
         }
 
         .ibm-style .tag {
-            font-family: 'Share Tech Mono', monospace;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 0.7rem;
-            font-weight: 400;
-            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--neon-cyan);
-            margin-bottom: 16px;
-            display: block;
-            position: relative;
-            z-index: 1;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 12px;
         }
 
         .ibm-style .title {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 800;
-            line-height: 1.25;
-            margin-bottom: 16px;
-            color: #fff;
-            position: relative;
-            z-index: 1;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: white;
         }
 
         .ibm-style .description {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.7;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
 
         .ibm-style .year {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-            color: #1e90ff;
-            background: rgba(30, 144, 255, 0.1);
-            padding: 8px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
             display: inline-block;
-            border: 1px solid #1e90ff;
-            position: relative;
-            z-index: 1;
         }
 
-        /* ========================================
-           CARD 2: Apple Style
-           80s Macintosh rainbow aesthetic
-        ======================================== */
+        .ibm-style::after {
+            content: 'IBM';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* CARD 2: Apple - Classic Beige */
         .apple-style {
-            background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
-            padding: 48px 40px;
-            border: 2px solid transparent;
-            background-image: linear-gradient(var(--retro-black), var(--retro-black)), 
-                              linear-gradient(45deg, #ff0080, #ff6600, #ffff00, #39ff14, #00ffff, #8a2be2);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
+            background: var(--apple-beige);
+            color: var(--apple-brown);
+            padding: 30px;
+            border: 2px solid var(--apple-brown);
             position: relative;
-            overflow: hidden;
+        }
+
+        .apple-style .logo {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 1.8rem;
+            color: var(--apple-brown);
+            margin-bottom: 15px;
+        }
+
+        .apple-style .tag {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: rgba(92, 64, 55, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .apple-style .title {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--apple-brown);
+        }
+
+        .apple-style .description {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 0.9rem;
+            color: var(--apple-brown);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .apple-style .year {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 0.8rem;
+            color: var(--apple-brown);
+            background: rgba(92, 64, 55, 0.1);
+            padding: 4px 8px;
+            display: inline-block;
+            border: 1px solid var(--apple-brown);
         }
 
         .apple-style::before {
             content: '🍎';
             position: absolute;
-            top: 30px;
-            right: 30px;
-            font-size: 60px;
-            filter: hue-rotate(0deg);
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+        }
             animation: rainbow-shift 3s ease infinite;
         }
 
