@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro 80s Design Systems</title>
+    <!-- description: CSS: 80s retro design aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Bungee&family=Quicksand:wght@400;600;700&family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 80s Neon Color Palette */
+            --neon-pink: #ff0080;
+            --neon-cyan: #00ffff;
+            --neon-purple: #8a2be2;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6600;
+            --neon-yellow: #ffff00;
+            --neon-blue: #1e90ff;
+            
+            /* Retro Gradients */
+            --sunset-gradient: linear-gradient(180deg, #ff0080 0%, #ff6600 30%, #ffff00 70%, #ff0080 100%);
+            --cyber-gradient: linear-gradient(45deg, #00ffff, #8a2be2, #ff0080);
+            --vaporwave-gradient: linear-gradient(135deg, #ff0080, #8a2be2, #00ffff);
+            
+            /* Dark retro backgrounds */
+            --retro-black: #0a0a0a;
+            --retro-dark-blue: #0f0f2f;
+            --retro-dark-purple: #1a0a2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--retro-black);
+            color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Retro CRT scanlines effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 2px,
+                rgba(0, 255, 255, 0.03) 2px,
+                rgba(0, 255, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 0.1s infinite;
+        }
+
+        /* Retro grid background */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: grid-shift 20s linear infinite;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 16px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+            line-height: 1;
+            text-transform: uppercase;
+            background: var(--cyber-gradient);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neon-glow 2s ease-in-out infinite alternate, gradient-shift 4s ease infinite;
+        }
+
+        .subtitle {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+        }
+
+        .card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: fadeInUp 0.6s ease-out backwards;
+            border: 2px solid transparent;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+        .card:nth-child(5) { animation-delay: 0.3s; }
+        .card:nth-child(6) { animation-delay: 0.35s; }
+        .card:nth-child(7) { animation-delay: 0.4s; }
+        .card:nth-child(8) { animation-delay: 0.45s; }
+        .card:nth-child(9) { animation-delay: 0.5s; }
+
+        /* ========================================
+           CARD 1: IBM Style
+           Big Blue 80s computer aesthetic
+        ======================================== */
+        .ibm-style {
+            background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+            padding: 48px 40px;
+            border: 2px solid #1e90ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ibm-style::before {
+            content: 'IBM';
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(30, 144, 255, 0.08);
+            letter-spacing: 0.2em;
+            pointer-events: none;
+        }
+
+        .ibm-style::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                transparent 8px,
+                rgba(30, 144, 255, 0.1) 8px,
+                rgba(30, 144, 255, 0.1) 16px
+            );
+            pointer-events: none;
+        }
+
+        .ibm-style:hover {
+            transform: scale(1.02);
+            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 0 30px rgba(30, 144, 255, 0.5),
+                inset 0 0 30px rgba(30, 144, 255, 0.1);
+        }
+
+        .ibm-style .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 20px #1e90ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ibm-style .tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ibm-style .title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ibm-style .description {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ibm-style .year {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: #1e90ff;
+            background: rgba(30, 144, 255, 0.1);
+            padding: 8px 16px;
+            display: inline-block;
+            border: 1px solid #1e90ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           CARD 2: Apple Style
+           80s Macintosh rainbow aesthetic
+        ======================================== */
+        .apple-style {
+            background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+            padding: 48px 40px;
+            border: 2px solid transparent;
+            background-image: linear-gradient(var(--retro-black), var(--retro-black)), 
+                              linear-gradient(45deg, #ff0080, #ff6600, #ffff00, #39ff14, #00ffff, #8a2be2);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apple-style::before {
+            content: '🍎';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 60px;
+            filter: hue-rotate(0deg);
+            animation: rainbow-shift 3s ease infinite;
+        }
+
+        .apple-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 0, 128, 0.1) 100%);
+            pointer-events: none;
+        }
+
+        .apple-style:hover {
+            transform: translateY(-4px) rotate(-0.5deg);
+            box-shadow: 
+                0 0 60px rgba(255, 0, 128, 0.4),
+                0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .apple-style .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            background: var(--sunset-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: rainbow-text 4s ease infinite;
+        }
+
+        .apple-style .tag {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--neon-pink);
+            margin-bottom: 16px;
+            display: block;
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .apple-style .title {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 400;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .apple-style .description {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .apple-style .features {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .apple-style .feature {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: #000;
+            background: var(--sunset-gradient);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ========================================
+           CARD 3: Microsoft Style
+           80s DOS/Windows neon green terminal
+        ======================================== */
+        .microsoft-style {
+            background: var(--retro-black);
+            padding: 48px 40px;
+            border: 2px solid var(--neon-green);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .microsoft-style::before {
+            content: 'C:\\>';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+            animation: cursor-blink 1s infinite;
+        }
+
+        .microsoft-style::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.03) 50%, transparent 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 20px,
+                    rgba(57, 255, 20, 0.02) 20px,
+                    rgba(57, 255, 20, 0.02) 22px
+                );
+            pointer-events: none;
+        }
+
+        .microsoft-style:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 0 40px rgba(57, 255, 20, 0.3),
+                inset 0 0 40px rgba(57, 255, 20, 0.05);
+        }
+
+        .microsoft-style .terminal-header {
+            background: rgba(57, 255, 20, 0.1);
+            padding: 12px 20px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 1px solid var(--neon-green);
+            font-size: 0.8rem;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        .microsoft-style .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            margin-bottom: 20px;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 15px var(--neon-green);
+        }
+
+        .microsoft-style .command {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .microsoft-style .command::before {
+            content: '> ';
+            color: rgba(57, 255, 20, 0.7);
+        }
+
+        .microsoft-style .output {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 16px;
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        .microsoft-style .version {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.7rem;
+            color: rgba(57, 255, 20, 0.5);
+        }
+
+        /* ========================================
+           CARD 4: Commodore Style
+           C64 blue/light blue retro computer
+        ======================================== */
+        .commodore-style {
+            background: linear-gradient(180deg, #40489a 0%, #3e4a89 100%);
+            padding: 48px 40px;
+            border: 3px solid #7c70da;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commodore-style::before {
+            content: 'COMMODORE 64';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #7c70da;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 10px #7c70da;
+        }
+
+        .commodore-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7c70da, #a5a8ff, #7c70da);
+        }
+
+        .commodore-style:hover {
+            transform: scale(1.01);
+            box-shadow: 
+                0 0 50px rgba(124, 112, 218, 0.4),
+                inset 0 0 50px rgba(124, 112, 218, 0.1);
+        }
+
+        .commodore-style .screen {
+            background: #000;
+            border: 4px solid #7c70da;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 40px;
+            margin-bottom: 24px;
+            font-family: 'Share Tech Mono', monospace;
+            position: relative;
+        }
+
+        .commodore-style .ready-prompt {
+            color: #7c70da;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            text-shadow: 0 0 5px #7c70da;
+        }
+
+        .commodore-style .basic-code {
+            color: #a5a8ff;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .commodore-style .cursor {
+            display: inline-block;
+            background: #7c70da;
+            width: 8px;
+            height: 16px;
+            animation: cursor-blink 1s infinite;
+        }
+
+        .commodore-style .label {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* ========================================
+           CARD 5: Atari Style
+           Orange/red sunset gaming aesthetic
+        ======================================== */
+        .atari-style {
+            background: linear-gradient(180deg, #000 0%, #1a0a00 50%, #ff6600 100%);
+            padding: 48px 40px;
+            border: 2px solid var(--neon-orange);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .atari-style::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 102, 0, 0.2) 0%, transparent 70%);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .atari-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 40px,
+                rgba(255, 102, 0, 0.1) 40px,
+                rgba(255, 102, 0, 0.1) 42px
+            );
+            pointer-events: none;
+        }
+
+        .atari-style:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-yellow);
+            box-shadow: 
+                0 0 60px rgba(255, 102, 0, 0.5),
+                0 20px 40px rgba(255, 102, 0, 0.3);
+        }
+
+        .atari-style .logo {
+            font-family: 'Bungee', sans-serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--neon-orange);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--neon-orange);
+            position: relative;
+            z-index: 1;
+        }
+
+        .atari-style .tag {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--neon-yellow);
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .atari-style .title {
+            font-family: 'Bungee', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .atari-style .description {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .atari-style .score {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--neon-orange);
+            text-shadow: 0 0 10px var(--neon-orange);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           CARD 6: Sony Style
+           Walkman pink/purple retro vibes
+        ======================================== */
+        .sony-style {
+            background: linear-gradient(135deg, #2c1810 0%, #1a0a2e 100%);
+            padding: 48px 40px;
+            border: 2px solid var(--neon-pink);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sony-style::before {
+            content: '♪';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            color: var(--neon-pink);
+            text-shadow: 0 0 20px var(--neon-pink);
+            animation: music-pulse 2s ease-in-out infinite;
+        }
+
+        .sony-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                var(--neon-pink) 0%, 
+                var(--neon-purple) 50%, 
+                var(--neon-pink) 100%);
+            animation: equalizer 1.5s ease infinite;
+        }
+
+        .sony-style:hover {
+            transform: scale(1.02) rotate(-0.5deg);
+            box-shadow: 
+                0 0 50px rgba(255, 0, 128, 0.4),
+                inset 0 0 50px rgba(138, 43, 226, 0.1);
+        }
+
+        .sony-style .cassette {
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 8px;
+            margin: 0 auto 24px auto;
+            position: relative;
+            border: 2px solid var(--neon-pink);
+        }
+
+        .sony-style .cassette::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #000 30%, transparent 30%);
+            border: 2px solid var(--neon-pink);
+            border-radius: 50%;
+        }
+
+        .sony-style .cassette::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #000 30%, transparent 30%);
+            border: 2px solid var(--neon-pink);
+            border-radius: 50%;
+            animation: spin 3s linear infinite;
+        }
+
+        .sony-style .logo {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--neon-pink);
+            text-align: center;
+            margin-bottom: 16px;
+            text-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        .sony-style .title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .sony-style .description {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* ========================================
+           CARD 7: MTV Style
+           80s music television neon madness
+        ======================================== */
+        .mtv-style {
+            background: var(--retro-black);
+            padding: 48px 40px;
+            border: 2px solid transparent;
+            background-image: linear-gradient(var(--retro-black), var(--retro-black)), var(--vaporwave-gradient);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mtv-style::before {
+            content: 'TV';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Bungee', sans-serif;
+            font-size: 80px;
+            font-weight: 400;
+            background: var(--vaporwave-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.2;
+        }
+
+        .mtv-style::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg,
+                rgba(255, 0, 128, 0.1) 30deg,
+                transparent 60deg,
+                rgba(0, 255, 255, 0.1) 90deg,
+                transparent 120deg
+            );
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .mtv-style:hover {
+            transform: scale(1.02);
+            box-shadow: 
+                0 0 60px rgba(255, 0, 128, 0.3),
+                0 0 60px rgba(0, 255, 255, 0.3);
+        }
+
+        .mtv-style .logo {
+            font-family: 'Bungee', sans-serif;
+            font-size: 3rem;
+            font-weight: 400;
+            background: var(--vaporwave-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .mtv-style .tag {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mtv-style .title {
+            font-family: 'Bungee', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .mtv-style .description {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mtv-style .vj-line {
+            font-family: 'Audiowide', sans-serif;
+            font-size: 0.9rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+            text-align: center;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           CARD 8: Nintendo Style
+           NES red/gray gaming console
+        ======================================== */
+        .nintendo-style {
+            background: linear-gradient(180deg, #8B0000 0%, #4a0000 50%, #1a1a1a 100%);
+            padding: 48px 40px;
+            border: 3px solid #DC143C;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nintendo-style::before {
+            content: '⚡';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 20px var(--neon-yellow);
+            animation: power-blink 2s ease infinite;
+        }
+
+        .nintendo-style::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                #DC143C 0px,
+                #DC143C 20px,
+                #666 20px,
+                #666 40px
+            );
+        }
+
+        .nintendo-style:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 0 40px rgba(220, 20, 60, 0.4),
+                0 20px 40px rgba(220, 20, 60, 0.2);
+        }
+
+        .nintendo-style .console {
+            background: linear-gradient(45deg, #666, #999);
+            border: 2px solid #DC143C;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .nintendo-style .power-light {
+            width: 12px;
+            height: 12px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: power-pulse 1.5s ease infinite;
+        }
+
+        .nintendo-style .cartridge-slot {
+            width: 100px;
+            height: 8px;
+            background: #000;
+            margin: 0 auto;
+            border: 1px solid #333;
+        }
+
+        .nintendo-style .logo {
+            font-family: 'Bungee', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #DC143C;
+            text-align: center;
+            margin-bottom: 16px;
+            text-shadow: 0 0 15px #DC143C;
+        }
+
+        .nintendo-style .title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .nintendo-style .description {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nintendo-style .game-line {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-yellow);
+            text-align: center;
+            text-shadow: 0 0 5px var(--neon-yellow);
+        }
+
+        /* ========================================
+           CARD 9: Pac-Man Arcade Style
+           Yellow arcade gaming nostalgia
+        ======================================== */
+        .pacman-style {
+            background: linear-gradient(180deg, #000080 0%, #000040 50%, #000 100%);
+            padding: 48px 40px;
+            border: 3px solid var(--neon-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pacman-style::before {
+            content: '• • • • •';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--neon-yellow);
+            text-align: center;
+            letter-spacing: 2rem;
+            text-shadow: 0 0 10px var(--neon-yellow);
+            animation: dots-fade 3s ease infinite;
+            z-index: 0;
+        }
+
+        .pacman-style::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(255, 255, 0, 0.02) 40px,
+                    rgba(255, 255, 0, 0.02) 42px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(255, 255, 0, 0.02) 40px,
+                    rgba(255, 255, 0, 0.02) 42px
+                );
+            pointer-events: none;
+        }
+
+        .pacman-style:hover {
+            transform: scale(1.02);
+            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 0 50px rgba(255, 255, 0, 0.4),
+                inset 0 0 50px rgba(255, 255, 0, 0.1);
+        }
+
+        .pacman-style .arcade-screen {
+            background: #000;
+            border: 4px solid var(--neon-yellow);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pacman-style .pacman {
+            font-size: 3rem;
+            color: var(--neon-yellow);
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px var(--neon-yellow);
+            animation: pac-chomp 0.8s ease infinite;
+        }
+
+        .pacman-style .score {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+            margin-bottom: 8px;
+        }
+
+        .pacman-style .high-score {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 8px var(--neon-pink);
+        }
+
+        .pacman-style .title {
+            font-family: 'Bungee', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            color: var(--neon-yellow);
+            text-align: center;
+            text-shadow: 0 0 15px var(--neon-yellow);
+            position: relative;
+            z-index: 1;
+        }
+
+        .pacman-style .description {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           Animations
+        ======================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes neon-glow {
+            from {
+                text-shadow: 
+                    0 0 5px currentColor,
+                    0 0 10px currentColor,
+                    0 0 20px currentColor;
+            }
+            to {
+                text-shadow: 
+                    0 0 10px currentColor,
+                    0 0 20px currentColor,
+                    0 0 40px currentColor;
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes scanlines {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes grid-shift {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(50px) translateY(50px); }
+        }
+
+        @keyframes cursor-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes rainbow-shift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes rainbow-text {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        @keyframes music-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes equalizer {
+            0% { height: 6px; }
+            50% { height: 12px; }
+            100% { height: 6px; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes power-blink {
+            0%, 80% { opacity: 1; }
+            90% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes power-pulse {
+            0%, 100% { box-shadow: 0 0 10px var(--neon-green); }
+            50% { box-shadow: 0 0 20px var(--neon-green); }
+        }
+
+        @keyframes dots-fade {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes pac-chomp {
+            0%, 100% { content: '◐'; }
+            50% { content: '●'; }
+        }
+
+        /* ========================================
+           Footer
+        ======================================== */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid var(--neon-cyan);
+            box-shadow: 0 -2px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        footer p {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        footer .retro-brands {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p class="eyebrow">Retro Design Systems</p>
+            <h1>80s Nostalgia</h1>
+            <p class="subtitle">A neon-soaked journey through the radical design aesthetics that defined the decade</p>
+        </header>
+
+        <div class="grid">
+            <!-- Card 1: IBM Style -->
+            <article class="card ibm-style">
+                <div class="logo">IBM</div>
+                <span class="tag">Big Blue Computing</span>
+                <h2 class="title">Personal Computer Revolution</h2>
+                <p class="description">The IBM PC set the standard for business computing. Blue suits, black screens, and the birth of the modern office.</p>
+                <span class="year">EST. 1981</span>
+            </article>
+
+            <!-- Card 2: Apple Style -->
+            <article class="card apple-style">
+                <div class="logo">Apple</div>
+                <span class="tag">Think Different</span>
+                <h2 class="title">Macintosh Magic</h2>
+                <p class="description">The computer for the rest of us. Revolutionary GUI, rainbow logo, and the beginning of user-friendly computing.</p>
+                <div class="features">
+                    <span class="feature">GUI</span>
+                    <span class="feature">Mouse</span>
+                    <span class="feature">Icons</span>
+                    <span class="feature">Desktop</span>
+                </div>
+            </article>
+
+            <!-- Card 3: Microsoft Style -->
+            <article class="card microsoft-style">
+                <div class="terminal-header">Microsoft Corporation • DOS 3.1 • 1985</div>
+                <div class="logo">MICROSOFT</div>
+                <div class="command">dir c:\windows</div>
+                <div class="output">Volume in drive C has no label<br>Directory of C:\WINDOWS</div>
+                <div class="command">win</div>
+                <div class="output">Starting Windows...</div>
+                <div class="command">format c: /s</div>
+                <div class="output">WARNING: ALL DATA WILL BE LOST</div>
+                <div class="version">MS-DOS 3.1</div>
+            </article>
+
+            <!-- Card 4: Commodore Style -->
+            <article class="card commodore-style">
+                <div class="screen">
+                    <div class="ready-prompt">READY.</div>
+                    <div class="basic-code">10 PRINT "HELLO WORLD"</div>
+                    <div class="basic-code">20 GOTO 10</div>
+                    <div class="basic-code">RUN</div>
+                    <div class="cursor"></div>
+                </div>
+                <div class="label">The Computer for the Masses, Not the Classes</div>
+            </article>
+
+            <!-- Card 5: Atari Style -->
+            <article class="card atari-style">
+                <div class="logo">ATARI</div>
+                <span class="tag">Video Computer System</span>
+                <h2 class="title">Game On</h2>
+                <p class="description">Bringing the arcade home. Joysticks, cartridges, and countless hours of fun. The foundation of home gaming.</p>
+                <div class="score">HIGH SCORE: 999,999</div>
+            </article>
+
+            <!-- Card 6: Sony Style -->
+            <article class="card sony-style">
+                <div class="cassette"></div>
+                <div class="logo">SONY</div>
+                <h2 class="title">Walkman Revolution</h2>
+                <p class="description">Music on the move. Personal stereo that changed how we experience sound. The soundtrack to the 80s lifestyle.</p>
+            </article>
+
+            <!-- Card 7: MTV Style -->
+            <article class="card mtv-style">
+                <div class="logo">MTV</div>
+                <span class="tag">Music Television</span>
+                <h2 class="title">Video Killed the Radio Star</h2>
+                <p class="description">24-hour music videos, VJs, and cultural revolution. The generation that grew up on screen instead of radio.</p>
+                <div class="vj-line">"I want my MTV!"</div>
+            </article>
+
+            <!-- Card 8: Nintendo Style -->
+            <article class="card nintendo-style">
+                <div class="console">
+                    <div class="power-light"></div>
+                    <div class="cartridge-slot"></div>
+                </div>
+                <div class="logo">NINTENDO</div>
+                <h2 class="title">Entertainment System</h2>
+                <p class="description">Saving the video game industry. 8-bit adventures, iconic characters, and the controller that shaped gaming forever.</p>
+                <div class="game-line">GAME OVER • PRESS START</div>
+            </article>
+
+            <!-- Card 9: Pac-Man Arcade Style -->
+            <article class="card pacman-style">
+                <div class="arcade-screen">
+                    <div class="pacman">◐</div>
+                    <div class="score">SCORE: 247,300</div>
+                    <div class="high-score">HIGH: 999,990</div>
+                </div>
+                <h2 class="title">Arcade Fever</h2>
+                <p class="description">Quarter-eating machines and neon-lit arcades. The golden age of gaming where legends were born and records were broken.</p>
+            </article>
+        </div>
+
+        <footer>
+            <p>Totally Radical Design Inspiration</p>
+            <p class="retro-brands">IBM • Apple • Microsoft • Commodore • Atari • Sony • MTV • Nintendo • Arcade Culture</p>
+        </footer>
+    </div>
+</body>
+</html>
