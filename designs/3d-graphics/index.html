@@ -247,14 +247,14 @@
                 </div>
             </div>
 
-            <!-- Cannon.js Demo -->
+            <!-- A-Frame Demo 2 -->
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
-                    <canvas id="cannon-physics"></canvas>
+                    <div id="aframe-prism" style="width: 100%; height: 100%;"></div>
                 </div>
                 <div class="demo-info">
-                    <div class="library-badge badge-cannon">Cannon.js</div>
-                    <div class="demo-title">Bouncing Spheres</div>
+                    <div class="library-badge badge-aframe">A-Frame</div>
+                    <div class="demo-title">Floating Prism</div>
                 </div>
             </div>
         </div>
@@ -864,109 +864,124 @@
         }
     </script>
 
-    <!-- Cannon.js Physics -->
-    <script src="https://cdn.jsdelivr.net/npm/cannon@0.20.0/build/cannon.min.js"></script>
+    <!-- A-Frame Demo 2: Floating Prism -->
     <script type="module">
         import * as THREE from 'three';
         
-        // Cannon.js Demo: Bouncing Spheres
-        setTimeout(() => {
-            const canvas = document.getElementById('cannon-physics');
-            if (!canvas) return;
+        // A-Frame-style Demo: Floating Prism
+        {
+            const container = document.getElementById('aframe-prism');
+            if (!container) return;
             
-            const parentWidth = canvas.parentElement.clientWidth;
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             
-            renderer.setSize(parentWidth, 280);
-            renderer.setClearColor(0x000000, 0);
+            renderer.setSize(container.clientWidth, 280);
+            renderer.setClearColor(0x001122, 1);
+            container.appendChild(renderer.domElement);
             
-            // Physics world
-            const world = new CANNON.World();
-            world.gravity.set(0, -9.82, 0);
-            world.broadphase = new CANNON.NaiveBroadphase();
+            // Create triangular prism geometry
+            const prismGeometry = new THREE.CylinderGeometry(0, 1.2, 2, 3);
+            const prismMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4080,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+            const prism = new THREE.Mesh(prismGeometry, prismMaterial);
+            prism.position.z = -4;
+            scene.add(prism);
             
-            // Ground
-            const groundShape = new CANNON.Plane();
-            const groundBody = new CANNON.Body({ mass: 0 });
-            groundBody.addShape(groundShape);
-            groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-            world.add(groundBody);
+            // Create wireframe overlay
+            const wireframeGeometry = new THREE.CylinderGeometry(0, 1.2, 2, 3);
+            const wireframeMaterial = new THREE.WireframeGeometry(wireframeGeometry);
+            const wireframe = new THREE.LineSegments(wireframeMaterial, 
+                new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.6 })
+            );
+            wireframe.position.z = -4;
+            scene.add(wireframe);
             
-            // Bouncing spheres
-            const spheres = [];
-            const sphereGeometry = new THREE.SphereGeometry(0.3, 16, 12);
-            
-            for (let i = 0; i < 5; i++) {
-                // Physics body
-                const shape = new CANNON.Sphere(0.3);
-                const body = new CANNON.Body({ mass: 1 });
-                body.addShape(shape);
-                body.position.set(
-                    (Math.random() - 0.5) * 4,
-                    3 + i * 0.8,
-                    (Math.random() - 0.5) * 4
-                );
-                body.velocity.set(
-                    (Math.random() - 0.5) * 4,
-                    0,
-                    (Math.random() - 0.5) * 4
-                );
-                body.material = new CANNON.Material({ restitution: 0.9 });
-                world.add(body);
-                
-                // Visual mesh
-                const material = new THREE.MeshPhongMaterial({
-                    color: new THREE.Color().setHSL(i / 5, 0.8, 0.6),
-                    shininess: 100
+            // Floating particles
+            const particles = [];
+            for (let i = 0; i < 15; i++) {
+                const particleGeometry = new THREE.SphereGeometry(0.05, 8, 6);
+                const particleMaterial = new THREE.MeshBasicMaterial({ 
+                    color: new THREE.Color().setHSL(Math.random(), 0.8, 0.7),
+                    transparent: true,
+                    opacity: 0.8
                 });
-                const mesh = new THREE.Mesh(sphereGeometry, material);
-                scene.add(mesh);
+                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
                 
-                spheres.push({ body, mesh });
+                particle.position.set(
+                    (Math.random() - 0.5) * 6,
+                    (Math.random() - 0.5) * 4,
+                    -6 + Math.random() * 4
+                );
+                
+                particle.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02
+                    ),
+                    originalPos: particle.position.clone()
+                };
+                
+                scene.add(particle);
+                particles.push(particle);
             }
             
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
             scene.add(ambientLight);
             
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
+            const pointLight1 = new THREE.PointLight(0xff4080, 1, 10);
+            pointLight1.position.set(2, 2, -2);
+            scene.add(pointLight1);
             
-            camera.position.set(6, 4, 6);
-            camera.lookAt(0, 0, 0);
+            const pointLight2 = new THREE.PointLight(0x00ffff, 1, 10);
+            pointLight2.position.set(-2, -2, -2);
+            scene.add(pointLight2);
             
+            camera.position.z = 2;
+            
+            let time = 0;
             function animate() {
-                world.step(1/60);
+                time += 0.016;
                 
-                // Update visual objects from physics
-                spheres.forEach(({ body, mesh }) => {
-                    mesh.position.copy(body.position);
-                    mesh.quaternion.copy(body.quaternion);
+                // Rotate and float prism
+                prism.rotation.x = time * 0.5;
+                prism.rotation.y = time * 0.8;
+                prism.position.y = Math.sin(time * 1.5) * 0.3;
+                
+                // Rotate wireframe slightly different
+                wireframe.rotation.x = time * 0.6;
+                wireframe.rotation.y = time * 0.7;
+                wireframe.position.y = Math.sin(time * 1.5) * 0.3;
+                
+                // Animate particles
+                particles.forEach((particle, i) => {
+                    particle.position.add(particle.userData.velocity);
                     
-                    // Reset if sphere falls too far
-                    if (body.position.y < -5) {
-                        body.position.set(
-                            (Math.random() - 0.5) * 4,
-                            5,
-                            (Math.random() - 0.5) * 4
-                        );
-                        body.velocity.set(
-                            (Math.random() - 0.5) * 4,
-                            0,
-                            (Math.random() - 0.5) * 4
-                        );
-                    }
+                    // Orbit around original position
+                    const orbitRadius = 0.5 + Math.sin(time + i) * 0.3;
+                    particle.position.x = particle.userData.originalPos.x + Math.cos(time * 0.5 + i * 0.5) * orbitRadius;
+                    particle.position.y = particle.userData.originalPos.y + Math.sin(time * 0.7 + i * 0.5) * orbitRadius;
+                    
+                    // Color cycling
+                    particle.material.color.setHSL((time * 0.5 + i * 0.1) % 1, 0.8, 0.7);
                 });
+                
+                // Animate lights
+                pointLight1.intensity = 0.8 + Math.sin(time * 2) * 0.4;
+                pointLight2.intensity = 0.8 + Math.cos(time * 2.5) * 0.4;
                 
                 renderer.render(scene, camera);
                 requestAnimationFrame(animate);
             }
-            
             animate();
-        }, 100);
+        }
     </script>
 </body>
 </html>
