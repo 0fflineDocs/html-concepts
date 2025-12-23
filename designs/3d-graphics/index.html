@@ -122,6 +122,8 @@
         .badge-p5 { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
         .badge-babylon { background: rgba(16, 185, 129, 0.2); color: #34d399; }
         .badge-d3 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-aframe { background: rgba(217, 70, 239, 0.2); color: #e879f9; }
+        .badge-cannon { background: rgba(239, 68, 68, 0.2); color: #f87171; }
     </style>
 </head>
 <body>
@@ -231,6 +233,34 @@
                 <div class="demo-info">
                     <div class="library-badge badge-d3">D3.js</div>
                     <div class="demo-title">Data Stream</div>
+                </div>
+            </div>
+
+            <!-- A-Frame Demo -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <a-scene id="aframe-scene" embedded style="width: 100%; height: 100%;">
+                        <a-sphere id="aframe-sphere" position="0 1.25 -5" radius="1.25" color="#EF2D5E" roughness="0.1" metalness="0.5"></a-sphere>
+                        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+                        <a-sky color="#111111"></a-sky>
+                        <a-light type="ambient" color="#404040"></a-light>
+                        <a-light type="point" position="2 4 4" color="#ffffff"></a-light>
+                    </a-scene>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-aframe">A-Frame</div>
+                    <div class="demo-title">VR Scene</div>
+                </div>
+            </div>
+
+            <!-- Cannon.js Demo -->
+            <div class="demo-card">
+                <div class="demo-canvas-wrapper">
+                    <canvas id="cannon-physics"></canvas>
+                </div>
+                <div class="demo-info">
+                    <div class="library-badge badge-cannon">Cannon.js</div>
+                    <div class="demo-title">Physics Simulation</div>
                 </div>
             </div>
         </div>
@@ -767,6 +797,130 @@
 
                 requestAnimationFrame(animate);
             }
+            animate();
+        }
+    </script>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script>
+        // A-Frame Demo: VR Scene with animated sphere
+        AFRAME.registerComponent('animate-rotation', {
+            tick: function () {
+                this.el.object3D.rotation.x += 0.01;
+                this.el.object3D.rotation.y += 0.01;
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const sphere = document.querySelector('#aframe-sphere');
+            if (sphere) {
+                sphere.setAttribute('animate-rotation', '');
+                sphere.setAttribute('animation', {
+                    property: 'position',
+                    to: '0 2.5 -5',
+                    dur: 2000,
+                    dir: 'alternate',
+                    loop: true,
+                    easing: 'easeInOutSine'
+                });
+            }
+        });
+    </script>
+
+    <!-- Cannon.js Physics -->
+    <script src="https://cdn.jsdelivr.net/npm/cannon@0.20.0/build/cannon.min.js"></script>
+    <script type="module">
+        import * as THREE from 'three';
+        
+        // Cannon.js Demo: Physics Simulation
+        {
+            const canvas = document.getElementById('cannon-physics');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.parentElement.clientWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            
+            renderer.setSize(canvas.parentElement.clientWidth, 280);
+            renderer.setClearColor(0x000000, 0);
+            
+            // Physics world
+            const world = new CANNON.World();
+            world.gravity.set(0, -9.82, 0);
+            world.broadphase = new CANNON.NaiveBroadphase();
+            
+            // Ground
+            const groundShape = new CANNON.Plane();
+            const groundBody = new CANNON.Body({ mass: 0 });
+            groundBody.addShape(groundShape);
+            groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+            world.add(groundBody);
+            
+            const groundGeometry = new THREE.PlaneGeometry(10, 10);
+            const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x333333, transparent: true, opacity: 0.3 });
+            const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+            groundMesh.rotation.x = -Math.PI / 2;
+            scene.add(groundMesh);
+            
+            // Falling boxes
+            const boxes = [];
+            const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            
+            function createBox() {
+                // Physics body
+                const shape = new CANNON.Box(new CANNON.Vec3(0.25, 0.25, 0.25));
+                const body = new CANNON.Body({ mass: 1 });
+                body.addShape(shape);
+                body.position.set(
+                    (Math.random() - 0.5) * 4,
+                    5 + Math.random() * 3,
+                    (Math.random() - 0.5) * 4
+                );
+                world.add(body);
+                
+                // Visual mesh
+                const material = new THREE.MeshLambertMaterial({
+                    color: new THREE.Color().setHSL(Math.random(), 0.7, 0.6)
+                });
+                const mesh = new THREE.Mesh(boxGeometry, material);
+                scene.add(mesh);
+                
+                boxes.push({ body, mesh });
+                
+                // Remove old boxes
+                if (boxes.length > 15) {
+                    const old = boxes.shift();
+                    world.remove(old.body);
+                    scene.remove(old.mesh);
+                }
+            }
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            camera.position.set(5, 5, 5);
+            camera.lookAt(0, 0, 0);
+            
+            // Create boxes periodically
+            setInterval(createBox, 800);
+            
+            function animate() {
+                world.step(1/60);
+                
+                // Update visual objects from physics
+                boxes.forEach(({ body, mesh }) => {
+                    mesh.position.copy(body.position);
+                    mesh.quaternion.copy(body.quaternion);
+                });
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            
             animate();
         }
     </script>
