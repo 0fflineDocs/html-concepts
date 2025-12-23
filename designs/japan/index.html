@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manga & Anime Classics</title>
+    <!-- description: CSS: Authentic manga and anime visual styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Source+Code+Pro:wght@400;700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Akira - Bold red and black manga style */
+            --akira-red: #dc143c;
+            --akira-black: #000000;
+            --akira-white: #ffffff;
+            
+            /* Ghost in the Shell - Teal and dark blue */
+            --gits-teal: #008080;
+            --gits-dark: #1a1a2e;
+            --gits-light: #b0e0e6;
+            
+            /* Evangelion - Purple and orange */
+            --eva-purple: #4b0082;
+            --eva-orange: #ff4500;
+            --eva-dark: #2f2f2f;
+            
+            /* Naruto - Orange and navy */
+            --naruto-orange: #ff8c00;
+            --naruto-navy: #191970;
+            --naruto-beige: #f5deb3;
+            
+            /* Lady Snowblood - Crimson and white */
+            --snow-crimson: #b22222;
+            --snow-white: #ffffff;
+            --snow-gray: #2f2f2f;
+            
+            /* Edgerunners - Pink and cyan */
+            --edge-pink: #ff1493;
+            --edge-cyan: #00ffff;
+            --edge-dark: #0a0a0f;
+            
+            /* Hellsing - Dark red and black */
+            --hellsing-darkred: #8b0000;
+            --hellsing-black: #000000;
+            --hellsing-gold: #daa520;
+            
+            /* Ichi - Yellow and black */
+            --ichi-yellow: #ffff00;
+            --ichi-black: #000000;
+            --ichi-purple: #4b0082;
+            
+            /* Death Note - Black and cream */
+            --death-black: #000000;
+            --death-cream: #f5f5dc;
+            --death-red: #8b0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            padding: 30px;
+            position: relative;
+            transition: transform 0.3s ease;
+            min-height: 280px;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .year {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        /* AKIRA - Bold red and black manga aesthetic */
+        .card:nth-child(1) {
+            background: var(--akira-black);
+            color: var(--akira-white);
+            border: 4px solid var(--akira-red);
+        }
+        .card:nth-child(1) .tag {
+            color: var(--akira-red);
+            border-bottom: 2px solid var(--akira-red);
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+        .card:nth-child(1) .title {
+            font-family: 'Noto Sans JP', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .card:nth-child(1) .year {
+            background: var(--akira-red);
+            color: var(--akira-white);
+        }
+        .card:nth-child(1)::after {
+            content: 'AKIRA';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 32px;
+            font-weight: 900;
+            color: rgba(220, 20, 60, 0.2);
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        /* Ghost in the Shell - Tech noir cyan */
+        .card:nth-child(2) {
+            background: var(--gits-dark);
+            color: var(--gits-light);
+            border: 2px solid var(--gits-teal);
+        }
+        .card:nth-child(2) .tag {
+            color: var(--gits-teal);
+            font-family: 'Source Code Pro', monospace;
+        }
+        .card:nth-child(2) .title {
+            color: var(--gits-teal);
+        }
+        .card:nth-child(2) .year {
+            background: var(--gits-teal);
+            color: var(--gits-dark);
+        }
+        .card:nth-child(2)::before {
+            content: '攻殻機動隊';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px;
+            color: rgba(0, 128, 128, 0.3);
+            writing-mode: vertical-rl;
+        }
+
+        /* Evangelion - Purple and orange mecha */
+        .card:nth-child(3) {
+            background: var(--eva-purple);
+            color: white;
+            border: 3px solid var(--eva-orange);
+        }
+        .card:nth-child(3) .tag {
+            color: var(--eva-orange);
+            background: rgba(255, 69, 0, 0.1);
+            padding: 4px 8px;
+        }
+        .card:nth-child(3) .year {
+            background: var(--eva-orange);
+            color: var(--eva-purple);
+        }
+        .card:nth-child(3)::after {
+            content: 'NERV';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255, 69, 0, 0.3);
+        }
+
+        /* Naruto - Orange scroll aesthetic */
+        .card:nth-child(4) {
+            background: var(--naruto-beige);
+            color: var(--naruto-navy);
+            border: 3px solid var(--naruto-orange);
+            position: relative;
+        }
+        .card:nth-child(4) .tag {
+            color: var(--naruto-orange);
+        }
+        .card:nth-child(4) .title {
+            color: var(--naruto-navy);
+        }
+        .card:nth-child(4) .year {
+            background: var(--naruto-orange);
+            color: white;
+        }
+        .card:nth-child(4)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--naruto-orange) 0px,
+                var(--naruto-orange) 10px,
+                var(--naruto-navy) 10px,
+                var(--naruto-navy) 15px
+            );
+        }
+
+        /* Lady Snowblood - Elegant crimson and white */
+        .card:nth-child(5) {
+            background: var(--snow-white);
+            color: var(--snow-gray);
+            border: 2px solid var(--snow-crimson);
+            box-shadow: inset 0 0 20px rgba(178, 34, 34, 0.1);
+        }
+        .card:nth-child(5) .tag {
+            color: var(--snow-crimson);
+            font-family: 'Noto Serif JP', serif;
+        }
+        .card:nth-child(5) .title {
+            color: var(--snow-crimson);
+            font-family: 'Noto Serif JP', serif;
+        }
+        .card:nth-child(5) .description {
+            font-family: 'Noto Serif JP', serif;
+        }
+        .card:nth-child(5) .year {
+            background: var(--snow-crimson);
+            color: white;
+        }
+        .card:nth-child(5)::after {
+            content: '雪血';
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 18px;
+            color: rgba(178, 34, 34, 0.3);
+        }
+
+        /* Edgerunners - Cyberpunk neon */
+        .card:nth-child(6) {
+            background: var(--edge-dark);
+            color: white;
+            border: 2px solid var(--edge-pink);
+            position: relative;
+        }
+        .card:nth-child(6) .tag {
+            color: var(--edge-pink);
+            font-family: 'Source Code Pro', monospace;
+        }
+        .card:nth-child(6) .title {
+            color: var(--edge-cyan);
+            text-transform: uppercase;
+        }
+        .card:nth-child(6) .year {
+            background: var(--edge-pink);
+            color: white;
+        }
+        .card:nth-child(6)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--edge-pink), var(--edge-cyan));
+        }
+
+        /* Hellsing - Gothic dark red */
+        .card:nth-child(7) {
+            background: var(--hellsing-black);
+            color: white;
+            border: 3px solid var(--hellsing-darkred);
+        }
+        .card:nth-child(7) .tag {
+            color: var(--hellsing-gold);
+            border: 1px solid var(--hellsing-gold);
+            padding: 4px 8px;
+            display: inline-block;
+        }
+        .card:nth-child(7) .title {
+            color: var(--hellsing-darkred);
+            font-family: 'Noto Serif JP', serif;
+        }
+        .card:nth-child(7) .year {
+            background: var(--hellsing-darkred);
+            color: white;
+        }
+        .card:nth-child(7)::after {
+            content: '✠';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            color: rgba(218, 165, 32, 0.3);
+        }
+
+        /* Ichi the Killer - Disturbing yellow and black */
+        .card:nth-child(8) {
+            background: var(--ichi-yellow);
+            color: var(--ichi-black);
+            border: 4px solid var(--ichi-black);
+        }
+        .card:nth-child(8) .tag {
+            color: var(--ichi-purple);
+            background: rgba(75, 0, 130, 0.1);
+            padding: 4px 8px;
+        }
+        .card:nth-child(8) .title {
+            color: var(--ichi-black);
+        }
+        .card:nth-child(8) .year {
+            background: var(--ichi-black);
+            color: var(--ichi-yellow);
+        }
+        .card:nth-child(8)::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--ichi-black) 0px,
+                var(--ichi-black) 5px,
+                transparent 5px,
+                transparent 10px
+            );
+        }
+
+        /* Death Note - Notebook pages */
+        .card:nth-child(9) {
+            background: var(--death-cream);
+            color: var(--death-black);
+            border: 3px solid var(--death-black);
+            position: relative;
+        }
+        .card:nth-child(9) .tag {
+            color: var(--death-red);
+            font-family: 'Courier New', monospace;
+        }
+        .card:nth-child(9) .title {
+            font-family: 'Noto Serif JP', serif;
+        }
+        .card:nth-child(9) .description {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+        .card:nth-child(9) .year {
+            background: var(--death-black);
+            color: var(--death-cream);
+        }
+        .card:nth-child(9)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 40px;
+            bottom: 0;
+            width: 1px;
+            background: rgba(139, 0, 0, 0.3);
+        }
+        .card:nth-child(9)::after {
+            content: 'DEATH NOTE';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            color: rgba(139, 0, 0, 0.4);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="eyebrow">Japanese Comics & Animation</div>
+            <h1>Manga & Anime Classics</h1>
+            <p class="subtitle">Nine legendary series that defined visual storytelling in Japan</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <span class="tag">Neo-Tokyo Manga</span>
+                <h3 class="title">Akira</h3>
+                <p class="description">Katsuhiro Otomo's cyberpunk masterpiece. A motorcycle gang leader searches for his friend in a post-apocalyptic Neo-Tokyo where psychic powers awaken.</p>
+                <span class="year">1982</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Cyberpunk Manga</span>
+                <h3 class="title">Ghost in the Shell</h3>
+                <p class="description">Masamune Shirow's exploration of consciousness and identity. Major Kusanagi leads Section 9 in a world where minds and machines merge.</p>
+                <span class="year">1989</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Mecha Anime</span>
+                <h3 class="title">Neon Genesis Evangelion</h3>
+                <p class="description">Hideaki Anno's psychological deconstruction of the giant robot genre. Shinji Ikari pilots Eva Unit-01 against mysterious Angels.</p>
+                <span class="year">1995</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Ninja Manga</span>
+                <h3 class="title">Naruto</h3>
+                <p class="description">Masashi Kishimoto's tale of a young ninja with a nine-tailed fox demon sealed inside him, determined to become the leader of his village.</p>
+                <span class="year">1999</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Revenge Manga</span>
+                <h3 class="title">Lady Snowblood</h3>
+                <p class="description">Kazuo Koike's elegant tale of vengeance. A woman born in prison seeks revenge for her family's murder in Meiji-era Japan.</p>
+                <span class="year">1972</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Cyberpunk Anime</span>
+                <h3 class="title">Cyberpunk Edgerunners</h3>
+                <p class="description">Studio Trigger's neon-soaked journey through Night City. David Martinez climbs the ladder of cybernetic enhancement and street credibility.</p>
+                <span class="year">2022</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Vampire Manga</span>
+                <h3 class="title">Hellsing</h3>
+                <p class="description">Kouta Hirano's gothic horror. The Hellsing Organization deploys Alucard, a powerful vampire, to eliminate supernatural threats to England.</p>
+                <span class="year">1997</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Psychological Manga</span>
+                <h3 class="title">Ichi the Killer</h3>
+                <p class="description">Hideo Yamamoto's disturbing thriller. A sadomasochistic yakuza enforcer becomes obsessed with finding a mysterious killer named Ichi.</p>
+                <span class="year">2001</span>
+            </div>
+
+            <div class="card">
+                <span class="tag">Supernatural Manga</span>
+                <h3 class="title">Death Note</h3>
+                <p class="description">Tsugumi Ohba's psychological cat-and-mouse game. Light Yagami finds a notebook that kills anyone whose name is written in it.</p>
+                <span class="year">2003</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
