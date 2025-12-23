@@ -870,7 +870,7 @@
         import * as THREE from 'three';
         
         // Cannon.js Demo: Bouncing Spheres
-        {
+        setTimeout(() => {
             const canvas = document.getElementById('cannon-physics');
             if (!canvas) return;
             
@@ -909,12 +909,11 @@
                     (Math.random() - 0.5) * 4
                 );
                 body.velocity.set(
-                    (Math.random() - 0.5) * 6,
+                    (Math.random() - 0.5) * 4,
                     0,
-                    (Math.random() - 0.5) * 6
+                    (Math.random() - 0.5) * 4
                 );
-                body.material = new CANNON.Material();
-                body.material.restitution = 0.9;
+                body.material = new CANNON.Material({ restitution: 0.9 });
                 world.add(body);
                 
                 // Visual mesh
@@ -955,9 +954,9 @@
                             (Math.random() - 0.5) * 4
                         );
                         body.velocity.set(
-                            (Math.random() - 0.5) * 6,
+                            (Math.random() - 0.5) * 4,
                             0,
-                            (Math.random() - 0.5) * 6
+                            (Math.random() - 0.5) * 4
                         );
                     }
                 });
@@ -967,7 +966,7 @@
             }
             
             animate();
-        }
+        }, 100);
     </script>
 </body>
 </html>
