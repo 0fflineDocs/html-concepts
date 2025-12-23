@@ -236,25 +236,25 @@
                 </div>
             </div>
 
-            <!-- A-Frame Demo -->
+            <!-- WebGL Demo 1 -->
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
-                    <div id="aframe-container" style="width: 100%; height: 100%;"></div>
+                    <canvas id="webgl-prism"></canvas>
                 </div>
                 <div class="demo-info">
-                    <div class="library-badge badge-aframe">A-Frame</div>
-                    <div class="demo-title">Pulsing Orb</div>
+                    <div class="library-badge badge-aframe">WebGL</div>
+                    <div class="demo-title">Rotating Prism</div>
                 </div>
             </div>
 
-            <!-- A-Frame Demo 2 -->
+            <!-- WebGL Demo 2 -->
             <div class="demo-card">
                 <div class="demo-canvas-wrapper">
-                    <div id="aframe-prism" style="width: 100%; height: 100%;"></div>
+                    <canvas id="webgl-particles"></canvas>
                 </div>
                 <div class="demo-info">
-                    <div class="library-badge badge-aframe">A-Frame</div>
-                    <div class="demo-title">Floating Prism</div>
+                    <div class="library-badge badge-aframe">WebGL</div>
+                    <div class="demo-title">Particle Swirl</div>
                 </div>
             </div>
         </div>
@@ -795,193 +795,97 @@
         }
     </script>
 
-    <!-- A-Frame Alternative using Three.js -->
-    <script type="module">
-        import * as THREE from 'three';
-        
-        // A-Frame-style Demo: Pulsing Orb
+        // WebGL Demo 1: Rotating Prism
         {
-            const container = document.getElementById('aframe-container');
+            const canvas = document.getElementById('webgl-prism');
+            const parentWidth = canvas.parentElement.clientWidth;
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / 280, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            
-            renderer.setSize(container.clientWidth, 280);
-            renderer.setClearColor(0x000022, 1);
-            container.appendChild(renderer.domElement);
-            
-            // Pulsing sphere
-            const sphereGeometry = new THREE.SphereGeometry(0.8, 32, 32);
-            const sphereMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0xff0080,
-                shininess: 100
-            });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            sphere.position.z = -3;
-            scene.add(sphere);
-            
-            // Rotating torus
-            const torusGeometry = new THREE.TorusGeometry(1.5, 0.1, 16, 100);
-            const torusMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0x00ffff,
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            // Create triangular prism
+            const geometry = new THREE.CylinderGeometry(0, 1, 2, 3);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xff4080,
                 transparent: true,
-                opacity: 0.7
+                opacity: 0.8
             });
-            const torus = new THREE.Mesh(torusGeometry, torusMaterial);
-            torus.position.z = -3;
-            scene.add(torus);
-            
+            const prism = new THREE.Mesh(geometry, material);
+            scene.add(prism);
+
             // Lighting
             const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
             scene.add(ambientLight);
-            
-            const pointLight = new THREE.PointLight(0xff0080, 1, 10);
-            pointLight.position.set(2, 2, 0);
+            const pointLight = new THREE.PointLight(0xff4080, 1, 10);
+            pointLight.position.set(2, 2, 2);
             scene.add(pointLight);
-            
-            camera.position.z = 2;
-            
-            let time = 0;
-            function animate() {
-                time += 0.016;
-                
-                // Rotate sphere
-                sphere.rotation.x = time;
-                sphere.rotation.y = time;
-                sphere.rotation.z = time;
-                
-                // Scale sphere
-                const scale = 1 + Math.sin(time * 2) * 0.2;
-                sphere.scale.setScalar(scale);
-                
-                // Rotate torus
-                torus.rotation.y = time * 0.5;
-                
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-    </script>
 
-    <!-- A-Frame Demo 2: Floating Prism -->
-    <script type="module">
-        import * as THREE from 'three';
-        
-        // A-Frame-style Demo: Floating Prism
-        {
-            const container = document.getElementById('aframe-prism');
-            if (!container) return;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / 280, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            
-            renderer.setSize(container.clientWidth, 280);
-            renderer.setClearColor(0x001122, 1);
-            container.appendChild(renderer.domElement);
-            
-            // Create triangular prism geometry
-            const prismGeometry = new THREE.CylinderGeometry(0, 1.2, 2, 3);
-            const prismMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0xff4080,
-                shininess: 100,
-                transparent: true,
-                opacity: 0.9
-            });
-            const prism = new THREE.Mesh(prismGeometry, prismMaterial);
-            prism.position.z = -4;
-            scene.add(prism);
-            
-            // Create wireframe overlay
-            const wireframeGeometry = new THREE.CylinderGeometry(0, 1.2, 2, 3);
-            const wireframeMaterial = new THREE.WireframeGeometry(wireframeGeometry);
-            const wireframe = new THREE.LineSegments(wireframeMaterial, 
-                new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.6 })
-            );
-            wireframe.position.z = -4;
-            scene.add(wireframe);
-            
-            // Floating particles
-            const particles = [];
-            for (let i = 0; i < 15; i++) {
-                const particleGeometry = new THREE.SphereGeometry(0.05, 8, 6);
-                const particleMaterial = new THREE.MeshBasicMaterial({ 
-                    color: new THREE.Color().setHSL(Math.random(), 0.8, 0.7),
-                    transparent: true,
-                    opacity: 0.8
-                });
-                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-                
-                particle.position.set(
-                    (Math.random() - 0.5) * 6,
-                    (Math.random() - 0.5) * 4,
-                    -6 + Math.random() * 4
-                );
-                
-                particle.userData = {
-                    velocity: new THREE.Vector3(
-                        (Math.random() - 0.5) * 0.02,
-                        (Math.random() - 0.5) * 0.02,
-                        (Math.random() - 0.5) * 0.02
-                    ),
-                    originalPos: particle.position.clone()
-                };
-                
-                scene.add(particle);
-                particles.push(particle);
-            }
-            
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
-            scene.add(ambientLight);
-            
-            const pointLight1 = new THREE.PointLight(0xff4080, 1, 10);
-            pointLight1.position.set(2, 2, -2);
-            scene.add(pointLight1);
-            
-            const pointLight2 = new THREE.PointLight(0x00ffff, 1, 10);
-            pointLight2.position.set(-2, -2, -2);
-            scene.add(pointLight2);
-            
-            camera.position.z = 2;
-            
-            let time = 0;
-            function animate() {
-                time += 0.016;
-                
-                // Rotate and float prism
-                prism.rotation.x = time * 0.5;
-                prism.rotation.y = time * 0.8;
-                prism.position.y = Math.sin(time * 1.5) * 0.3;
-                
-                // Rotate wireframe slightly different
-                wireframe.rotation.x = time * 0.6;
-                wireframe.rotation.y = time * 0.7;
-                wireframe.position.y = Math.sin(time * 1.5) * 0.3;
-                
-                // Animate particles
-                particles.forEach((particle, i) => {
-                    particle.position.add(particle.userData.velocity);
-                    
-                    // Orbit around original position
-                    const orbitRadius = 0.5 + Math.sin(time + i) * 0.3;
-                    particle.position.x = particle.userData.originalPos.x + Math.cos(time * 0.5 + i * 0.5) * orbitRadius;
-                    particle.position.y = particle.userData.originalPos.y + Math.sin(time * 0.7 + i * 0.5) * orbitRadius;
-                    
-                    // Color cycling
-                    particle.material.color.setHSL((time * 0.5 + i * 0.1) % 1, 0.8, 0.7);
-                });
-                
-                // Animate lights
-                pointLight1.intensity = 0.8 + Math.sin(time * 2) * 0.4;
-                pointLight2.intensity = 0.8 + Math.cos(time * 2.5) * 0.4;
+            function animatePrism() {
+                prism.rotation.x += 0.01;
+                prism.rotation.y += 0.02;
+                prism.position.y = Math.sin(Date.now() * 0.001) * 0.5;
                 
                 renderer.render(scene, camera);
-                requestAnimationFrame(animate);
+                requestAnimationFrame(animatePrism);
             }
-            animate();
+            animatePrism();
         }
-    </script>
+
+        // WebGL Demo 2: Particle Swirl
+        {
+            const canvas = document.getElementById('webgl-particles');
+            const parentWidth = canvas.parentElement.clientWidth;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, parentWidth / 280, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(parentWidth, 280);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            const particles = new THREE.BufferGeometry();
+            const particleCount = 200;
+            const positions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+            }
+            
+            particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            
+            const material = new THREE.PointsMaterial({
+                color: 0x00ffff,
+                size: 0.1,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particleSystem = new THREE.Points(particles, material);
+            scene.add(particleSystem);
+
+            function animateParticles() {
+                particleSystem.rotation.y += 0.005;
+                particleSystem.rotation.x += 0.002;
+                
+                const positions = particleSystem.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = Date.now() * 0.001 + i * 0.1;
+                    positions[i * 3] = Math.cos(angle) * (2 + Math.sin(angle * 0.5));
+                    positions[i * 3 + 1] = Math.sin(angle * 0.7) * 2;
+                    positions[i * 3 + 2] = Math.sin(angle) * (2 + Math.cos(angle * 0.5));
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+        }
 </body>
 </html>
