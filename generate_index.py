@@ -108,22 +108,25 @@ def main():
         f"Browse {design_count} self-contained HTML and CSS design experiments—from "
         "editorial layouts to futuristic storytelling and interactive timelines."
     )
+    indented_html_list_items = "\n".join(
+        f"            {line}" for line in html_list_items.strip().splitlines()
+    )
 
-    full_html = f"""<!DOCTYPE html>
-<html lang=\"en\">
+    full_html = f'''<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <meta name=\"description\" content=\"{page_description}\">
-    <meta name=\"author\" content=\"Design Bureau\">
-    <meta property=\"og:title\" content=\"{page_title}\">
-    <meta property=\"og:description\" content=\"Design explorations with more personality. Cybersecurity meets architecture.\">
-    <meta property=\"og:type\" content=\"website\">
-    <meta name=\"twitter:card\" content=\"summary_large_image\">
-    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
-    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
-    <link href=\"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap\" rel=\"stylesheet\">
+    <meta name="description" content="{page_description}">
+    <meta name="author" content="Design Bureau">
+    <meta property="og:title" content="{page_title}">
+    <meta property="og:description" content="Design explorations with more personality. Cybersecurity meets architecture.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {{
             color-scheme: light dark;
@@ -162,7 +165,7 @@ def main():
         }}
 
         body {{
-            font-family: \"Space Grotesk\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;
+            font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             line-height: 1.6;
             max-width: 1120px;
             margin: 0 auto;
@@ -187,7 +190,7 @@ def main():
         }}
 
         .hero::before {{
-            content: \"\";
+            content: "";
             position: absolute;
             inset: 0;
             background: linear-gradient(90deg, transparent calc(100% - 1px), hsl(var(--border-subtle)) 0),
@@ -200,7 +203,7 @@ def main():
         .eyebrow,
         .hero-meta span,
         footer {{
-            font-family: \"JetBrains Mono\", \"SFMono-Regular\", Consolas, monospace;
+            font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
         }}
 
         .eyebrow {{
@@ -277,7 +280,7 @@ def main():
         }}
 
         li::before {{
-            content: \"\";
+            content: "";
             position: absolute;
             inset: 0;
             border: 2px solid hsl(var(--accent));
@@ -361,25 +364,25 @@ def main():
     </style>
 </head>
 <body>
-    <main class=\"shell\">
-        <section class=\"hero\">
-            <div class=\"eyebrow\"><span>HTML Concepts</span><strong>{design_count} curated experiments</strong></div>
+    <main class="shell">
+        <section class="hero">
+            <div class="eyebrow"><span>HTML Concepts</span><strong>{design_count} curated experiments</strong></div>
             <h1>{design_count} curated experiments.</h1>
             <p>{page_description}</p>
-            <div class=\"hero-meta\">
+            <div class="hero-meta">
                 <span>Design Bureau</span>
                 <span>Cybersecurity meets architecture</span>
             </div>
         </section>
         <ul>
-            {html_list_items}
+{indented_html_list_items}
         </ul>
         <footer>
             Last built on: {now} (UTC)
         </footer>
     </main>
 </body>
-</html>"""
+</html>'''
 
     with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
         f.write(full_html)
